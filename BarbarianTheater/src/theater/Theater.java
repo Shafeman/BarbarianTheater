@@ -83,7 +83,7 @@ public class Theater {
 	return removed;
 	}
 	
-	public Show addShow(String clientID, String name, Date startDate, Date endDate){
+	public Show addShow(String clientID, String name, Calendar startDate, Calendar endDate){
 		return new Show(name, startDate, endDate);
 	}
 	

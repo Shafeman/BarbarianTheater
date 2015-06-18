@@ -1,13 +1,14 @@
 package theater;
+import java.util.Calendar;
 import java.util.Date;
 
 
 public class Show {
 	private String name;
-	private Date startDate;
-	private Date endDate;
+	private Calendar startDate;
+	private Calendar endDate;
 	
-	public Show(String name, Date startDate, Date endDate){
+	public Show(String name, Calendar startDate, Calendar endDate){
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -21,11 +22,11 @@ public class Show {
 		this.name = name;
 	}
 	
-	public Date getStartDate() {
+	public Calendar getStartDate() {
 		return startDate;
 	}
 	
-	public Date getEndDate() {
+	public Calendar getEndDate() {
 		return endDate;
 	}
 	
