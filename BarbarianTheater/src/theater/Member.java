@@ -1,17 +1,18 @@
 package theater;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 
 public class Member extends TheaterPatron{
 	private ArrayList<CreditCard> creditCards;
 	
-	public Member(String name, String address, String phoneNumber, String creditCardNumber, Date expiration){
+	public Member(String name, String address, String phoneNumber, String creditCardNumber, Calendar expiration){
 		super(name, address, phoneNumber);
 		creditCards.add(new CreditCard(creditCardNumber, expiration));
 	}
 	
-	public CreditCard addCreditCard(String creditCardNumber, Date expiration){
+	public CreditCard addCreditCard(String creditCardNumber, Calendar expiration){
 		CreditCard card = new CreditCard(creditCardNumber, expiration);
 		creditCards.add(card);
 		return card;
