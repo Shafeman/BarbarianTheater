@@ -1,5 +1,6 @@
 package theater;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -54,7 +55,7 @@ public class Client extends TheaterPatron{
  * @param date - the date being searched for
  * @return
  */
-	public boolean hasDate(Date date){
+	public boolean hasDate(Calendar date){
 		for(int i = 0; i < shows.size(); i++){
 			if(shows.get(i).getStartDate().before(date) && shows.get(i).getStartDate().after(date) ){
 				return true;

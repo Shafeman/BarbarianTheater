@@ -1,6 +1,7 @@
 package theater;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -44,7 +45,7 @@ public class Theater {
 		return clients.iterator();
 	}
 	
-	public Member addMember(String name, String address, String phone, String creditCardNumber, Date expiration){
+	public Member addMember(String name, String address, String phone, String creditCardNumber, Calendar expiration){
 		Member customer = new Member(name, address, phone, creditCardNumber, expiration);
 		return customer;
 	}
@@ -58,7 +59,7 @@ public class Theater {
 		return members.iterator();
 	}
 	
-	public CreditCard addCreditCard(String id, String creditCardNumber, Date expiration){
+	public CreditCard addCreditCard(String id, String creditCardNumber, Calendar expiration){
 		//search for member by id
 		CreditCard card = new CreditCard(creditCardNumber, expiration);
 		return card;
@@ -82,7 +83,7 @@ public class Theater {
 	return removed;
 	}
 	
-	public Show addShow(String clientID, String name, Date startDate, Date endDate){
+	public Show addShow(String clientID, String name, Calendar startDate, Calendar endDate){
 		return new Show(name, startDate, endDate);
 	}
 	

@@ -1,12 +1,13 @@
 package theater;
+import java.util.Calendar;
 import java.util.Date;
 
 
 public class CreditCard {
 	private String creditCardNumber;
-	private Date expirationDate;
+	private Calendar expirationDate;
 	
-	public CreditCard(String creditCardNumber, Date expiration){
+	public CreditCard(String creditCardNumber, Calendar expiration){
 		this.creditCardNumber = creditCardNumber;
 		this.expirationDate = expiration;
 	}
@@ -15,11 +16,11 @@ public class CreditCard {
 		return creditCardNumber;
 	}
 
-	public Date getExpirationDate() {
+	public Calendar getExpirationDate() {
 		return expirationDate;
 	}
 	
-	public void setExpirationDate(Date expirationDate) {
+	public void setExpirationDate(Calendar expirationDate) {
 		this.expirationDate = expirationDate;
 	}
 	
