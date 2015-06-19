@@ -8,8 +8,10 @@ import java.util.StringTokenizer;
 /**
  * Created by Nathan on 6/19/2015.
  */
+
 public class UserInterface {
 
+    private static UserInterface userInterface;
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     private static final int EXIT = 0;
@@ -26,6 +28,32 @@ public class UserInterface {
     private static final int SAVE_DATA = 11;
     private static final int RETRIEVE_DATA = 12;
     private static final int HELP = 13;
+
+    private UserInterface() {
+        if (yesOrNo("Look for saved data and  use it?")) {
+            retrieveData();
+        } else {
+            //library = Library.instance();
+        }
+    }
+
+    public static UserInterface instance() {
+        if (userInterface == null) {
+            return userInterface = new UserInterface();
+        } else {
+            return userInterface;
+        }
+    }
+
+    private boolean yesOrNo(String prompt) {
+        String more = getToken(prompt + " (Y|y)[es] or anything else for no");
+        if (more.charAt(0) != 'y' && more.charAt(0) != 'Y') {
+            return false;
+        }
+        return true;
+    }
+
+
 
     public void help() {
         System.out.println("Enter a number between 0 and 12 as explained below:");
@@ -166,5 +194,10 @@ public class UserInterface {
     private void retrieveData() {
 
 
+    }
+
+    public static void main(String[] args) {
+
+        UserInterface.instance().process();
     }
 }
