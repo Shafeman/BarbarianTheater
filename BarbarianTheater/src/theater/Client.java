@@ -11,7 +11,7 @@ import java.util.Iterator;
  * holds an ArrayList of Shows.
  * The class is responsible for managing the client's balance and
  * adding plays, searching the Client's plays for a certain date, and
- * returning an iterator for traversing the array of Shows. 
+ * returning an iterator for traversing the array of Shows...
  */
 public class Client extends TheaterPatron{
 	private double balance;
