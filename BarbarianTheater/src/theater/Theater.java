@@ -3,6 +3,7 @@ package theater;
 import java.io.ObjectInputStream;
 import java.util.Calendar;
 import java.util.List;
+import java.util.StringTokenizer;
 
 
 public class Theater {
@@ -119,6 +120,40 @@ public class Theater {
 		}
 		return false;
 	}
+	
+	public boolean checkCreditCardInCorrectFormat(String creditCardNumber){
+		return CreditCard.isCreditCardInCorrectFormat(creditCardNumber);
+	}
+	
+	public boolean checkCreditCardExpirationFormat(String expiration){
+		return CreditCard.isProperExpirationDateFormat(expiration);
+	}
+	
+	public boolean isCreditCardDuplicate(String creditCardNumber) {
+
+        String delims = "-";
+        StringTokenizer creditCardToValidate = new StringTokenizer(creditCardNumber, delims);
+
+        for (Member member : this.listMembers()) {
+            for (CreditCard customerCreditCard : member.getCreditCards()) {
+
+                String cardNumberOnFile = customerCreditCard.getCreditCardNumber();
+                StringTokenizer cardOnFile = new StringTokenizer(cardNumberOnFile, delims);
+                int StringTokensTheSame = 0;
+
+                while (creditCardToValidate.hasMoreElements()) {
+
+                    if (creditCardToValidate.nextToken().equals(cardOnFile.nextToken())) {
+                        StringTokensTheSame++;
+                    }
+                }
+                if (StringTokensTheSame == 4) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 //	public Iterator<Show> listShows(){
 //		return clients.iterator().next().getShows(); //obviously REALLY BAD code. Thankfully just temporary.

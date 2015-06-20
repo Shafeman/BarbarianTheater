@@ -154,7 +154,7 @@ public class UserInterface {
         client = theater.addClient(name, address, phoneNumber);
 
         if (client != null) {
-            System.out.println("Client " + name + " was added");
+            System.out.println("Client " + name + " " + client.getID() + " was added");
         }
     }
 
@@ -183,14 +183,11 @@ public class UserInterface {
         String address = getToken("Enter client address");
         String phoneNumber = getToken("Enter client phone number");
         String creditCardNumber = getCreditCardNumber("Enter credit card number with dashes\n" +
-                "Example 1111-2222-3333-4444");
-        Calendar date = getCreditCardExpirationDate("Enter credit card expiration date in this format mm/yy");  
-//should these methods sit at Theater or be static methods in Credit Card called "checkCCNformat" and "checkCCDformat"?
-        
+                "Example 1111-2222-3333-4444"); 
+        Calendar date = getCreditCardExpirationDate("Enter credit card expiration date in this format mm/yy");        
         Member member = theater.addMember(name, address, phoneNumber, creditCardNumber, date);
 
         if (member != null) {
-
             System.out.println("Member " + name + " was added");
         }
     }
@@ -216,10 +213,9 @@ public class UserInterface {
             Calendar expirationDate = getCreditCardExpirationDate("Enter credit card expiration date in this format mm/yy");
             member.addCreditCard(creditCardNumber, expirationDate);
         } else {
-            System.out.println("Member entered isn't in the system"); //add member id to message
+            System.out.println("Member " + memberID + " isn't in the system");
         }
     }
-    //see above for question re: location of CC check methods. Also need to refuse past dates on CC expiry.
 
     private void removeCreditCard() {
 
@@ -254,14 +250,14 @@ public class UserInterface {
 
     }
 
-    public Calendar getCreditCardExpirationDate(String prompt) {
+    private Calendar getCreditCardExpirationDate(String prompt) {
 
         do {
             try {
                 System.out.println(prompt);
                 String line = reader.readLine();
 
-                if (isProperExpirationDateFormat(line)) {
+                if (theater.checkCreditCardExpirationFormat(line)) {
 
                     DateFormat dateFormat = new SimpleDateFormat("MM/yy");
                     Calendar calendar = Calendar.getInstance();
@@ -287,9 +283,9 @@ public class UserInterface {
             try {
                 String creditCardNumber = reader.readLine();
 
-                if (isCreditCardInCorrectFormat(creditCardNumber)) {
+                if (theater.checkCreditCardInCorrectFormat(creditCardNumber)) {
 
-                    if (!isCreditCardDuplicate(creditCardNumber)) {
+                    if (!theater.isCreditCardDuplicate(creditCardNumber)) {
 
                         return creditCardNumber;
                     }
@@ -298,77 +294,5 @@ public class UserInterface {
                 System.out.println("bad credit card input");
             }
         }
-    }
-
-    private boolean isCreditCardInCorrectFormat(String creditCardNumber) { //clean this up with reg-ex
-
-        if (creditCardNumber.length() == 19) {
-
-            for (int i = 0; i < creditCardNumber.length(); i++) {
-
-                if (i == 4 || i == 9 || i == 14) {
-
-                    if (!(creditCardNumber.charAt(i) == '-')) {
-                        return false;
-                    }
-                } else {
-                    if (!(Character.isDigit(creditCardNumber.charAt(i)))) {
-                        return false;
-                    }
-                }
-            }
-        } else {
-            return false;
-        }
-        return true;
-    }
-
-    private boolean isCreditCardDuplicate(String creditCardNumber) {
-
-        String delims = "-";
-        StringTokenizer creditCardToValidate = new StringTokenizer(creditCardNumber, delims);
-
-        for (Member member : theater.listMembers()) {
-            for (CreditCard customerCreditCard : member.getCreditCards()) {
-
-                String cardNumberOnFile = customerCreditCard.getCreditCardNumber();
-                StringTokenizer cardOnFile = new StringTokenizer(cardNumberOnFile, delims);
-                int StringTokensTheSame = 0;
-
-                while (creditCardToValidate.hasMoreElements()) {
-
-                    if (creditCardToValidate.nextToken().equals(cardOnFile.nextToken())) {
-                        StringTokensTheSame++;
-                    }
-                }
-                if (StringTokensTheSame == 4) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean isProperExpirationDateFormat(String expirationDate) {
-
-        if (expirationDate.length() == 5) {
-
-            for (int i = 0; i < expirationDate.length(); i++) {
-
-                if (i == 2) {
-
-                    if (!(expirationDate.charAt(i) == '/')) {
-                        return false;
-                    }
-                } else {
-                    if (!(Character.isDigit(expirationDate.charAt(i)))) {
-                        return false;
-                    }
-                }
-            }
-        } else {
-            return false;
-        }
-        return true;
     }
 }
