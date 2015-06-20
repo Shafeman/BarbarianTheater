@@ -3,6 +3,8 @@ package theater;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -146,16 +148,29 @@ public class UserInterface {
         String phone = getToken("Enter client phone number");
         Client client;
         client = theater.addClient(name, address, phone);
+
+        if (client != null) {
+            System.out.println("Client " + name + " was added");
+        }
         //TODO check client add for success
     }
 
     private void removeClient() {
 
-
+        String clientID = getToken("Enter client ID to be removed");
+        if (theater.removeClient(clientID)) {
+            System.out.println("Client was removed");
+        } else {
+            System.out.println("Client ID entered didn't match any in the system");
+        }
     }
 
     private void listClients() {
 
+        for (Client client : theater.listClients()) {
+
+            System.out.println(client.toString());
+        }
 
     }
 

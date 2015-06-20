@@ -4,11 +4,12 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.List;
 
 
 public class Theater {
 	//private ArrayList<Client> clients; //depends on the list discussion. should be changed to correction collection class
-	private static ClientsList<Client> clientList;
+	private static ClientsList clientList;
 	private static Theater singletonTheater;
 	private String name;
 	private int seatCapacity;
@@ -36,21 +37,29 @@ public class Theater {
 		clientList.add(client);
 		return client;
 	}
-
-//	public Iterator<Client> listClients(){
-//		return clients.iterator();
-//	}
 	
 	public boolean removeClient(String id){
-		if (id == "true") {
-			//find client by id and remove from clients
+		if (isClientIDRemoved(id)) {
+
 			return true;
 		}
 		else{
 			return false;
 		}
 	}
-	
+
+	private boolean isClientIDRemoved(String id) {
+
+		Client clientToRemove = clientList.search(id);
+
+		if (clientToRemove != null) {
+
+			clientList.remove(id);
+			return true;
+		}
+		return false;
+	}
+
 	public Member addMember(String name, String address, String phone, String creditCardNumber, Calendar expiration){
 		Member customer = new Member(name, address, phone, creditCardNumber, expiration);
 		return customer;
@@ -63,6 +72,10 @@ public class Theater {
 	
 	public Iterator<Member> listMembers(){
 		return members.iterator();
+	}
+
+	public List<Client> listClients() {
+		return clientList.getList();
 	}
 	
 	public CreditCard addCreditCard(String id, String creditCardNumber, Calendar expiration){

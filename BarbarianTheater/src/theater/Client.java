@@ -63,5 +63,9 @@ public class Client extends TheaterPatron{
 		}
 		return false;
 	}
-	
+
+	@Override
+	public String toString() {
+		return super.toString() + "\nBalance: " + balance;
+	}
 }

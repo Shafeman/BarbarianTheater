@@ -1,26 +1,29 @@
 package theater;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 
-public class ClientsList<E> extends ArrayList<E>{
-	private static ClientsList<Client> singletonClientList;
-	private ArrayList<Client> clients;
-	
-	private ClientsList(){
-		
+public class ClientsList {
+
+	private static ClientsList singletonClientList;
+	private List<Client> clients;
+
+	private ClientsList() {
+
+		clients = new ArrayList<Client>();
 	}
-	
-	public static ClientsList<Client> clientListInstance(){
+
+	public static ClientsList clientListInstance() {
 		if(singletonClientList == null){
-			singletonClientList = new ClientsList<Client>();
+			singletonClientList = new ClientsList();
 		}
 		return singletonClientList;
 	}
 
-//	public boolean add(Client client){
-//		return clients.add(client);
-//	}
+	public boolean add(Client client) {
+		return clients.add(client);
+	}
 	
 	public boolean remove(String id){
 		for(int i = 0; i < clients.size(); i++){
@@ -31,9 +34,9 @@ public class ClientsList<E> extends ArrayList<E>{
 		}
 		return false;
 	}
-	
-	public Iterator<Client> getList(){
-		return clients.iterator();
+
+	public List<Client> getList() {
+		return clients;
 	}
 	
 	public Client search(String id){
