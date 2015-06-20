@@ -45,30 +45,6 @@ public class CreditCard {
 		}
     }
 
-	/*
-	public static boolean isProperExpirationDateFormat(String expirationDate) {
-
-        if (expirationDate.length() == 5) {
-
-            for (int i = 0; i < expirationDate.length(); i++) {
-
-                if (i == 2) {
-
-                    if (!(expirationDate.charAt(i) == '/')) {
-                        return false;
-                    }
-                } else {
-                    if (!(Character.isDigit(expirationDate.charAt(i)))) {
-                        return false;
-                    }
-                }
-            }
-        } else {
-            return false;
-        }
-        return true;
-    }
-    */
 
 	@Override
 	public String toString() {
