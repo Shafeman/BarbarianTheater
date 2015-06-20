@@ -209,7 +209,7 @@ public class UserInterface {
         Member member = theater.addMember(name, address, phoneNumber, creditCardNumber, date);
 
         if (member != null) {
-            System.out.println("Member " + name + " was added");
+            System.out.println("Member " + name + " " + member.getID() + " was added");
         }
     }
 
