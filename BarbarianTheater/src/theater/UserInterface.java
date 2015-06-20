@@ -316,9 +316,14 @@ public class UserInterface {
                 String line = reader.readLine();
                 DateFormat dateFormat = new SimpleDateFormat("MM/yy");
                 dateFormat.setLenient(false);
-                Calendar calendar = Calendar.getInstance();
+                Calendar calendar = new GregorianCalendar();
                 calendar.setTime(dateFormat.parse(line));
-                return calendar;
+                if(calendar.after(Calendar.getInstance())){
+                	return calendar;
+                }
+                else{
+                	System.out.println("Expiration Date cannot be in the past.");
+                }                	
             } catch (IOException ioe) {
                 System.exit(0);
             } catch (ParseException pe) {
