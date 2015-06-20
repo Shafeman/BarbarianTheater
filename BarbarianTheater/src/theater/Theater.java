@@ -52,7 +52,7 @@ public class Theater {
 
 		Client clientToRemove = clientList.search(id);
 
-		if (clientToRemove != null) {
+		if (clientToRemove != null && clientToRemove.getShows().size() == 0) {
 
 			clientList.remove(id);
 			return true;

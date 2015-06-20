@@ -1,8 +1,6 @@
 package theater;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
+
+import java.util.*;
 
 /**
  * Barbarians: Douglas Brian Shaffer, Nathan Kangas, Johnathan Franco
@@ -16,7 +14,7 @@ import java.util.Iterator;
  */
 public class Client extends TheaterPatron{
 	private double balance;
-	private ArrayList<Show> shows;
+	private List<Show> shows;
 
 /**
  * Client Constructor. Sets balance to 0.00 and generates a unique ID through TheaterPerson
@@ -27,6 +25,7 @@ public class Client extends TheaterPatron{
 	public Client(String name, String address, String phoneNumber) {
 		super(name, address, phoneNumber);
 		this.balance = 0.00;
+		shows = new ArrayList<Show>();
 	}
 
 	public double getBalance() {
@@ -36,9 +35,9 @@ public class Client extends TheaterPatron{
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-	
-	public Iterator<Show> getShows(){
-		return shows.iterator();
+
+	public List<Show> getShows() {
+		return shows;
 	}
 	
 	public void addShow(Show show){
