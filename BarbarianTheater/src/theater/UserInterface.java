@@ -3,6 +3,10 @@ package theater;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -145,14 +149,13 @@ public class UserInterface {
 
         String name = getToken("Enter client name");
         String address = getToken("Enter client address");
-        String phone = getToken("Enter client phone number");
+        String phoneNumber = getToken("Enter client phone number");
         Client client;
-        client = theater.addClient(name, address, phone);
+        client = theater.addClient(name, address, phoneNumber);
 
         if (client != null) {
             System.out.println("Client " + name + " was added");
         }
-        //TODO check client add for success
     }
 
     private void removeClient() {
@@ -176,7 +179,19 @@ public class UserInterface {
 
     private void addMemeber() {
 
+        String name = getToken("Enter client name");
+        String address = getToken("Enter client address");
+        String phoneNumber = getToken("Enter client phone number");
+        String creditCardNumber = getCreditCardNumber("Enter credit card number with dashes\n" +
+                "Example 1111-2222-3333-4444");
+        Calendar date = getCreditCardExpirationDate("Enter credit card expiration date in this format mm/yy");
 
+        Member member = theater.addMember(name, address, phoneNumber, creditCardNumber, date);
+
+        if (member != null) {
+
+            System.out.println("Member " + name + " was added");
+        }
     }
 
     private void removeMember() {
@@ -196,7 +211,10 @@ public class UserInterface {
 
     private void listMember() {
 
+        for (Member member : theater.listMembers()) {
 
+            System.out.println(member.toString());
+        }
     }
 
     private void addShow() {
@@ -217,5 +235,125 @@ public class UserInterface {
     private void retrieveData() {
 
 
+    }
+
+    public Calendar getCreditCardExpirationDate(String prompt) {
+
+        do {
+            try {
+                System.out.println(prompt);
+                String line = reader.readLine();
+
+                if (isProperExpirationDateFormat(line)) {
+
+                    DateFormat dateFormat = new SimpleDateFormat("MM/yy");
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(dateFormat.parse(line));
+
+                    return calendar;
+                }
+
+            } catch (IOException ioe) {
+                System.exit(0);
+            } catch (ParseException pe) {
+                System.out.println("Please enter the expiration date in this format mm/yy");
+            }
+        } while (true);
+    }
+
+    private String getCreditCardNumber(String prompt) {
+
+        while (true) {
+
+            System.out.println(prompt);
+
+            try {
+                String creditCardNumber = reader.readLine();
+
+                if (isCreditCardInCorrectFormat(creditCardNumber)) {
+
+                    if (!isCreditCardDuplicate(creditCardNumber)) {
+
+                        return creditCardNumber;
+                    }
+                }
+            } catch (IOException ioe) {
+                System.out.println("bad credit card input");
+            }
+        }
+    }
+
+    private boolean isCreditCardInCorrectFormat(String creditCardNumber) {
+
+        if (creditCardNumber.length() == 19) {
+
+            for (int i = 0; i < creditCardNumber.length(); i++) {
+
+                if (i == 4 || i == 9 || i == 14) {
+
+                    if (!(creditCardNumber.charAt(i) == '-')) {
+                        return false;
+                    }
+                } else {
+                    if (!(Character.isDigit(creditCardNumber.charAt(i)))) {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isCreditCardDuplicate(String creditCardNumber) {
+
+        String delims = "-";
+        StringTokenizer creditCardToValidate = new StringTokenizer(creditCardNumber, delims);
+        //TODO try catch block upcast
+        //Theater theater = (Theater) lastState;
+
+        for (Member member : theater.listMembers()) {
+            for (CreditCard customerCreditCard : member.getCreditCards()) {
+
+                String cardNumberOnFile = customerCreditCard.getCreditCardNumber();
+                StringTokenizer cardOnFile = new StringTokenizer(cardNumberOnFile, delims);
+                int StringTokensTheSame = 0;
+
+                while (creditCardToValidate.hasMoreElements()) {
+
+                    if (creditCardToValidate.nextToken().equals(cardOnFile.nextToken())) {
+                        StringTokensTheSame++;
+                    }
+                }
+                if (StringTokensTheSame == 4) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isProperExpirationDateFormat(String expirationDate) {
+
+        if (expirationDate.length() == 5) {
+
+            for (int i = 0; i < expirationDate.length(); i++) {
+
+                if (i == 2) {
+
+                    if (!(expirationDate.charAt(i) == '/')) {
+                        return false;
+                    }
+                } else {
+                    if (!(Character.isDigit(expirationDate.charAt(i)))) {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            return false;
+        }
+        return true;
     }
 }

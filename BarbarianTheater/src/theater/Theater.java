@@ -10,15 +10,17 @@ import java.util.List;
 public class Theater {
 	//private ArrayList<Client> clients; //depends on the list discussion. should be changed to correction collection class
 	private static ClientsList clientList;
+	private static MemberList memberList;
 	private static Theater singletonTheater;
 	private String name;
 	private int seatCapacity;
-	private ArrayList<Member> members;
+
 	
 	private Theater(String name, int seatCapacity){
 		this.name = name;
 		this.seatCapacity = seatCapacity;
 		clientList = ClientsList.clientListInstance();
+		memberList = MemberList.memberListInstance();
 	}
 	
 	public static Theater instance(String name, int capacity){
@@ -61,17 +63,18 @@ public class Theater {
 	}
 
 	public Member addMember(String name, String address, String phone, String creditCardNumber, Calendar expiration){
-		Member customer = new Member(name, address, phone, creditCardNumber, expiration);
-		return customer;
+		Member member = new Member(name, address, phone, creditCardNumber, expiration);
+		memberList.add(member);
+		return member;
 	}
 	
 	public boolean removeMember(String id){
 			//remove member
 		return true;
 	}
-	
-	public Iterator<Member> listMembers(){
-		return members.iterator();
+
+	public List<Member> listMembers() {
+		return memberList.getList();
 	}
 
 	public List<Client> listClients() {
@@ -89,17 +92,15 @@ public class Theater {
 	 * @param creditCardNumber
 	 * @return
 	 */
-	public boolean removeCreditCard(String creditCardNumber){
-		Iterator<Member> itr = members.iterator();
-		boolean removed = false;
+	public boolean removeCreditCard(String creditCardNumber) {
 
-		while(itr.hasNext()){
-			Member member = itr.next();
-			//Will look into this member and try to remove CC
-			if(member.removeCreditCard(creditCardNumber))
-					removed = true;
+		for (Member member : memberList.getList()) {
+
+			if (member.removeCreditCard(creditCardNumber)) {
+				return true;
+			}
 		}
-	return removed;
+		return false;
 	}
 
 //	public Iterator<Show> listShows(){

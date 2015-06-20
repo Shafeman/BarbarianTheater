@@ -1,4 +1,6 @@
 package theater;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -23,5 +25,15 @@ public class CreditCard {
 	public void setExpirationDate(Calendar expirationDate) {
 		this.expirationDate = expirationDate;
 	}
-	
+
+	@Override
+	public String toString() {
+
+		//Calendar calendar = Calendar.getInstance();
+		//calendar.add(expirationDate.DATE, 1);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/yy");
+
+		return "Credit card number: " + creditCardNumber + "\nExpiration date: " +
+				simpleDateFormat.format(expirationDate.getTime());
+	}
 }

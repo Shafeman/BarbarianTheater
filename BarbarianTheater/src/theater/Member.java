@@ -2,13 +2,15 @@ package theater;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 public class Member extends TheaterPatron{
-	private ArrayList<CreditCard> creditCards;
+	private List<CreditCard> creditCards;
 	
 	public Member(String name, String address, String phoneNumber, String creditCardNumber, Calendar expiration){
 		super(name, address, phoneNumber);
+		creditCards = new ArrayList<CreditCard>();
 		creditCards.add(new CreditCard(creditCardNumber, expiration));
 	}
 	
@@ -16,6 +18,10 @@ public class Member extends TheaterPatron{
 		CreditCard card = new CreditCard(creditCardNumber, expiration);
 		creditCards.add(card);
 		return card;
+	}
+
+	public List<CreditCard> getCreditCards() {
+		return creditCards;
 	}
 		
 	/**
@@ -40,5 +46,21 @@ public class Member extends TheaterPatron{
 			}			
 		}
 		return removed;		
+	}
+
+	private String printCreditCardList() {
+
+		String creditCardList = "";
+		for (CreditCard creditCard : creditCards) {
+
+			creditCardList += creditCard.toString() + "\n";
+		}
+
+		return creditCardList;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + "\n" + printCreditCardList();
 	}
 }

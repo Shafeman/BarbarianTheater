@@ -1,19 +1,21 @@
 package theater;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 
-public class MemberList<E> extends ArrayList<E>{
-	private ArrayList<Member> members;
-	private static MemberList<Member> singletonMemberList;
-	
-	private MemberList(){
-		
+public class MemberList {
+	private static MemberList singletonMemberList;
+	private List<Member> members;
+
+	private MemberList() {
+
+		members = new ArrayList<Member>();
 	}
-	
-	public static MemberList<Member> memberListInstance(){
+
+	public static MemberList memberListInstance() {
 		if(singletonMemberList == null){
-			singletonMemberList = new MemberList<Member>();
+			singletonMemberList = new MemberList();
 		}
 		return singletonMemberList;
 	}
@@ -31,9 +33,9 @@ public class MemberList<E> extends ArrayList<E>{
 		}
 		return false;
 	}
-	
-	public Iterator<Member> getList(){
-		return members.iterator();
+
+	public List<Member> getList() {
+		return members;
 	}
 	
 	public Member search(String id){

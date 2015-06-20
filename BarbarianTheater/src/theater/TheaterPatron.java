@@ -55,7 +55,7 @@ public abstract class TheaterPatron {
 
 	@Override
 	public String toString() {
-		return ("Client ID: " + id + "\n" + name + "\n" + address + "\n" +
+		return ("Client ID: " + id + "\nName: " + name + "\nAddress: " + address + "\nPhone number: " +
 				phoneNumber);
 	}
 }
