@@ -1,21 +1,23 @@
 package theater;
+
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 
 
 public class Theater {
+	//private ArrayList<Client> clients; //depends on the list discussion. should be changed to correction collection class
+	private static ClientsList<Client> clientList;
+	private static Theater singletonTheater;
 	private String name;
 	private int seatCapacity;
-	private ArrayList<Client> clients; //depends on the list discussion. should be changed to correction collection class
 	private ArrayList<Member> members;
-	private static Theater singletonTheater;
 	
 	private Theater(String name, int seatCapacity){
 		this.name = name;
 		this.seatCapacity = seatCapacity;
+		clientList = ClientsList.clientListInstance();
 	}
 	
 	public static Theater instance(String name, int capacity){
@@ -24,25 +26,29 @@ public class Theater {
 		}
 		return singletonTheater;
 	}
+
+	public static Theater load() {
+		return null;
+	}
 	
 	public Client addClient(String name, String address, String phoneNumber){
 		Client client = new Client(name, address, phoneNumber);
+		clientList.add(client);
 		return client;
 	}
-	
+
+//	public Iterator<Client> listClients(){
+//		return clients.iterator();
+//	}
 	
 	public boolean removeClient(String id){
-		if(id=="true"){
+		if (id == "true") {
 			//find client by id and remove from clients
 			return true;
 		}
 		else{
 			return false;
 		}
-	}
-	
-	public Iterator<Client> listClients(){
-		return clients.iterator();
 	}
 	
 	public Member addMember(String name, String address, String phone, String creditCardNumber, Calendar expiration){
@@ -73,30 +79,26 @@ public class Theater {
 	public boolean removeCreditCard(String creditCardNumber){
 		Iterator<Member> itr = members.iterator();
 		boolean removed = false;
-		
+
 		while(itr.hasNext()){
 			Member member = itr.next();
 			//Will look into this member and try to remove CC
 			if(member.removeCreditCard(creditCardNumber))
 					removed = true;
-		}		
+		}
 	return removed;
 	}
+
+//	public Iterator<Show> listShows(){
+//		return clients.iterator().next().getShows(); //obviously REALLY BAD code. Thankfully just temporary.
+//	}
 	
 	public Show addShow(String clientID, String name, Calendar startDate, Calendar endDate){
 		return new Show(name, startDate, endDate);
 	}
 	
-	public Iterator<Show> listShows(){
-		return clients.iterator().next().getShows(); //obviously REALLY BAD code. Thankfully just temporary.
-	}
-	
 	public boolean save(){
 		return true;
-	}
-	
-	public static Theater load(){
-		return null;		
 	}
 	
 	private void readObject(ObjectInputStream input){

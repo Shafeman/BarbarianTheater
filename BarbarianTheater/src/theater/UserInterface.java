@@ -11,9 +11,6 @@ import java.util.StringTokenizer;
 
 public class UserInterface {
 
-    private static UserInterface userInterface;
-    private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
     private static final int EXIT = 0;
     private static final int ADD_CLIENT = 1;
     private static final int REMOVE_CLIENT = 2;
@@ -28,12 +25,15 @@ public class UserInterface {
     private static final int SAVE_DATA = 11;
     private static final int RETRIEVE_DATA = 12;
     private static final int HELP = 13;
+    private static UserInterface userInterface;
+    private static Theater theater;
+    private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     private UserInterface() {
         if (yesOrNo("Look for saved data and  use it?")) {
             retrieveData();
         } else {
-            //library = Library.instance();
+            theater = Theater.instance("Guthrie", 1441);
         }
     }
 
@@ -45,6 +45,11 @@ public class UserInterface {
         }
     }
 
+    public static void main(String[] args) {
+
+        UserInterface.instance().process();
+    }
+
     private boolean yesOrNo(String prompt) {
         String more = getToken(prompt + " (Y|y)[es] or anything else for no");
         if (more.charAt(0) != 'y' && more.charAt(0) != 'Y') {
@@ -52,8 +57,6 @@ public class UserInterface {
         }
         return true;
     }
-
-
 
     public void help() {
         System.out.println("Enter a number between 0 and 12 as explained below:");
@@ -126,7 +129,7 @@ public class UserInterface {
             try {
                 System.out.println(prompt);
                 String line = reader.readLine();
-                StringTokenizer tokenizer = new StringTokenizer(line,"\n\r\f");
+                StringTokenizer tokenizer = new StringTokenizer(line, "\n\r\f");
                 if (tokenizer.hasMoreTokens()) {
                     return tokenizer.nextToken();
                 }
@@ -138,7 +141,12 @@ public class UserInterface {
 
     private void addClient() {
 
-
+        String name = getToken("Enter client name");
+        String address = getToken("Enter client address");
+        String phone = getToken("Enter client phone number");
+        Client client;
+        client = theater.addClient(name, address, phone);
+        //TODO check client add for success
     }
 
     private void removeClient() {
@@ -194,10 +202,5 @@ public class UserInterface {
     private void retrieveData() {
 
 
-    }
-
-    public static void main(String[] args) {
-
-        UserInterface.instance().process();
     }
 }

@@ -4,8 +4,8 @@ import java.util.Iterator;
 
 
 public class ClientsList<E> extends ArrayList<E>{
-	private ArrayList<Client> clients;
 	private static ClientsList<Client> singletonClientList;
+	private ArrayList<Client> clients;
 	
 	private ClientsList(){
 		
@@ -17,10 +17,10 @@ public class ClientsList<E> extends ArrayList<E>{
 		}
 		return singletonClientList;
 	}
-	
-	public boolean add(Client client){
-		return clients.add(client);
-	}
+
+//	public boolean add(Client client){
+//		return clients.add(client);
+//	}
 	
 	public boolean remove(String id){
 		for(int i = 0; i < clients.size(); i++){
