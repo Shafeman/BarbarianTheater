@@ -196,7 +196,12 @@ public class UserInterface {
 
     private void removeMember() {
 
-
+        String clientID = getToken("Enter client ID to be removed");
+        if (theater.removeMember(clientID)) {
+            System.out.println("Member was removed");
+        } else {
+            System.out.println("Member ID entered didn't match any in the system");
+        }
     }
 
     private void addCreditCard() {

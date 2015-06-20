@@ -69,8 +69,25 @@ public class Theater {
 	}
 	
 	public boolean removeMember(String id){
-			//remove member
-		return true;
+
+		if (isMemberIDRemoved(id)) {
+
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean isMemberIDRemoved(String id) {
+
+		Member memberToRemove = memberList.search(id);
+
+		if (memberToRemove != null) {
+
+			memberList.remove(id);
+			return true;
+		}
+		return false;
 	}
 
 	public List<Member> listMembers() {
