@@ -196,7 +196,7 @@ public class UserInterface {
 
     private void removeMember() {
 
-        String clientID = getToken("Enter client ID to be removed");
+        String clientID = getToken("Enter member ID to be removed");
         if (theater.removeMember(clientID)) {
             System.out.println("Member was removed");
         } else {
@@ -206,7 +206,17 @@ public class UserInterface {
 
     private void addCreditCard() {
 
+        String memberID = getToken("Enter member ID to add the credit card too");
+        Member member = theater.searchMember(memberID);
 
+        if (member != null) {
+            String creditCardNumber = getCreditCardNumber("Enter credit card number with dashes\n" +
+                    "Example 1111-2222-3333-4444");
+            Calendar expirationDate = getCreditCardExpirationDate("Enter credit card expiration date in this format mm/yy");
+            member.addCreditCard(creditCardNumber, expirationDate);
+        } else {
+            System.out.println("Member entered isn't in the system");
+        }
     }
 
     private void removeCreditCard() {
