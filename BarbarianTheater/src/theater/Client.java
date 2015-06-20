@@ -61,7 +61,7 @@ public class Client extends TheaterPatron{
 			}				
 		}
 		return false;
-	}
+	} //still needs fixed.
 
 	@Override
 	public String toString() {

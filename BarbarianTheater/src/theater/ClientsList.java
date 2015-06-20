@@ -1,6 +1,5 @@
 package theater;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -32,7 +31,7 @@ public class ClientsList {
 				return true;
 			}				
 		}
-		return false;
+		return false; //if we make the Client equals() method compare IDs, we can use Client here instead of String
 	}
 
 	public List<Client> getList() {
@@ -45,6 +44,6 @@ public class ClientsList {
 				return clients.get(i);
 			}				
 		}
-		return null;
+		return null;  //search for Client rather than ID?
 	}
 }

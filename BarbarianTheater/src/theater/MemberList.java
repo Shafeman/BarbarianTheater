@@ -1,6 +1,5 @@
 package theater;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -31,7 +30,7 @@ public class MemberList {
 				return true;
 			}				
 		}
-		return false;
+		return false; //same as CientList. If we make Member equals() method use ID, we can just compare Members instead of Strings.
 	}
 
 	public List<Member> getList() {
@@ -44,6 +43,6 @@ public class MemberList {
 				return members.get(i);
 			}				
 		}
-		return null;
+		return null;  //search for Member rather than ID?
 	}
 }

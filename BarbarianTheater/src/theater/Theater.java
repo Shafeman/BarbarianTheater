@@ -1,14 +1,11 @@
 package theater;
 
 import java.io.ObjectInputStream;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 
 public class Theater {
-	//private ArrayList<Client> clients; //depends on the list discussion. should be changed to correction collection class
 	private static ClientsList clientList;
 	private static MemberList memberList;
 	private static Theater singletonTheater;
@@ -38,10 +35,10 @@ public class Theater {
 		Client client = new Client(name, address, phoneNumber);
 		clientList.add(client);
 		return client;
-	}
+	} 
 	
 	public boolean removeClient(String id){
-		if (isClientIDRemoved(id)) {
+		if (isClientIDRemoved(id)) { //why use a separate method here?
 
 			return true;
 		}
@@ -56,7 +53,7 @@ public class Theater {
 
 		if (clientToRemove != null && clientToRemove.getShows().size() == 0) {
 
-			clientList.remove(id);
+			clientList.remove(id); //should this pass the client instead?
 			return true;
 		}
 		return false;
@@ -70,7 +67,7 @@ public class Theater {
 	
 	public boolean removeMember(String id){
 
-		if (isMemberIDRemoved(id)) {
+		if (isMemberIDRemoved(id)) { //why use a separate method here
 
 			return true;
 		} else {
@@ -87,7 +84,7 @@ public class Theater {
 			memberList.remove(id);
 			return true;
 		}
-		return false;
+		return false;  //should this pass the member instead?
 	}
 
 	public List<Member> listMembers() {
@@ -103,7 +100,6 @@ public class Theater {
 	}
 	
 	public CreditCard addCreditCard(String id, String creditCardNumber, Calendar expiration){
-		//search for member by id
 		CreditCard card = new CreditCard(creditCardNumber, expiration);
 		return card;
 	}

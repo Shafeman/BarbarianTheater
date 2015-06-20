@@ -162,7 +162,7 @@ public class UserInterface {
 
         String clientID = getToken("Enter client ID to be removed");
         if (theater.removeClient(clientID)) {
-            System.out.println("Client was removed");
+            System.out.println("Client " + clientID +  " was removed");
         } else {
             System.out.println("Client ID entered didn't match any in the system");
         }
@@ -184,8 +184,9 @@ public class UserInterface {
         String phoneNumber = getToken("Enter client phone number");
         String creditCardNumber = getCreditCardNumber("Enter credit card number with dashes\n" +
                 "Example 1111-2222-3333-4444");
-        Calendar date = getCreditCardExpirationDate("Enter credit card expiration date in this format mm/yy");
-
+        Calendar date = getCreditCardExpirationDate("Enter credit card expiration date in this format mm/yy");  
+//should these methods sit at Theater or be static methods in Credit Card called "checkCCNformat" and "checkCCDformat"?
+        
         Member member = theater.addMember(name, address, phoneNumber, creditCardNumber, date);
 
         if (member != null) {
@@ -196,9 +197,9 @@ public class UserInterface {
 
     private void removeMember() {
 
-        String clientID = getToken("Enter member ID to be removed");
-        if (theater.removeMember(clientID)) {
-            System.out.println("Member was removed");
+        String memberID = getToken("Enter member ID to be removed");
+        if (theater.removeMember(memberID)) {
+            System.out.println("Member " + memberID + " was removed");
         } else {
             System.out.println("Member ID entered didn't match any in the system");
         }
@@ -215,9 +216,10 @@ public class UserInterface {
             Calendar expirationDate = getCreditCardExpirationDate("Enter credit card expiration date in this format mm/yy");
             member.addCreditCard(creditCardNumber, expirationDate);
         } else {
-            System.out.println("Member entered isn't in the system");
+            System.out.println("Member entered isn't in the system"); //add member id to message
         }
     }
+    //see above for question re: location of CC check methods. Also need to refuse past dates on CC expiry.
 
     private void removeCreditCard() {
 
@@ -298,7 +300,7 @@ public class UserInterface {
         }
     }
 
-    private boolean isCreditCardInCorrectFormat(String creditCardNumber) {
+    private boolean isCreditCardInCorrectFormat(String creditCardNumber) { //clean this up with reg-ex
 
         if (creditCardNumber.length() == 19) {
 
@@ -325,8 +327,6 @@ public class UserInterface {
 
         String delims = "-";
         StringTokenizer creditCardToValidate = new StringTokenizer(creditCardNumber, delims);
-        //TODO try catch block upcast
-        //Theater theater = (Theater) lastState;
 
         for (Member member : theater.listMembers()) {
             for (CreditCard customerCreditCard : member.getCreditCards()) {

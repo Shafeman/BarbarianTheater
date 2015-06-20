@@ -55,7 +55,9 @@ public abstract class TheaterPatron {
 
 	@Override
 	public String toString() {
-		return ("Client ID: " + id + "\nName: " + name + "\nAddress: " + address + "\nPhone number: " +
+		return ("ID: " + id + "\nName: " + name + "\nAddress: " + address + "\nPhone number: " +
 				phoneNumber);
 	}
+	
+	//add equals method that lets us call objects instead of ids?
 }
