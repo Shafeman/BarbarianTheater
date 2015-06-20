@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -145,6 +146,25 @@ public class UserInterface {
         } while (true);
     }
 
+    /**
+     * Prompts for a date and gets a date object
+     * @param prompt the prompt
+     * @return the data as a Calendar object
+     */
+    public Calendar getDate(String prompt) {
+      do {
+        try {
+          Calendar date = new GregorianCalendar();
+          String item = getToken(prompt);
+          DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
+          date.setTime(dateFormat.parse(item));
+          return date;
+        } catch (Exception fe) {
+          System.out.println("Please input a date as mm/dd/yy");
+        }
+      } while (true);
+    }   
+    
     private void addClient() {
 
         String name = getToken("Enter client name");
