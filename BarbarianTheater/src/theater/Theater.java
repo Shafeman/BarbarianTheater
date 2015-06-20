@@ -131,9 +131,11 @@ public class Theater {
 		return CreditCard.isCreditCardInCorrectFormat(creditCardNumber);
 	}
 	
+	/*
 	public boolean checkCreditCardExpirationFormat(String expiration){
 		return CreditCard.isProperExpirationDateFormat(expiration);
 	}
+	*/
 	
 	public boolean isCreditCardDuplicate(String creditCardNumber) {
 

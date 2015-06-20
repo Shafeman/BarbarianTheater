@@ -45,6 +45,7 @@ public class CreditCard {
 		}
     }
 
+	/*
 	public static boolean isProperExpirationDateFormat(String expirationDate) {
 
         if (expirationDate.length() == 5) {
@@ -67,6 +68,7 @@ public class CreditCard {
         }
         return true;
     }
+    */
 
 	@Override
 	public String toString() {

@@ -308,14 +308,14 @@ public class UserInterface {
                 System.out.println(prompt);
                 String line = reader.readLine();
 
-                if (theater.checkCreditCardExpirationFormat(line)) {
+ //               if (theater.checkCreditCardExpirationFormat(line)) {
 
                     DateFormat dateFormat = new SimpleDateFormat("MM/yy");
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(dateFormat.parse(line));
 
                     return calendar;
-                }
+ //               }
 
             } catch (IOException ioe) {
                 System.exit(0);

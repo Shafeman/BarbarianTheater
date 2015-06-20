@@ -32,7 +32,7 @@ public class ClientsList {
 				return true;
 			}				
 		}
-		return false; //if we make the Client equals() method compare IDs, we can use Client here instead of String
+		return false;
 	}
 
 	public List<Client> getList() {
@@ -47,7 +47,7 @@ public class ClientsList {
 				return clients.get(i);
 			}				
 		}
-		return null;  //search for Client rather than ID?
+		return null;
 	}
 
 
