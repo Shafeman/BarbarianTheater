@@ -157,10 +157,11 @@ public class UserInterface {
           Calendar date = new GregorianCalendar();
           String item = getToken(prompt);
           DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
+          dateFormat.setLenient(false);
           date.setTime(dateFormat.parse(item));
           return date;
         } catch (Exception fe) {
-          System.out.println("Please input a date as mm/dd/yy");
+          System.out.println("Incorrect Format");
         }
       } while (true);
     }   
@@ -313,20 +314,15 @@ public class UserInterface {
             try {
                 System.out.println(prompt);
                 String line = reader.readLine();
-
- //               if (theater.checkCreditCardExpirationFormat(line)) {
-
-                    DateFormat dateFormat = new SimpleDateFormat("MM/yy");
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(dateFormat.parse(line));
-
-                    return calendar;
- //               }
-
+                DateFormat dateFormat = new SimpleDateFormat("MM/yy");
+                dateFormat.setLenient(false);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dateFormat.parse(line));
+                return calendar;
             } catch (IOException ioe) {
                 System.exit(0);
             } catch (ParseException pe) {
-                System.out.println("Please enter the expiration date in this format mm/yy");
+                System.out.println("Incorrect Format");
             }
         } while (true);
     }
