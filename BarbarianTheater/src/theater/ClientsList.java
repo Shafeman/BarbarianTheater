@@ -1,5 +1,6 @@
 package theater;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -38,6 +39,8 @@ public class ClientsList {
 		return clients;
 	}
 	
+
+	
 	public Client search(String id){
 		for(int i = 0; i < clients.size(); i++){
 			if(clients.get(i).getID().equals(id)){
@@ -46,4 +49,6 @@ public class ClientsList {
 		}
 		return null;  //search for Client rather than ID?
 	}
+
+
 }

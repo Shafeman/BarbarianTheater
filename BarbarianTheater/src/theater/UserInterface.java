@@ -249,15 +249,46 @@ public class UserInterface {
             System.out.println(member.toString());
         }
     }
-
+    
     private void addShow() {
-
-
-    }
-
+    	Show show;
+    	do{
+    	String id = getToken("Please enter a client ID");
+    	Client client = theater.searchClient(id);
+    	
+    	if(client != null) {
+    		String showTitle = getToken("What is the title of the show?");
+    		Calendar startDate = getDate("Enter a start date: mm/dd/yy");
+    		Calendar endDate = getDate("Enter a end date: mm/dd/yy");
+    	
+    		//Still need to check dates
+    		
+    		show = theater.addShow(id, showTitle, startDate, endDate);
+    		 if(show != null){
+    	    		System.out.println(show);
+    		 }
+    	
+    	}else {
+    		System.out.println("No such client exists!");
+    	}
+    	
+    		if (!yesOrNo("Add another show?")) {
+            break;
+    		}
+    	}while(true);
+    	
+    }	
+    	
+    
     private void listShows() {
-
-
+    	//List<Show> shows = theater.listShows();
+    	System.out.println("************************************");
+    	System.out.println("A list of current shows:");
+    	
+    	for(Show show : theater.listShows()) {
+    		System.out.print(show.toString() + "\n");
+    	}
+    	System.out.println("************************************");
     }
 
     private void saveData() {

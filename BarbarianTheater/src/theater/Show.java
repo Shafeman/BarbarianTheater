@@ -1,6 +1,7 @@
 package theater;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 
 
 public class Show {
@@ -30,5 +31,25 @@ public class Show {
 		return endDate;
 	}
 	
+	@Override
+	public String toString() {
+		
+		int startDay = startDate.get(Calendar.DAY_OF_MONTH);
+		int startMonth = startDate.get(Calendar.MONTH);
+		int startYear = startDate.get(Calendar.YEAR);
+		int endDay = endDate.get(Calendar.DAY_OF_MONTH);
+		int endMonth = endDate.get(Calendar.MONTH);
+		int endYear = endDate.get(Calendar.YEAR);
+		
+		String str = "";
+		
+		str += name;
+		str += ":  " + startMonth + "/" + startDay + "/" + startYear + " -";
+		str += " " + endMonth + "/" + endDay + "/" + endYear;
+				
+		
+		return str;
+		
+	}
 
 }

@@ -62,6 +62,15 @@ public class Client extends TheaterPatron{
 		}
 		return false;
 	} //still needs fixed.
+	
+	public boolean hasShow() {
+		boolean hasShows = false;
+		
+		if(shows != null)
+			hasShows = true;
+		
+		return hasShows;
+	}
 
 	@Override
 	public String toString() {

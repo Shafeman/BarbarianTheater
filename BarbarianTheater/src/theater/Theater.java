@@ -1,7 +1,9 @@
 package theater;
 
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -95,6 +97,10 @@ public class Theater {
 	public Member searchMember(String ID) {
 		return memberList.search(ID);
 	}
+	
+	public Client searchClient(String ID) {
+		return clientList.search(ID);
+	}
 
 	public List<Client> listClients() {
 		return clientList.getList();
@@ -155,11 +161,28 @@ public class Theater {
         return false;
     }
 
-//	public Iterator<Show> listShows(){
-//		return clients.iterator().next().getShows(); //obviously REALLY BAD code. Thankfully just temporary.
-//	}
+	public List<Show> listShows(){
+		
+		List<Show> shows = new ArrayList<Show>();
+
+		
+		for(Client client : clientList.getList()) {
+			if(client.hasShow())
+			shows.addAll(client.getShows());
+			
+		}
+		
+		
+		
+		return shows;
+	}
 	
 	public Show addShow(String clientID, String name, Calendar startDate, Calendar endDate){
+		
+		Client client = searchClient(clientID);
+		
+		client.addShow(new Show(name, startDate, endDate));
+		
 		return new Show(name, startDate, endDate);
 	}
 	
