@@ -94,6 +94,10 @@ public class Theater {
 		return memberList.getList();
 	}
 
+	public Member searchMember(String ID) {
+		return memberList.search(ID);
+	}
+
 	public List<Client> listClients() {
 		return clientList.getList();
 	}
