@@ -250,6 +250,10 @@ public class UserInterface {
         }
     }
     
+    /**
+     * Method to add a new show to a current client with no
+     * conflicting dates.     * 
+     */
     private void addShow() {
     	Show show;
     	do{
@@ -261,29 +265,31 @@ public class UserInterface {
     		Calendar startDate = getDate("Enter a start date: mm/dd/yy");
     		Calendar endDate = getDate("Enter a end date: mm/dd/yy");
     	
-    		//Still need to check dates
-    		
-    		show = theater.addShow(id, showTitle, startDate, endDate);
-    		 if(show != null){
+    		//Show will return null if date are used 
+    		show = theater.addShow(id, showTitle, startDate, endDate);    		
+    		if(show != null){
     	    		System.out.println(show);
-    		 }
+    		}else{
+    			 System.out.println("These date/s are already booked!");
+    		}
     	
     	}else {
     		System.out.println("No such client exists!");
-    	}
-    	
+    	}    	
     		if (!yesOrNo("Add another show?")) {
             break;
     		}
-    	}while(true);
-    	
+    	}while(true);    	
     }	
     	
-    
+    /**
+     * Method to list a currently running shows from
+     * each client.
+     */
     private void listShows() {
-    	//List<Show> shows = theater.listShows();
+    	
     	System.out.println("************************************");
-    	System.out.println("A list of current shows:");
+    	System.out.println("A list of current shows:\n");    	
     	
     	for(Show show : theater.listShows()) {
     		System.out.print(show.toString() + "\n");

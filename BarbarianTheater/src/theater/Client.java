@@ -48,20 +48,21 @@ public class Client extends TheaterPatron{
 		 */
 	}
 
-/**
- * hasDate loops through the ArrayList of shows and returns
- * true if a date falls between a shows start and end dates.
- * @param date - the date being searched for
- * @return
- */
-	public boolean hasDate(Calendar date){
-		for(int i = 0; i < shows.size(); i++){
-			if(shows.get(i).getStartDate().before(date) && shows.get(i).getStartDate().after(date) ){
-				return true;
-			}				
-		}
-		return false;
-	} //still needs fixed.
+	/**
+	 * hasDate loops through the ArrayList of shows and returns
+	 * true if a date falls between a shows start and end dates.
+	 * @param date - the date being searched for
+	 * @return
+	 */
+		public boolean hasDate(Calendar startDate, Calendar endDate){
+			boolean hasDate = false;
+			
+			for(int i = 0; i < shows.size(); i++){
+				if(startDate.after(shows.get(i).getStartDate()) && endDate.before(shows.get(i).getEndDate()));
+				hasDate = true;
+			}	
+			return hasDate;
+		} 
 	
 	public boolean hasShow() {
 		boolean hasShows = false;

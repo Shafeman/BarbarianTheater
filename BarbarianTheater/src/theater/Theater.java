@@ -179,13 +179,31 @@ public class Theater {
 		return shows;
 	}
 	
+	/**
+	 * A method to add a show to a valid client, also checks to see if 
+	 * the Dates passed are valid.
+	 * @param clientID
+	 * @param name
+	 * @param startDate
+	 * @param endDate
+	 * @return Show object: if the dates are not valid the Show object will be null
+	 */
 	public Show addShow(String clientID, String name, Calendar startDate, Calendar endDate){
+		
+		Show show = null;		
 		
 		Client client = searchClient(clientID);
 		
-		client.addShow(new Show(name, startDate, endDate));
+		for(Client checkClient : clientList.getList())
+			if(checkClient.hasDate(startDate, endDate)) {
+				return show;
+			}else{
+				
+				show = new Show(name, startDate, endDate);
+				client.addShow(show);
+			}
 		
-		return new Show(name, startDate, endDate);
+		return show;
 	}
 	
 	public boolean save(){
