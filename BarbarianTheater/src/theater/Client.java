@@ -54,15 +54,20 @@ public class Client extends TheaterPatron{
 	 * @param date - the date being searched for
 	 * @return
 	 */
-		public boolean hasDate(Calendar startDate, Calendar endDate){
-			boolean hasDate = false;
+	public boolean hasDate(Calendar startDate, Calendar endDate){
+		boolean hasDate = false;
+		
+		for(int i = 0; i < shows.size(); i++){
 			
-			for(int i = 0; i < shows.size(); i++){
-				if(startDate.after(shows.get(i).getStartDate()) || endDate.before(shows.get(i).getEndDate()));
+			
+			if((startDate.after(shows.get(i).getStartDate()) && startDate.before(shows.get(i).getEndDate()))
+				      || (endDate.after(shows.get(i).getStartDate()) && endDate.before(shows.get(i).getEndDate()))
+				      || (startDate.before(shows.get(i).getStartDate()) && endDate.after(shows.get(i).getEndDate()))
+				      || (startDate.equals(shows.get(i).getStartDate()) || (endDate.equals(shows.get(i).getEndDate()))))
 				hasDate = true;
-			}	
-			return hasDate;
-		} 
+		}	
+		return hasDate;
+	} 
 	
 	public boolean hasShow() {
 		boolean hasShows = false;
