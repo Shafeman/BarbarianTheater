@@ -58,12 +58,13 @@ public class Client extends TheaterPatron{
 		boolean hasDate = false;
 		
 		for(int i = 0; i < shows.size(); i++){
+			Calendar testStartDate = shows.get(i).getStartDate();
+			Calendar testEndDate = shows.get(i).getEndDate();
 			
-			
-			if((startDate.after(shows.get(i).getStartDate()) && startDate.before(shows.get(i).getEndDate()))
-				      || (endDate.after(shows.get(i).getStartDate()) && endDate.before(shows.get(i).getEndDate()))
-				      || (startDate.before(shows.get(i).getStartDate()) && endDate.after(shows.get(i).getEndDate()))
-				      || (startDate.equals(shows.get(i).getStartDate()) || (endDate.equals(shows.get(i).getEndDate()))))
+			if((startDate.after(testStartDate) && startDate.before(testEndDate))
+				      || (endDate.after(testStartDate) && endDate.before(testEndDate))
+				      || (startDate.before(testStartDate) && endDate.after(testEndDate))
+				      || (startDate.equals(testStartDate) || (endDate.equals(testEndDate))))
 				hasDate = true;
 		}	
 		return hasDate;

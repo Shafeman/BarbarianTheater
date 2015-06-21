@@ -288,9 +288,9 @@ public class UserInterface {
     	}else {
     		System.out.println("No such client exists!");
     	}    	
-    		if (!yesOrNo("Add another show?")) {
-            break;
-    		}
+    	if (!yesOrNo("Add another show?")) {
+           break;
+    	}
     	}while(true);    	
     }	
     	
