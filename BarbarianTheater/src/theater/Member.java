@@ -6,6 +6,9 @@ import java.util.List;
 
 
 public class Member extends TheaterPatron{
+	private static int CC_NOT_HERE = 0;
+	private static int TOO_FEW_CARDS = 1;
+	private static int SUCCESS = 2;
 	private List<CreditCard> creditCards;
 	
 	public Member(String name, String address, String phoneNumber, String creditCardNumber, Calendar expiration){
@@ -31,21 +34,19 @@ public class Member extends TheaterPatron{
 	 * @return true : if found and removed 
 	 * 	false: if not found or Member only has one creditCard	
 	 */
-	public boolean removeCreditCard(String creditCardNumber){
-		
-		boolean removed = false;
-		
-		//Member has more than one card
-		if(creditCards.size() > 1){ 
-			for(int i = 0; i < creditCards.size(); i++){
-				if(creditCards.get(i).getCreditCardNumber().equals(creditCardNumber)){
+	public int removeCreditCard(String creditCardNumber){
+		for(int i = 0; i < creditCards.size(); i++){
+			if(creditCards.get(i).getCreditCardNumber().equals(creditCardNumber)){
+				if(creditCards.size() > 1){ 
 					creditCards.remove(i);
-					removed = true;
-					return removed;
-				}				
+					return SUCCESS;
+				}
+				else{
+					return TOO_FEW_CARDS;
+				}
 			}			
 		}
-		return removed;		
+		return CC_NOT_HERE;		
 	}
 
 	private String printCreditCardList() {

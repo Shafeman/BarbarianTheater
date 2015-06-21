@@ -11,6 +11,9 @@ public class Theater {
 	private static ClientsList clientList;
 	private static MemberList memberList;
 	private static Theater singletonTheater;
+	private static int CC_NOT_FOUND = 0;
+	private static int TOO_FEW_CARDS = 1;
+	private static int SUCCESS = 2;
 	private String name;
 	private int seatCapacity;
 
@@ -93,15 +96,18 @@ public class Theater {
 	 * @param creditCardNumber
 	 * @return
 	 */
-	public boolean removeCreditCard(String creditCardNumber) {
-
+	public int removeCreditCard(String creditCardNumber) {
+		int failReason = CC_NOT_FOUND;
 		for (Member member : memberList.getList()) {
-
-			if (member.removeCreditCard(creditCardNumber)) {
-				return true;
+			int result = member.removeCreditCard(creditCardNumber);
+			if (result == SUCCESS) {
+				return result;
+			}
+			else if (result == TOO_FEW_CARDS){ //if any user has the card, but only one
+				failReason = TOO_FEW_CARDS;
 			}
 		}
-		return false;
+		return failReason;
 	}
 	
 	public boolean checkCreditCardInCorrectFormat(String creditCardNumber){

@@ -239,7 +239,18 @@ public class UserInterface {
     }
 
     private void removeCreditCard() {
-
+    	
+    	String creditCardNumber = getToken("Enter a credit card number.");
+    	int attempt = theater.removeCreditCard(creditCardNumber);
+    	if (attempt == 2) {
+    		System.out.println("Credit card " + creditCardNumber + " was removed.");
+    	}
+    	else if(attempt == 1){
+    		System.out.println("Cannot delete a card from a member with only one credit card");
+    	}
+    	else{
+    		System.out.println("Credit card " + creditCardNumber + " isn't in the system");
+    	}
 
     }
 
