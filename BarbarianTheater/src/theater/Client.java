@@ -58,7 +58,7 @@ public class Client extends TheaterPatron{
 			boolean hasDate = false;
 			
 			for(int i = 0; i < shows.size(); i++){
-				if(startDate.after(shows.get(i).getStartDate()) && endDate.before(shows.get(i).getEndDate()));
+				if(startDate.after(shows.get(i).getStartDate()) || endDate.before(shows.get(i).getEndDate()));
 				hasDate = true;
 			}	
 			return hasDate;

@@ -3,6 +3,7 @@ package theater;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -40,11 +41,22 @@ public class Theater {
 	} 
 	
 	public boolean removeClient(String id){
+		if (isClientIDRemoved(id)) { //why use a separate method here?
+
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	private boolean isClientIDRemoved(String id) {
+
 		Client clientToRemove = clientList.search(id);
 
 		if (clientToRemove != null && clientToRemove.getShows().size() == 0) {
 
-			clientList.remove(id);
+			clientList.remove(id); //should this pass the client instead?
 			return true;
 		}
 		return false;
@@ -57,6 +69,17 @@ public class Theater {
 	}
 	
 	public boolean removeMember(String id){
+
+		if (isMemberIDRemoved(id)) { //why use a separate method here
+
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean isMemberIDRemoved(String id) {
+
 		Member memberToRemove = memberList.search(id);
 
 		if (memberToRemove != null) {
@@ -64,7 +87,7 @@ public class Theater {
 			memberList.remove(id);
 			return true;
 		}
-		return false;
+		return false;  //should this pass the member instead?
 	}
 
 	public List<Member> listMembers() {
@@ -107,6 +130,12 @@ public class Theater {
 	public boolean checkCreditCardInCorrectFormat(String creditCardNumber){
 		return CreditCard.isCreditCardInCorrectFormat(creditCardNumber);
 	}
+	
+	/*
+	public boolean checkCreditCardExpirationFormat(String expiration){
+		return CreditCard.isProperExpirationDateFormat(expiration);
+	}
+	*/
 	
 	public boolean isCreditCardDuplicate(String creditCardNumber) {
 
