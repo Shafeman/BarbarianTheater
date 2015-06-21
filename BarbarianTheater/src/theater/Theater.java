@@ -110,23 +110,11 @@ public class Theater {
 	
 	public boolean isCreditCardDuplicate(String creditCardNumber) {
 
-        String delims = "-";
-        StringTokenizer creditCardToValidate = new StringTokenizer(creditCardNumber, delims);
-
         for (Member member : this.listMembers()) {
             for (CreditCard customerCreditCard : member.getCreditCards()) {
 
                 String cardNumberOnFile = customerCreditCard.getCreditCardNumber();
-                StringTokenizer cardOnFile = new StringTokenizer(cardNumberOnFile, delims);
-                int StringTokensTheSame = 0;
-
-                while (creditCardToValidate.hasMoreElements()) {
-
-                    if (creditCardToValidate.nextToken().equals(cardOnFile.nextToken())) {
-                        StringTokensTheSame++;
-                    }
-                }
-                if (StringTokensTheSame == 4) {
+                if(creditCardNumber.equals(cardNumberOnFile)){
                     return true;
                 }
             }

@@ -340,12 +340,16 @@ public class UserInterface {
 
             try {
                 String creditCardNumber = reader.readLine();
-
+                String nonDigitsPattern = "[^0-9]+";
+        		creditCardNumber = creditCardNumber.replaceAll(nonDigitsPattern, "");
                 if (theater.checkCreditCardInCorrectFormat(creditCardNumber)) {
 
                     if (!theater.isCreditCardDuplicate(creditCardNumber)) {
 
                         return creditCardNumber;
+                    }
+                    else{
+                    	System.out.println("That credit card is already in the system.");
                     }
                 }
             } catch (IOException ioe) {
