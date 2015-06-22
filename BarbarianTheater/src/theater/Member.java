@@ -1,11 +1,13 @@
 package theater;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 
-public class Member extends TheaterPatron{
+public class Member extends TheaterPatron implements Serializable {
 	private List<CreditCard> creditCards;
 	
 	public Member(String name, String address, String phoneNumber, String creditCardNumber, Calendar expiration){

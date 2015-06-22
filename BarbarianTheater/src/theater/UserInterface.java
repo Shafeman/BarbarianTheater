@@ -7,8 +7,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Iterator;
-import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -37,9 +35,71 @@ public class UserInterface {
 
     private UserInterface() {
         if (yesOrNo("Look for saved data and  use it?")) {
-            retrieveData();
+            retrieve();
         } else {
-            theater = Theater.instance("Guthrie", 1441);
+
+            boolean isDataRelatedCommand;
+            int commandValue;
+            do {
+                help();
+                isDataRelatedCommand = true;
+                commandValue = getCommand();
+
+                if (commandValue == HELP) {
+                    isDataRelatedCommand = false;
+                } else if (commandValue == EXIT) {
+                    System.exit(0);
+                } else if (commandValue == RETRIEVE_DATA) {
+                    retrieve();
+                }
+
+            } while (!isDataRelatedCommand);
+
+            theater = Theater.instance();
+            theater.setName("Guthrie");
+            theater.setSeatCapacity(1441);
+
+            switch (commandValue) {
+                case ADD_CLIENT:
+                    addClient();
+                    break;
+                case REMOVE_CLIENT:
+                    removeClient();
+                    break;
+                case LIST_CLIENTS:
+                    listClients();
+                    break;
+                case ADD_MEMBER:
+                    addMemeber();
+                    break;
+                case REMOVE_MEMBER:
+                    removeMember();
+                    break;
+                case ADD_CREDIT_CARD:
+                    addCreditCard();
+                    break;
+                case REMOVE_CREDIT_CARD:
+                    removeCreditCard();
+                    break;
+                case LIST_MEMBER:
+                    listMember();
+                    break;
+                case ADD_SHOW:
+                    addShow();
+                    break;
+                case LIST_SHOWS:
+                    listShows();
+                    break;
+                case SAVE_DATA:
+                    saveData();
+                    break;
+                case RETRIEVE_DATA:
+                    retrieve();
+                    break;
+                case HELP:
+                    help();
+                    break;
+            }
         }
     }
 
@@ -109,7 +169,8 @@ public class UserInterface {
                     break;
                 case SAVE_DATA: saveData();
                     break;
-                case RETRIEVE_DATA: retrieveData();
+                case RETRIEVE_DATA:
+                    retrieve();
                     break;
                 case HELP: help();
                     break;
@@ -246,12 +307,27 @@ public class UserInterface {
 
     private void saveData() {
 
-
+        if (theater.save()) {
+            System.out.println("The theater data has been saved");
+        } else {
+            System.out.println("Saving failed");
+        }
     }
 
-    private void retrieveData() {
+    private void retrieve() {
 
-
+        try {
+            Theater tempLibrary = Theater.retrieve();
+            if (tempLibrary != null) {
+                System.out.println(" The library has been successfully retrieved from the file LibraryData \n");
+                theater = tempLibrary;
+            } else {
+                System.out.println("File doesnt exist creating new library");
+                theater = Theater.instance();
+            }
+        } catch (Exception cnfe) {
+            cnfe.printStackTrace();
+        }
     }
 
     public Calendar getCreditCardExpirationDate(String prompt) {

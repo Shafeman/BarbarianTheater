@@ -1,8 +1,10 @@
 package theater;
 
 
-public abstract class TheaterPatron {
-	private static int counter = 0;
+import java.io.Serializable;
+
+public abstract class TheaterPatron implements Serializable {
+	private static int counter = 0; //statics testing
 	private String id;
 	private String name;
 	private String address;
@@ -15,7 +17,7 @@ public abstract class TheaterPatron {
 		this.id = generateID();
 		counter++;
 	}
-	
+
 	public String getID(){
 		return id;
 	}

@@ -1,10 +1,14 @@
 package theater;
+
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MemberList {
+public class MemberList implements Serializable {
 	private static MemberList singletonMemberList;
+	//private static MemberList singletonMemberList = MemberList.memberListInstance();
 	private List<Member> members;
 
 	private MemberList() {
@@ -44,5 +48,39 @@ public class MemberList {
 			}				
 		}
 		return null;  //search for Member rather than ID?
+	}
+
+	private void writeObject(java.io.ObjectOutputStream output) {
+		try {
+			output.defaultWriteObject();
+			output.writeObject(singletonMemberList);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+	}
+
+	private Object readResolve() {
+		return singletonMemberList;
+	}
+
+	private void readObject(java.io.ObjectInputStream input) {
+		try {
+			if (singletonMemberList != null) {
+
+				input.readObject();
+				return;
+			} else {
+				input.defaultReadObject();
+				if (singletonMemberList == null) {
+					singletonMemberList = (MemberList) input.readObject();
+				} else {
+					input.readObject();
+				}
+			}
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (ClassNotFoundException cnfe) {
+			cnfe.printStackTrace();
+		}
 	}
 }

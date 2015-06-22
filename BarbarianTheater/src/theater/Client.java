@@ -1,5 +1,6 @@
 package theater;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -12,7 +13,7 @@ import java.util.*;
  * adding plays, searching the Client's plays for a certain date, and
  * returning an iterator for traversing the array of Shows...
  */
-public class Client extends TheaterPatron{
+public class Client extends TheaterPatron implements Serializable {
 	private double balance;
 	private List<Show> shows;
 

@@ -1,10 +1,11 @@
 package theater;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
-public class CreditCard {
+public class CreditCard implements Serializable {
 	private String creditCardNumber;
 	private Calendar expirationDate;
 	

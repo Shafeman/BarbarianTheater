@@ -1,9 +1,11 @@
 package theater;
+
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
 
-public class Show {
+public class Show implements Serializable {
 	private String name;
 	private Calendar startDate;
 	private Calendar endDate;
