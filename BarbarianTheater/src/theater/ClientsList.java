@@ -3,6 +3,7 @@ package theater;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -35,12 +36,14 @@ public class ClientsList implements Serializable {
 				return true;
 			}				
 		}
-		return false; //if we make the Client equals() method compare IDs, we can use Client here instead of String
+		return false;
 	}
 
 	public List<Client> getList() {
 		return clients;
 	}
+	
+
 	
 	public Client search(String id){
 		for(int i = 0; i < clients.size(); i++){
@@ -48,7 +51,7 @@ public class ClientsList implements Serializable {
 				return clients.get(i);
 			}				
 		}
-		return null;  //search for Client rather than ID?
+		return null;
 	}
 
     private void writeObject(java.io.ObjectOutputStream output) {

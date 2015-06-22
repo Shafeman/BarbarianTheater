@@ -49,20 +49,36 @@ public class Client extends TheaterPatron implements Serializable {
 		 */
 	}
 
-/**
- * hasDate loops through the ArrayList of shows and returns
- * true if a date falls between a shows start and end dates.
- * @param date - the date being searched for
- * @return
- */
-	public boolean hasDate(Calendar date){
+	/**
+	 * hasDate loops through the ArrayList of shows and returns
+	 * true if a date falls between a shows start and end dates.
+	 * @param date - the date being searched for
+	 * @return
+	 */
+	public boolean hasDate(Calendar startDate, Calendar endDate){
+		boolean hasDate = false;
+		
 		for(int i = 0; i < shows.size(); i++){
-			if(shows.get(i).getStartDate().before(date) && shows.get(i).getStartDate().after(date) ){
-				return true;
-			}				
-		}
-		return false;
-	} //still needs fixed.
+			Calendar testStartDate = shows.get(i).getStartDate();
+			Calendar testEndDate = shows.get(i).getEndDate();
+			
+			if((startDate.after(testStartDate) && startDate.before(testEndDate))
+				      || (endDate.after(testStartDate) && endDate.before(testEndDate))
+				      || (startDate.before(testStartDate) && endDate.after(testEndDate))
+				      || (startDate.equals(testStartDate) || (endDate.equals(testEndDate))))
+				hasDate = true;
+		}	
+		return hasDate;
+	} 
+	
+	public boolean hasShow() {
+		boolean hasShows = false;
+		
+		if(shows != null)
+			hasShows = true;
+		
+		return hasShows;
+	}
 
 	@Override
 	public String toString() {

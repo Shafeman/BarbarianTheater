@@ -34,7 +34,7 @@ public class MemberList implements Serializable {
 				return true;
 			}				
 		}
-		return false; //same as CientList. If we make Member equals() method use ID, we can just compare Members instead of Strings.
+		return false;
 	}
 
 	public List<Member> getList() {
@@ -47,7 +47,7 @@ public class MemberList implements Serializable {
 				return members.get(i);
 			}				
 		}
-		return null;  //search for Member rather than ID?
+		return null;
 	}
 
 	private void writeObject(java.io.ObjectOutputStream output) {

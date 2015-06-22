@@ -1,12 +1,18 @@
 package theater;
 
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.io.*;
 import java.util.Calendar;
 import java.util.List;
+import java.util.StringTokenizer;
 
 
 public class Theater implements Serializable {
 	private static Theater singletonTheater;
+	private static int CC_NOT_FOUND = 0;
+	private static int TOO_FEW_CARDS = 1;
+	private static int SUCCESS = 2;
 	private ClientsList clientList;
 	private MemberList memberList;
 	//private static Theater singletonTheater = Theater.instance();
@@ -57,22 +63,11 @@ public class Theater implements Serializable {
 	}
 
 	public boolean removeClient(String id){
-		if (isClientIDRemoved(id)) { //why use a separate method here?
-
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-
-	private boolean isClientIDRemoved(String id) {
-
 		Client clientToRemove = clientList.search(id);
 
 		if (clientToRemove != null && clientToRemove.getShows().size() == 0) {
 
-			clientList.remove(id); //should this pass the client instead?
+			clientList.remove(id);
 			return true;
 		}
 		return false;
@@ -85,17 +80,6 @@ public class Theater implements Serializable {
 	}
 
 	public boolean removeMember(String id){
-
-		if (isMemberIDRemoved(id)) { //why use a separate method here
-
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	private boolean isMemberIDRemoved(String id) {
-
 		Member memberToRemove = memberList.search(id);
 
 		if (memberToRemove != null) {
@@ -103,7 +87,7 @@ public class Theater implements Serializable {
 			memberList.remove(id);
 			return true;
 		}
-		return false;  //should this pass the member instead?
+		return false;
 	}
 
 	public List<Member> listMembers() {
@@ -112,6 +96,10 @@ public class Theater implements Serializable {
 
 	public Member searchMember(String ID) {
 		return memberList.search(ID);
+	}
+	
+	public Client searchClient(String ID) {
+		return clientList.search(ID);
 	}
 
 	public List<Client> listClients() {
@@ -133,19 +121,79 @@ public class Theater implements Serializable {
 	 * @param creditCardNumber
 	 * @return
 	 */
-	public boolean removeCreditCard(String creditCardNumber) {
-
+	public int removeCreditCard(String creditCardNumber) {
+		int failReason = CC_NOT_FOUND;
 		for (Member member : memberList.getList()) {
-
-			if (member.removeCreditCard(creditCardNumber)) {
-				return true;
+			int result = member.removeCreditCard(creditCardNumber);
+			if (result == SUCCESS) {
+				return result;
+			}
+			else if (result == TOO_FEW_CARDS){ //if any user has the card, but only one
+				failReason = TOO_FEW_CARDS;
 			}
 		}
-		return false;
+		return failReason;
 	}
 	
+	public boolean checkCreditCardInCorrectFormat(String creditCardNumber){
+		return CreditCard.isCreditCardInCorrectFormat(creditCardNumber);
+	}
+	
+	public boolean isCreditCardDuplicate(String creditCardNumber) {
+
+        for (Member member : this.listMembers()) {
+            for (CreditCard customerCreditCard : member.getCreditCards()) {
+
+                String cardNumberOnFile = customerCreditCard.getCreditCardNumber();
+                if(creditCardNumber.equals(cardNumberOnFile)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+	public List<Show> listShows(){
+		
+		List<Show> shows = new ArrayList<Show>();
+
+		
+		for(Client client : clientList.getList()) {
+			if(client.hasShow())
+			shows.addAll(client.getShows());
+			
+		}
+		
+		
+		
+		return shows;
+	}
+	
+	/**
+	 * A method to add a show to a valid client, also checks to see if 
+	 * the Dates passed are valid.
+	 * @param clientID
+	 * @param name
+	 * @param startDate
+	 * @param endDate
+	 * @return Show object: if the dates are not valid the Show object will be null
+	 */
 	public Show addShow(String clientID, String name, Calendar startDate, Calendar endDate){
-		return new Show(name, startDate, endDate);
+		
+		Show show = null;		
+		
+		Client client = searchClient(clientID);
+		
+		for(Client checkClient : clientList.getList())
+			if(checkClient.hasDate(startDate, endDate)) {
+				return show;
+			}else{
+				
+				show = new Show(name, startDate, endDate);
+				client.addShow(show);
+			}
+		
+		return show;
 	}
 
 	public boolean save() {

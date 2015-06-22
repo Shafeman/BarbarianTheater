@@ -7,6 +7,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -206,6 +209,26 @@ public class UserInterface {
         } while (true);
     }
 
+    /**
+     * Prompts for a date and gets a date object
+     * @param prompt the prompt
+     * @return the data as a Calendar object
+     */
+    public Calendar getDate(String prompt) {
+      do {
+        try {
+          Calendar date = new GregorianCalendar();
+          String item = getToken(prompt);
+          DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
+          dateFormat.setLenient(false);
+          date.setTime(dateFormat.parse(item));
+          return date;
+        } catch (Exception fe) {
+          System.out.println("Incorrect Format");
+        }
+      } while (true);
+    }   
+    
     private void addClient() {
 
         String name = getToken("Enter client name");
@@ -215,7 +238,7 @@ public class UserInterface {
         client = theater.addClient(name, address, phoneNumber);
 
         if (client != null) {
-            System.out.println("Client " + name + " was added");
+            System.out.println("Client " + name + " " + client.getID() + " was added");
         }
     }
 
@@ -244,15 +267,12 @@ public class UserInterface {
         String address = getToken("Enter client address");
         String phoneNumber = getToken("Enter client phone number");
         String creditCardNumber = getCreditCardNumber("Enter credit card number with dashes\n" +
-                "Example 1111-2222-3333-4444");
-        Calendar date = getCreditCardExpirationDate("Enter credit card expiration date in this format mm/yy");  
-//should these methods sit at Theater or be static methods in Credit Card called "checkCCNformat" and "checkCCDformat"?
-        
+                "Example 1111-2222-3333-4444"); 
+        Calendar date = getCreditCardExpirationDate("Enter credit card expiration date in this format mm/yy");        
         Member member = theater.addMember(name, address, phoneNumber, creditCardNumber, date);
 
         if (member != null) {
-
-            System.out.println("Member " + name + " was added");
+            System.out.println("Member " + name + " " + member.getID() + " was added");
         }
     }
 
@@ -277,13 +297,23 @@ public class UserInterface {
             Calendar expirationDate = getCreditCardExpirationDate("Enter credit card expiration date in this format mm/yy");
             member.addCreditCard(creditCardNumber, expirationDate);
         } else {
-            System.out.println("Member entered isn't in the system"); //add member id to message
+            System.out.println("Member " + memberID + " isn't in the system");
         }
     }
-    //see above for question re: location of CC check methods. Also need to refuse past dates on CC expiry.
 
     private void removeCreditCard() {
-
+    	
+    	String creditCardNumber = getToken("Enter a credit card number.");
+    	int attempt = theater.removeCreditCard(creditCardNumber);
+    	if (attempt == 2) {
+    		System.out.println("Credit card " + creditCardNumber + " was removed.");
+    	}
+    	else if(attempt == 1){
+    		System.out.println("Cannot delete a card from a member with only one credit card");
+    	}
+    	else{
+    		System.out.println("Credit card " + creditCardNumber + " isn't in the system");
+    	}
 
     }
 
@@ -294,15 +324,52 @@ public class UserInterface {
             System.out.println(member.toString());
         }
     }
-
+    
+    /**
+     * Method to add a new show to a current client with no
+     * conflicting dates.     * 
+     */
     private void addShow() {
-
-
-    }
-
+    	Show show;
+    	do{
+    	String id = getToken("Please enter a client ID");
+    	Client client = theater.searchClient(id);
+    	
+    	if(client != null) {
+    		String showTitle = getToken("What is the title of the show?");
+    		Calendar startDate = getDate("Enter a start date: mm/dd/yy");
+    		Calendar endDate = getDate("Enter a end date: mm/dd/yy");
+    	
+    		//Show will return null if date are used 
+    		show = theater.addShow(id, showTitle, startDate, endDate);    		
+    		if(show != null){
+    	    		System.out.println(show);
+    		}else{
+    			 System.out.println("These date/s are already booked!");
+    		}
+    	
+    	}else {
+    		System.out.println("No such client exists!");
+    	}    	
+    	if (!yesOrNo("Add another show?")) {
+           break;
+    	}
+    	}while(true);    	
+    }	
+    	
+    /**
+     * Method to list a currently running shows from
+     * each client.
+     */
     private void listShows() {
-
-
+    	
+    	System.out.println("************************************");
+    	System.out.println("A list of current shows:\n");    	
+    	
+    	for(Show show : theater.listShows()) {
+    		System.out.print(show.toString() + "\n");
+    	}
+    	System.out.println("************************************");
     }
 
     private void saveData() {
@@ -330,26 +397,26 @@ public class UserInterface {
         }
     }
 
-    public Calendar getCreditCardExpirationDate(String prompt) {
+    private Calendar getCreditCardExpirationDate(String prompt) {
 
         do {
             try {
                 System.out.println(prompt);
                 String line = reader.readLine();
-
-                if (isProperExpirationDateFormat(line)) {
-
-                    DateFormat dateFormat = new SimpleDateFormat("MM/yy");
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(dateFormat.parse(line));
-
-                    return calendar;
+                DateFormat dateFormat = new SimpleDateFormat("MM/yy");
+                dateFormat.setLenient(false);
+                Calendar calendar = new GregorianCalendar();
+                calendar.setTime(dateFormat.parse(line));
+                if(calendar.after(Calendar.getInstance())){
+                	return calendar;
                 }
-
+                else{
+                	System.out.println("Expiration Date cannot be in the past.");
+                }                	
             } catch (IOException ioe) {
                 System.exit(0);
             } catch (ParseException pe) {
-                System.out.println("Please enter the expiration date in this format mm/yy");
+                System.out.println("Incorrect Format");
             }
         } while (true);
     }
@@ -362,89 +429,21 @@ public class UserInterface {
 
             try {
                 String creditCardNumber = reader.readLine();
+                String nonDigitsPattern = "[^0-9]+";
+        		creditCardNumber = creditCardNumber.replaceAll(nonDigitsPattern, "");
+                if (theater.checkCreditCardInCorrectFormat(creditCardNumber)) {
 
-                if (isCreditCardInCorrectFormat(creditCardNumber)) {
-
-                    if (!isCreditCardDuplicate(creditCardNumber)) {
+                    if (!theater.isCreditCardDuplicate(creditCardNumber)) {
 
                         return creditCardNumber;
+                    }
+                    else{
+                    	System.out.println("That credit card is already in the system.");
                     }
                 }
             } catch (IOException ioe) {
                 System.out.println("bad credit card input");
             }
         }
-    }
-
-    private boolean isCreditCardInCorrectFormat(String creditCardNumber) { //clean this up with reg-ex
-
-        if (creditCardNumber.length() == 19) {
-
-            for (int i = 0; i < creditCardNumber.length(); i++) {
-
-                if (i == 4 || i == 9 || i == 14) {
-
-                    if (!(creditCardNumber.charAt(i) == '-')) {
-                        return false;
-                    }
-                } else {
-                    if (!(Character.isDigit(creditCardNumber.charAt(i)))) {
-                        return false;
-                    }
-                }
-            }
-        } else {
-            return false;
-        }
-        return true;
-    }
-
-    private boolean isCreditCardDuplicate(String creditCardNumber) {
-
-        String delims = "-";
-        StringTokenizer creditCardToValidate = new StringTokenizer(creditCardNumber, delims);
-
-        for (Member member : theater.listMembers()) {
-            for (CreditCard customerCreditCard : member.getCreditCards()) {
-
-                String cardNumberOnFile = customerCreditCard.getCreditCardNumber();
-                StringTokenizer cardOnFile = new StringTokenizer(cardNumberOnFile, delims);
-                int StringTokensTheSame = 0;
-
-                while (creditCardToValidate.hasMoreElements()) {
-
-                    if (creditCardToValidate.nextToken().equals(cardOnFile.nextToken())) {
-                        StringTokensTheSame++;
-                    }
-                }
-                if (StringTokensTheSame == 4) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean isProperExpirationDateFormat(String expirationDate) {
-
-        if (expirationDate.length() == 5) {
-
-            for (int i = 0; i < expirationDate.length(); i++) {
-
-                if (i == 2) {
-
-                    if (!(expirationDate.charAt(i) == '/')) {
-                        return false;
-                    }
-                } else {
-                    if (!(Character.isDigit(expirationDate.charAt(i)))) {
-                        return false;
-                    }
-                }
-            }
-        } else {
-            return false;
-        }
-        return true;
     }
 }
