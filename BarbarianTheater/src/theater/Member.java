@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public class Member extends TheaterPatron implements Serializable {
-public class Member extends TheaterPatron{
+
 	private static int CC_NOT_HERE = 0;
 	private static int TOO_FEW_CARDS = 1;
 	private static int SUCCESS = 2;
