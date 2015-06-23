@@ -36,10 +36,10 @@ public class Show implements Serializable {
 	public String toString() {
 		
 		int startDay = startDate.get(Calendar.DAY_OF_MONTH);
-		int startMonth = startDate.get(Calendar.MONTH + 1);
+		int startMonth = startDate.get(Calendar.MONTH) + 1;
 		int startYear = startDate.get(Calendar.YEAR);
 		int endDay = endDate.get(Calendar.DAY_OF_MONTH);
-		int endMonth = endDate.get(Calendar.MONTH + 1);
+		int endMonth = endDate.get(Calendar.MONTH) + 1;
 		int endYear = endDate.get(Calendar.YEAR);
 		
 		String str = "";

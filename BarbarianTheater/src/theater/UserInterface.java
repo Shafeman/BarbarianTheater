@@ -339,7 +339,13 @@ public class UserInterface {
     		String showTitle = getToken("What is the title of the show?");
     		Calendar startDate = getDate("Enter a start date: mm/dd/yy");
     		Calendar endDate = getDate("Enter a end date: mm/dd/yy");
-    	
+    		
+    		while(startDate.after(endDate)){
+    			System.out.println("Please enter a start date that is before the end date");
+    			startDate = getDate("Enter a start date: mm/dd/yy");
+        		endDate = getDate("Enter a end date: mm/dd/yy");
+    		}
+    		
     		//Show will return null if date are used 
     		show = theater.addShow(id, showTitle, startDate, endDate);    		
     		if(show != null){
