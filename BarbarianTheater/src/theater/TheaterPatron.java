@@ -4,7 +4,9 @@ package theater;
 import java.io.Serializable;
 
 public abstract class TheaterPatron implements Serializable {
-	private static int counter = 0; //statics testing
+
+	private TheaterPatronIdServer singletonTheaterPatronIdServer;
+	//private static int counter = 0; //statics testing
 	private String id;
 	private String name;
 	private String address;
@@ -14,8 +16,9 @@ public abstract class TheaterPatron implements Serializable {
 		this.name = name;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
+		singletonTheaterPatronIdServer = TheaterPatronIdServer.theaterPatronIdServerInstance();
 		this.id = generateID();
-		counter++;
+		//counter++;
 	}
 
 	public String getID(){
@@ -51,7 +54,7 @@ public abstract class TheaterPatron implements Serializable {
 		if (nameLength > 6){
 			nameLength = 6;
 		}
-		id = this.name.substring(0, nameLength) + counter;
+		id = this.name.substring(0, nameLength) + singletonTheaterPatronIdServer.getNewIdCounter();
 		return id;
 	}
 
