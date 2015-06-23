@@ -31,23 +31,6 @@ public class Theater implements Serializable {
 		return singletonTheater;
 	}
 
-	public static Theater retrieve() {
-
-		try {
-			FileInputStream file = new FileInputStream("TheaterData");
-			ObjectInputStream input = new ObjectInputStream(file);
-			input.readObject();
-			//MemberIdServer.retrieve(input);
-			return singletonTheater;
-		} catch (IOException ioe) {
-			//ioe.printStackTrace();
-			return null;
-		} catch (ClassNotFoundException cnfe) {
-			//cnfe.printStackTrace();
-			return null;
-		}
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -219,6 +202,23 @@ public class Theater implements Serializable {
 		}
 	}
 
+	public static Theater retrieve() {
+
+		try {
+			FileInputStream file = new FileInputStream("TheaterData");
+			ObjectInputStream input = new ObjectInputStream(file);
+			input.readObject();
+			//MemberIdServer.retrieve(input);
+			return singletonTheater;
+		} catch (IOException ioe) {
+			//ioe.printStackTrace();
+			return null;
+		} catch (ClassNotFoundException cnfe) {
+			//cnfe.printStackTrace();
+			return null;
+		}
+	}
+	
 	private Object readResolve() {
 		return singletonTheater;
 	}

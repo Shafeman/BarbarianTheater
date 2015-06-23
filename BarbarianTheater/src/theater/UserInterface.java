@@ -388,19 +388,24 @@ public class UserInterface {
     }
 
     private void retrieve() {
+    	
+    	if(theater != null){
+    		System.out.println("The theater is already loaded.");
+    	} else { 
 
-        try {
-            Theater tempLibrary = Theater.retrieve();
-            if (tempLibrary != null) {
-                System.out.println(" The library has been successfully retrieved from the file LibraryData \n");
-                theater = tempLibrary;
-            } else {
-                System.out.println("File doesnt exist creating new library");
-                theater = Theater.instance();
-            }
-        } catch (Exception cnfe) {
-            cnfe.printStackTrace();
-        }
+    		try {
+    			Theater tempLibrary = Theater.retrieve();
+    			if (tempLibrary != null) {
+    				System.out.println(" The library has been successfully retrieved from the file LibraryData \n");
+    				theater = tempLibrary;
+    			} else {
+    				System.out.println("File doesnt exist creating new library");
+    				theater = Theater.instance();
+    			}
+    		} catch (Exception cnfe) {
+    			cnfe.printStackTrace();
+    		}
+    	}
     }
 
     private Calendar getCreditCardExpirationDate(String prompt) {
