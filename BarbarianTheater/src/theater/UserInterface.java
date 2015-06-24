@@ -1,3 +1,27 @@
+/**
+ * Barbarians: Douglas Brian Shaffer, Nathan Kangas, Johnathan Franco
+ *  @author Brahma Dathan and Sarnath Ramnath
+ * @Copyright (c) 2010
+ 
+ * Redistribution and use with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *   - the use is for academic purpose only
+ *   - Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *   - Neither the name of Brahma Dathan or Sarnath Ramnath
+ *     may be used to endorse or promote products derived
+ *     from this software without specific prior written permission.
+ *
+ * The authors do not make any claims regarding the correctness of the code in this module
+ * and are not responsible for any loss or damage resulting from its use.
+ * 
+ * This class implements the user interface for the Theater project.
+ * The commands are encoded as integers using a number of
+ * static final variables. A number of utility methods exist to
+ * make it easier to parse the input.
+ */
 package theater;
 
 import java.io.BufferedReader;
@@ -8,13 +32,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
 import java.util.StringTokenizer;
-
-/**
- * Created by Nathan on 6/19/2015.
- */
 
 public class UserInterface {
 
@@ -36,6 +54,9 @@ public class UserInterface {
     private static Theater theater;
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
+    /**
+     * Constructor. Loads a file
+     */
     private UserInterface() {
         if (yesOrNo("Look for saved data and  use it?")) {
             retrieve();
@@ -113,6 +134,11 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Supports the singleton pattern
+     * 
+     * @return the singleton object
+     */
     public static UserInterface instance() {
         if (userInterface == null) {
             return userInterface = new UserInterface();
@@ -144,6 +170,13 @@ public class UserInterface {
       } while (true);
     }
     
+    /**
+     * Queries for a yes or no and returns true for yes and false for no
+     * 
+     * @param prompt The string to be prepended to the yes/no prompt
+     * @return true for yes and false for no
+     * 
+     */
     private boolean yesOrNo(String prompt) {
         String more = getToken(prompt + " (Y|y)[es] or anything else for no");
         if (more.charAt(0) != 'y' && more.charAt(0) != 'Y') {
@@ -152,6 +185,10 @@ public class UserInterface {
         return true;
     }
 
+    /**
+     * Displays the help screen
+     * 
+     */
     public void help() {
     	System.out.println("\n" + theater.toString() + "\n");
         System.out.println("Enter a number between 0 and 12 as explained below:");
@@ -207,6 +244,12 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Prompts for a command from the keyboard
+     * 
+     * @return a valid command
+     * 
+     */
     public int getCommand() {
         do {
             try {
@@ -220,6 +263,13 @@ public class UserInterface {
         } while (true);
     }
 
+    /**
+     * Gets a token after prompting
+     * 
+     * @param prompt - whatever the user wants as prompt
+     * @return - the token from the keyboard
+     * 
+     */
     public String getToken(String prompt) {
         do {
             try {
@@ -255,6 +305,12 @@ public class UserInterface {
       } while (true);
     }   
     
+    /**
+     * Method to be called for adding a client.
+     * Prompts the user for the appropriate values and
+     * uses the appropriate Theater method for adding the client.
+     *  
+     */
     private void addClient() {
 
         String name = getToken("Enter client name");
@@ -282,7 +338,7 @@ public class UserInterface {
     	          System.out.println("Client " + clientID +  " was removed");
     	          break;
     	        case Theater.HAS_SHOWS:
-    	          System.out.println("Client could not be removed");
+    	          System.out.println("Client has future shows and could not be removed");
     	          break;
     	        default:
     	          System.out.println("An error has occurred");
@@ -293,16 +349,6 @@ public class UserInterface {
     	    } while (true);
     }
 
-    
-
-//        String clientID = getToken("Enter client ID to be removed");
-//        if (theater.removeClient(clientID)) {
-//            System.out.println("Client " + clientID +  " was removed");
-//        } else {
-//            System.out.println("Client ID entered didn't match any in the system");
-//        }
-//    }
-
     private void listClients() {
 
         for (Client client : theater.listClients()) {
@@ -312,6 +358,12 @@ public class UserInterface {
 
     }
 
+    /**
+     * Method to be called for adding a member.
+     * Prompts the user for the appropriate values and
+     * uses the appropriate Theater method for adding the member.
+     *  
+     */
     private void addMemeber() {
 
         String name = getToken("Enter client name");
@@ -429,6 +481,11 @@ public class UserInterface {
     	System.out.println("************************************");
     }
 
+    /**
+     * Method to be called for saving the Theater object.
+     * Uses the appropriate Theater method for saving.
+     *  
+     */
     private void saveData() {
 
         if (theater.save()) {
@@ -438,6 +495,11 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Method to be called for retrieving saved data.
+     * Uses the appropriate Theater method for retrieval.
+     *  
+     */
     private void retrieve() {
     	
     	if(theater != null){

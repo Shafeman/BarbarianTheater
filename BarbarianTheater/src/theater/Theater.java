@@ -1,27 +1,40 @@
+/**
+ * Barbarians: Douglas Brian Shaffer, Nathan Kangas, Johnathan Franco
+ * Theater acts as a facade between UserInterface and all other classes.
+ * UI calls methods from Theater after user enters commands.
+ * Theater is a singleton class and holds a singleton ClientsList and
+ * a singleton MemberList.
+ */
 package theater;
 
 import java.io.ObjectInputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.io.*;
 import java.util.Calendar;
 import java.util.List;
-import java.util.StringTokenizer;
 
 
+@SuppressWarnings("serial")
 public class Theater implements Serializable {
 	private static Theater singletonTheater;
 	public static final int NOT_FOUND = 0;
 	public static final int TOO_FEW_CARDS = 1;
 	public static final int SUCCESS = 2;
-	public static final int HAS_SHOWS = 3;
-	
+	public static final int HAS_SHOWS = 3;	
 	 
 	private ClientsList clientList;
 	private MemberList memberList;
-	//private static Theater singletonTheater = Theater.instance();
 	private String name;
 	private int seatCapacity;
 
+	/**
+	 * private Theater constructor
+	 * @param name
+	 * @param seatCapacity
+	 */
 	private Theater(String name, Integer seatCapacity) {
 		this.name = name;
 		this.seatCapacity = seatCapacity;
@@ -29,6 +42,13 @@ public class Theater implements Serializable {
 		memberList = MemberList.memberListInstance();
 	}
 
+	/**
+	 * instance creates a singleton Theater if one does not exist or
+	 * returns the current theater if it does exist.
+	 * @param name
+	 * @param capacity
+	 * @return
+	 */
 	public static Theater instance(String name, Integer capacity)
 	{
 		if(singletonTheater == null){
@@ -37,82 +57,158 @@ public class Theater implements Serializable {
 		return singletonTheater;
 	}
 
-
+	/**
+	 *setName sets this Theater's name 
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * setCapacity sets this Theater's seating capacity.
+	 * @param seatCapacity
+	 */
 	public void setSeatCapacity(int seatCapacity) {
 		this.seatCapacity = seatCapacity;
 	}
 	
+	/**
+	 * addClient adds a Client to ClientsList
+	 * @param name
+	 * @param address
+	 * @param phoneNumber
+	 * @return
+	 */
 	public Client addClient(String name, String address, String phoneNumber){
 		Client client = new Client(name, address, phoneNumber);
 		clientList.add(client);
 		return client;
 	}
 
+	/**
+	 * removeClient asks ClientList to search for a client ID passed as a parameter.
+	 * If the client does not have any shows scheduled for the current or future days,
+	 * the system removes the client if found. An integer is returned based on the results.
+	 * NOT_FOUND = 0;
+	 * SUCCESS = 2;
+	 * HAS_SHOWS = 3;
+	 * @param id
+	 * @return
+	 */
 	public int removeClient(String id){
 		Client clientToRemove = clientList.search(id);
+		Calendar today = Calendar.getInstance();
+		String todayDate = today.get(Calendar.MONTH) + "/" + today.get(Calendar.DAY_OF_MONTH) +
+				"/" + today.get(Calendar.YEAR);
+		DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
+		try {
+			today.setTime(dateFormat.parse(todayDate));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 
 		if (clientToRemove == null) {
 			return NOT_FOUND;
 		}
-		else if(clientToRemove != null && clientToRemove.getShows().size() == 0) {
-			return HAS_SHOWS;
+		else if(clientToRemove != null && clientToRemove.hasShow()) {
+			List<Show> clientsShows = clientToRemove.getShows();
+			for (Show show: clientsShows){
+				if(today.before(show.getEndDate())) {
+					return HAS_SHOWS;
+				}
+				else if(today.equals(show.getEndDate())){
+					return HAS_SHOWS;
+				}
+			}			
 		}
 		else {
 			clientList.remove(id);
-			return SUCCESS;
 		}
-		
+		return SUCCESS;		
 	}
 
+	/**
+	 * addMember adds a Member to MemberList
+	 * @param name
+	 * @param address
+	 * @param phone
+	 * @param creditCardNumber
+	 * @param expiration
+	 * @return
+	 */
 	public Member addMember(String name, String address, String phone, String creditCardNumber, Calendar expiration){
 		Member member = new Member(name, address, phone, creditCardNumber, expiration);
 		memberList.add(member);
 		return member;
 	}
 
+	/**
+	 * removeMember asks removeMember to search for a Member by ID and removes
+	 * the member if found, returning true if the member is removed and
+	 * false otherwise. 
+	 * @param id
+	 * @return
+	 */
 	public boolean removeMember(String id){
 		Member memberToRemove = memberList.search(id);
-
 		if (memberToRemove != null) {
-
 			memberList.remove(id);
 			return true;
 		}
 		return false;
 	}
 
+	/**
+	 * listMembers retrieves a list of Members from memberList
+	 * @return
+	 */
 	public List<Member> listMembers() {
 		return memberList.getList();
 	}
 
+	/**
+	 * searchMember returns a Member if the member is found
+	 * by ID in Member List
+	 * @param ID
+	 * @return
+	 */
 	public Member searchMember(String ID) {
 		return memberList.search(ID);
 	}
 	
+	/**
+	 * searchClient returns a Client if the client is found
+	 * by ID in Client List
+	 * @param ID
+	 * @return
+	 */
 	public Client searchClient(String ID) {
 		return clientList.search(ID);
 	}
 
+	/**
+	 * listClients retrieves a list of Clients from ClientsList
+	 * @return
+	 */
 	public List<Client> listClients() {
 		return clientList.getList();
 	}
 	
+	/**
+	 * addCreditCard adds a credit card to a Member for a given Member ID
+	 * @param id
+	 * @param creditCardNumber
+	 * @param expiration
+	 * @return
+	 */
 	public CreditCard addCreditCard(String id, String creditCardNumber, Calendar expiration){
 		CreditCard card = new CreditCard(creditCardNumber, expiration);
 		return card;
 	}
 
-//	public Iterator<Show> listShows(){
-//		return clients.iterator().next().getShows(); //obviously REALLY BAD code. Thankfully just temporary.
-//	}
-
 	/**
-	 * Searches all members for a creditCard then removes it
-	 *
+	 * Searches all members for a creditCard then removes it	 *
 	 * @param creditCardNumber
 	 * @return
 	 */
@@ -130,10 +226,24 @@ public class Theater implements Serializable {
 		return failReason;
 	}
 	
+	/**
+	 * checkCreditCardInCorrectFormat passes a credit card number to
+	 * CreditCard's static method to verify if a credit card number is
+	 * in a valid format. It returns true if the format is valid.
+	 * @param creditCardNumber
+	 * @return
+	 */
 	public boolean checkCreditCardInCorrectFormat(String creditCardNumber){
 		return CreditCard.isCreditCardInCorrectFormat(creditCardNumber);
 	}
 	
+	/**
+	 * isCreditCardDuplicate returns true if a credit card number has
+	 * already been assigned to a member. It returns false if the credit card
+	 * is not already assigned to a member.
+	 * @param creditCardNumber
+	 * @return
+	 */
 	public boolean isCreditCardDuplicate(String creditCardNumber) {
 
         for (Member member : this.listMembers()) {
@@ -148,6 +258,10 @@ public class Theater implements Serializable {
         return false;
     }
 
+	/**
+	 * listShows returns a list of Shows from all Clients.
+	 * @return
+	 */
 	public List<Show> listShows(){
 		
 		List<Show> shows = new ArrayList<Show>();
@@ -168,10 +282,8 @@ public class Theater implements Serializable {
 	 * @param endDate
 	 * @return Show object: if the dates are not valid the Show object will be null
 	 */
-	public Show addShow(String clientID, String name, Calendar startDate, Calendar endDate){
-		
-		Show show = null;		
-		
+	public Show addShow(String clientID, String name, Calendar startDate, Calendar endDate){		
+		Show show = null;				
 		Client client = searchClient(clientID);
 		
 		for(Client checkClient : clientList.getList())
@@ -182,17 +294,18 @@ public class Theater implements Serializable {
 				show = new Show(name, startDate, endDate);
 				client.addShow(show);
 			}
-		
 		return show;
 	}
 
+	/**
+	 * save is used to save the system to a file
+	 * @return
+	 */
 	public boolean save() {
-
 		try {
 			FileOutputStream file = new FileOutputStream("TheaterData");
 			ObjectOutputStream output = new ObjectOutputStream(file);
 			output.writeObject(singletonTheater);
-			//output.writeObject(MemberIdServer.instance());
 			return true;
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -200,6 +313,10 @@ public class Theater implements Serializable {
 		}
 	}
 
+	/**
+	 * writeObject writes the Theater to an output stream
+	 * @param output
+	 */
 	private void writeObject(java.io.ObjectOutputStream output) {
 		try {
 			output.defaultWriteObject();
@@ -209,29 +326,36 @@ public class Theater implements Serializable {
 		}
 	}
 
+	/**
+	 * retrieve loads the Theater and all other information from a file.
+	 * @return
+	 */
 	public static Theater retrieve() {
-
 		try {
 			FileInputStream file = new FileInputStream("TheaterData");
 			ObjectInputStream input = new ObjectInputStream(file);
 			input.readObject();
-			//MemberIdServer.retrieve(input);
 			return singletonTheater;
 		} catch (IOException ioe) {
-			//ioe.printStackTrace();
 			return null;
 		} catch (ClassNotFoundException cnfe) {
-			//cnfe.printStackTrace();
 			return null;
 		}
 	}
 	
+	/**
+	 * readResolve returns a singleton instance of Theater
+	 * @return
+	 */
 	private Object readResolve() {
 		return singletonTheater;
 	}
 	
+	/**
+	 * readObject reads the Theater Objects from an input stream
+	 * @param input
+	 */
 	private void readObject(ObjectInputStream input) {
-
 		try {
 			input.defaultReadObject();
 			if (singletonTheater == null) {
