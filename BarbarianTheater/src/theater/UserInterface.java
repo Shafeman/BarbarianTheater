@@ -80,15 +80,19 @@ public class UserInterface {
                 if (commandValue == HELP) {
                     isDataRelatedCommand = false;
                 } else if (commandValue == EXIT) {
+
+                    if (yesOrNo("Do you wish to save your file before exiting")) {
+                        saveData();
+                    }
                     System.exit(0);
                 } else if (commandValue == RETRIEVE_DATA) {
                     retrieve();
+                    commandValue = -1;
                 }
 
             } while (!isDataRelatedCommand);
 
             theater = Theater.instance(name, capacity);
-            commandValue = getCommand();
             
 //            theater = Theater.instance();
 //            theater.setName("Guthrie");
@@ -253,7 +257,10 @@ public class UserInterface {
                     break;
             }
         }
-        saveData();
+        if (yesOrNo("Do you wish to save your file before exiting")) {
+
+            saveData();
+        }
     }
 
     /**
