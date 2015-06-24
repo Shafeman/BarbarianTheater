@@ -40,6 +40,11 @@ public class UserInterface {
         if (yesOrNo("Look for saved data and  use it?")) {
             retrieve();
         } else {
+        	
+        	 //If starting a new Theater, ask for name and capacity
+        	String name = getToken("What will be the name of your theater?");
+        	Integer capacity = getNumber("What is the MAX capacity of your theater?");    	
+        	theater = Theater.instance(name,capacity);
 
             boolean isDataRelatedCommand;
             int commandValue;
@@ -58,9 +63,11 @@ public class UserInterface {
 
             } while (!isDataRelatedCommand);
 
-            theater = Theater.instance();
-            theater.setName("Guthrie");
-            theater.setSeatCapacity(1441);
+         
+            
+//            theater = Theater.instance();
+//            theater.setName("Guthrie");
+//            theater.setSeatCapacity(1441);
 
             switch (commandValue) {
                 case ADD_CLIENT:
@@ -119,6 +126,24 @@ public class UserInterface {
         UserInterface.instance().process();
     }
 
+    /**
+     * Converts the string to a number
+     * @param prompt the string for prompting
+     * @return the integer corresponding to the string
+     * 
+     */
+    public int getNumber(String prompt) {
+      do {
+        try {
+          String item = getToken(prompt);
+          Integer number = Integer.valueOf(item);
+          return number.intValue();
+        } catch (NumberFormatException nfe) {
+          System.out.println("Please input a number ");
+        }
+      } while (true);
+    }
+    
     private boolean yesOrNo(String prompt) {
         String more = getToken(prompt + " (Y|y)[es] or anything else for no");
         if (more.charAt(0) != 'y' && more.charAt(0) != 'Y') {
@@ -128,6 +153,7 @@ public class UserInterface {
     }
 
     public void help() {
+    	System.out.println("\n" + theater.toString() + "\n");
         System.out.println("Enter a number between 0 and 12 as explained below:");
         System.out.println(EXIT + " to Exit\n");
         System.out.println(ADD_CLIENT + " to add a client");
@@ -243,14 +269,39 @@ public class UserInterface {
     }
 
     private void removeClient() {
-
-        String clientID = getToken("Enter client ID to be removed");
-        if (theater.removeClient(clientID)) {
-            System.out.println("Client " + clientID +  " was removed");
-        } else {
-            System.out.println("Client ID entered didn't match any in the system");
-        }
+    	int result;
+    	
+    	do {
+    	      String clientID = getToken("Enter client's id to be removed");
+    	      result = theater.removeClient(clientID);
+    	      switch(result){
+    	        case Theater.NOT_FOUND:
+    	          System.out.println("Client does not exist");
+    	          break;
+    	        case Theater.SUCCESS:
+    	          System.out.println("Client " + clientID +  " was removed");
+    	          break;
+    	        case Theater.HAS_SHOWS:
+    	          System.out.println("Client could not be removed");
+    	          break;
+    	        default:
+    	          System.out.println("An error has occurred");
+    	      }
+    	      if (!yesOrNo("Remove another client?")) {
+    	        break;
+    	      }
+    	    } while (true);
     }
+
+    
+
+//        String clientID = getToken("Enter client ID to be removed");
+//        if (theater.removeClient(clientID)) {
+//            System.out.println("Client " + clientID +  " was removed");
+//        } else {
+//            System.out.println("Client ID entered didn't match any in the system");
+//        }
+//    }
 
     private void listClients() {
 
@@ -396,11 +447,13 @@ public class UserInterface {
     		try {
     			Theater tempLibrary = Theater.retrieve();
     			if (tempLibrary != null) {
-    				System.out.println(" The library has been successfully retrieved from the file LibraryData \n");
+    				System.out.println(" The Theater has been successfully retrieved from the file TheaterData \n");
     				theater = tempLibrary;
     			} else {
-    				System.out.println("File doesnt exist creating new library");
-    				theater = Theater.instance();
+    				System.out.println("File doesnt exist creating new Theater");
+    				String name = getToken("What will be the name of your theater?");
+    	        	Integer capacity = getNumber("What is the MAX capacity of your theater?");    	
+    	        	theater = Theater.instance(name,capacity);
     			}
     		} catch (Exception cnfe) {
     			cnfe.printStackTrace();

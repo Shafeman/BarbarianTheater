@@ -10,26 +10,33 @@ import java.util.StringTokenizer;
 
 public class Theater implements Serializable {
 	private static Theater singletonTheater;
-	private static int CC_NOT_FOUND = 0;
-	private static int TOO_FEW_CARDS = 1;
-	private static int SUCCESS = 2;
+	public static final int NOT_FOUND = 0;
+	public static final int TOO_FEW_CARDS = 1;
+	public static final int SUCCESS = 2;
+	public static final int HAS_SHOWS = 3;
+	
+	 
 	private ClientsList clientList;
 	private MemberList memberList;
 	//private static Theater singletonTheater = Theater.instance();
 	private String name;
 	private int seatCapacity;
 
-	private Theater() {
+	private Theater(String name, Integer seatCapacity) {
+		this.name = name;
+		this.seatCapacity = seatCapacity;
 		clientList = ClientsList.clientListInstance();
 		memberList = MemberList.memberListInstance();
 	}
 
-	public static Theater instance() {
+	public static Theater instance(String name, Integer capacity)
+	{
 		if(singletonTheater == null){
-			singletonTheater = new Theater();
+			singletonTheater = new Theater(name, capacity);
 		}
 		return singletonTheater;
 	}
+
 
 	public void setName(String name) {
 		this.name = name;
@@ -45,15 +52,20 @@ public class Theater implements Serializable {
 		return client;
 	}
 
-	public boolean removeClient(String id){
+	public int removeClient(String id){
 		Client clientToRemove = clientList.search(id);
 
-		if (clientToRemove != null && clientToRemove.getShows().size() == 0) {
-
-			clientList.remove(id);
-			return true;
+		if (clientToRemove == null) {
+			return NOT_FOUND;
 		}
-		return false;
+		else if(clientToRemove != null && clientToRemove.getShows().size() == 0) {
+			return HAS_SHOWS;
+		}
+		else {
+			clientList.remove(id);
+			return SUCCESS;
+		}
+		
 	}
 
 	public Member addMember(String name, String address, String phone, String creditCardNumber, Calendar expiration){
@@ -105,7 +117,7 @@ public class Theater implements Serializable {
 	 * @return
 	 */
 	public int removeCreditCard(String creditCardNumber) {
-		int failReason = CC_NOT_FOUND;
+		int failReason = NOT_FOUND;
 		for (Member member : memberList.getList()) {
 			int result = member.removeCreditCard(creditCardNumber);
 			if (result == SUCCESS) {
@@ -139,16 +151,11 @@ public class Theater implements Serializable {
 	public List<Show> listShows(){
 		
 		List<Show> shows = new ArrayList<Show>();
-
 		
 		for(Client client : clientList.getList()) {
 			if(client.hasShow())
-			shows.addAll(client.getShows());
-			
-		}
-		
-		
-		
+			shows.addAll(client.getShows());			
+		}		
 		return shows;
 	}
 	
@@ -240,6 +247,17 @@ public class Theater implements Serializable {
 		}
 	}
 
-
-
+	/**
+	 * This toString method will return a 
+	 * string of the Name of the theater
+	 * and the seating capacity
+	 */
+	@Override
+	public String toString() {
+		String str = "";
+		
+		str += "Theater Name:" + name + "\nSeating Capacity:" + seatCapacity;
+		
+		return str;
+	}
 }
