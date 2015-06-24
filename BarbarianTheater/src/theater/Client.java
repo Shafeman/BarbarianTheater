@@ -1,8 +1,3 @@
-package theater;
-
-import java.io.Serializable;
-import java.util.*;
-
 /**
  * Barbarians: Douglas Brian Shaffer, Nathan Kangas, Johnathan Franco
  * This class extends TheaterPatron and acts as the Theater members that
@@ -11,8 +6,15 @@ import java.util.*;
  * holds an ArrayList of Shows.
  * The class is responsible for managing the client's balance and
  * adding plays, searching the Client's plays for a certain date, and
- * returning an iterator for traversing the array of Shows...
+ * returning an iterator for traversing the array of Shows.
  */
+package theater;
+
+import java.io.Serializable;
+import java.util.*;
+
+
+@SuppressWarnings("serial")
 public class Client extends TheaterPatron implements Serializable {
 	private double balance;
 	private List<Show> shows;
@@ -29,24 +31,36 @@ public class Client extends TheaterPatron implements Serializable {
 		shows = new ArrayList<Show>();
 	}
 
+	/**
+	 * getBalance returns the Client's balance
+	 * @return
+	 */
 	public double getBalance() {
 		return balance;
 	}
 
+	/**
+	 * setBalance takes a double and assigns it to this Client's balance
+	 * @param balance
+	 */
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 
+	/**
+	 * getShows returns a List of shows
+	 * @return
+	 */
 	public List<Show> getShows() {
 		return shows;
 	}
 	
+	/**
+	 * addShow adds a Show to the list of Shows.
+	 * @param show
+	 */
 	public void addShow(Show show){
 		shows.add(show); 
-		/*
-		 * The addShow method in Theater should be the method that searches all of the clients and does the date
-		 * checking. When it's sure there are no date overlaps, it can call the client.addshow method.
-		 */
 	}
 
 	/**
@@ -70,7 +84,11 @@ public class Client extends TheaterPatron implements Serializable {
 		}	
 		return hasDate;
 	} 
-	
+
+	/**
+	 * hasShow returns true if the Client has any shows scheduled or false otherwise.
+	 * @return
+	 */
 	public boolean hasShow() {
 		boolean hasShows = false;
 		
@@ -80,6 +98,9 @@ public class Client extends TheaterPatron implements Serializable {
 		return hasShows;
 	}
 
+	/**
+	 * toString returns the Client's name, address, phone number, and balance.
+	 */
 	@Override
 	public String toString() {
 		return super.toString() + "\nBalance: " + balance;
