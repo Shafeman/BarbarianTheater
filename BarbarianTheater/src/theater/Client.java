@@ -61,10 +61,6 @@ public class Client extends TheaterPatron implements Serializable {
 	 */
 	public void addShow(Show show){
 		shows.add(show); 
-		/*
-		 * The addShow method in Theater should be the method that searches all of the clients and does the date
-		 * checking. When it's sure there are no date overlaps, it can call the client.addshow method.
-		 */
 	}
 
 	/**
