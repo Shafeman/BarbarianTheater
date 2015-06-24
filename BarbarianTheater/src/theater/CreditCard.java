@@ -19,23 +19,50 @@ public class CreditCard implements Serializable {
 	private String creditCardNumber;
 	private Calendar expirationDate;
 	
+	/**
+	 * Credit Card constructor.
+	 * @param creditCardNumber
+	 * @param expiration
+	 */
 	public CreditCard(String creditCardNumber, Calendar expiration){
 		this.creditCardNumber = creditCardNumber;
 		this.expirationDate = expiration;
 	}
 	
+	/**
+	 * getCreditCardNumber returns the credit card number.
+	 * @return
+	 */
 	public String getCreditCardNumber() {
 		return creditCardNumber;
 	}
 
+	/**
+	 * getExpirationDate returns the expiration date.
+	 * @return
+	 */
 	public Calendar getExpirationDate() {
 		return expirationDate;
 	}
 	
+	/**
+	 * setExpiration Date takes a Calendar date and assigns it to
+	 * this CreditCard's expiration date.
+	 * @param expirationDate
+	 */
 	public void setExpirationDate(Calendar expirationDate) {
 		this.expirationDate = expirationDate;
 	}
 	
+	/**
+	 * isCreditCardInCorrectFormat uses a regular expression to confirm
+	 * that a String credit card number is in a valid credit card format.
+	 * It matches Visa, MasterCard, American Express, Diner's Club, Discover,
+	 * and JCB cards. The regular expression was enhanced by the discussion at
+	 * http://stackoverflow.com/questions/9315647/regex-credit-card-number-tests
+	 * @param creditCardNumber
+	 * @return
+	 */
 	public static boolean isCreditCardInCorrectFormat(String creditCardNumber) {
 
 		String allCreditCardPatterns = "(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|"
@@ -54,7 +81,9 @@ public class CreditCard implements Serializable {
 		}
     }
 
-
+	/**
+	 * toString returns the credit card number and expiration date with identifiers.
+	 */
 	@Override
 	public String toString() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/yy");
