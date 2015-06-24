@@ -57,15 +57,18 @@ public class UserInterface {
     /**
      * Constructor. Prompts user if they want to load a file or creates a new theater
      */
+    String name;
+    Integer capacity;
+
     private UserInterface() {
         if (yesOrNo("Look for saved data and  use it?")) {
             retrieve();
         } else {
         	
         	 //If starting a new Theater, ask for name and capacity
-        	String name = getToken("What will be the name of your theater?");
-        	Integer capacity = getNumber("What is the MAX capacity of your theater?");    	
-        	theater = Theater.instance(name,capacity);
+            name = getToken("What will be the name of your theater?");
+            capacity = getNumber("What is the MAX capacity of your theater?");
+//        	theater = Theater.instance(name,capacity);
 
             boolean isDataRelatedCommand;
             int commandValue;
@@ -84,6 +87,7 @@ public class UserInterface {
 
             } while (!isDataRelatedCommand);
 
+            theater = Theater.instance(name, capacity);
             commandValue = getCommand();
             
 //            theater = Theater.instance();
@@ -194,7 +198,7 @@ public class UserInterface {
      * 
      */
     public void help() {
-    	System.out.println("\n" + theater.toString() + "\n");
+        //System.out.println("\n" + theater.toString() + "\n");
         System.out.println("Enter a number between 0 and 12 as explained below:");
         System.out.println(EXIT + " to Exit\n");
         System.out.println(ADD_CLIENT + " to add a client");
@@ -249,6 +253,7 @@ public class UserInterface {
                     break;
             }
         }
+        saveData();
     }
 
     /**
