@@ -55,7 +55,7 @@ public class UserInterface {
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     /**
-     * Constructor. Loads a file
+     * Constructor. Prompts user if they want to load a file or creates a new theater
      */
     private UserInterface() {
         if (yesOrNo("Look for saved data and  use it?")) {
@@ -147,6 +147,10 @@ public class UserInterface {
         }
     }
 
+    /**
+     * main
+     * @param args
+     */
     public static void main(String[] args) {
 
         UserInterface.instance().process();
@@ -208,6 +212,9 @@ public class UserInterface {
         System.out.println(HELP + " for help");
     }
 
+    /**
+     * calls appropriate methods for user input
+     */
     public void process() {
         int command;
         help();
@@ -324,6 +331,10 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Prompts user for a client id and Calls appropriate methods in Theater 
+     * class to remove a client. Prints messages to user based on returned results.
+     */
     private void removeClient() {
     	int result;
     	
@@ -349,10 +360,11 @@ public class UserInterface {
     	    } while (true);
     }
 
+    /**
+     * Lists clients in the theater.
+     */
     private void listClients() {
-
         for (Client client : theater.listClients()) {
-
             System.out.println(client.toString());
         }
 
@@ -365,7 +377,6 @@ public class UserInterface {
      *  
      */
     private void addMemeber() {
-
         String name = getToken("Enter client name");
         String address = getToken("Enter client address");
         String phoneNumber = getToken("Enter client phone number");
@@ -377,10 +388,14 @@ public class UserInterface {
         if (member != null) {
             System.out.println("Member " + name + " " + member.getID() + " was added");
         }
+        
     }
 
+    /**
+     * Propmts user for a member id and
+     * Calls appropriate method in Theater to remove a member
+     */
     private void removeMember() {
-
         String memberID = getToken("Enter member ID to be removed");
         if (theater.removeMember(memberID)) {
             System.out.println("Member " + memberID + " was removed");
@@ -389,14 +404,16 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Prompts user for a member id and, if member is found, asks user
+     * for a valid credit card number and expiration date. 
+     */
     private void addCreditCard() {
-
         String memberID = getToken("Enter member ID to add the credit card too");
         Member member = theater.searchMember(memberID);
 
         if (member != null) {
-            String creditCardNumber = getCreditCardNumber("Enter credit card number with dashes\n" +
-                    "Example 1111-2222-3333-4444");
+            String creditCardNumber = getCreditCardNumber("Enter a valid credit card number");
             Calendar expirationDate = getCreditCardExpirationDate("Enter credit card expiration date in this format mm/yy");
             member.addCreditCard(creditCardNumber, expirationDate);
         } else {
@@ -404,14 +421,16 @@ public class UserInterface {
         }
     }
 
-    private void removeCreditCard() {
-    	
+    /**
+     * Asks user for a credit card number and removes it from the system if one is found.
+     */
+    private void removeCreditCard() {    	
     	String creditCardNumber = getToken("Enter a credit card number.");
     	int attempt = theater.removeCreditCard(creditCardNumber);
-    	if (attempt == 2) {
+    	if (attempt == Theater.SUCCESS) {
     		System.out.println("Credit card " + creditCardNumber + " was removed.");
     	}
-    	else if(attempt == 1){
+    	else if(attempt == Theater.TOO_FEW_CARDS){
     		System.out.println("Cannot delete a card from a member with only one credit card");
     	}
     	else{
@@ -420,10 +439,11 @@ public class UserInterface {
 
     }
 
+    /**
+     * Lists members in the system
+     */
     private void listMember() {
-
         for (Member member : theater.listMembers()) {
-
             System.out.println(member.toString());
         }
     }
@@ -523,8 +543,13 @@ public class UserInterface {
     	}
     }
 
+    /**
+     * Prompts the user for a correctly formatted credit card
+     * expiration date
+     * @param prompt
+     * @return
+     */
     private Calendar getCreditCardExpirationDate(String prompt) {
-
         do {
             try {
                 System.out.println(prompt);
@@ -547,20 +572,21 @@ public class UserInterface {
         } while (true);
     }
 
+    /**
+     * Prompts user for a credit card number and verifies it is a valid format
+     * by calling the proper method in Theater.
+     * @param prompt
+     * @return
+     */
     private String getCreditCardNumber(String prompt) {
-
         while (true) {
-
             System.out.println(prompt);
-
             try {
                 String creditCardNumber = reader.readLine();
                 String nonDigitsPattern = "[^0-9]+";
         		creditCardNumber = creditCardNumber.replaceAll(nonDigitsPattern, "");
                 if (theater.checkCreditCardInCorrectFormat(creditCardNumber)) {
-
                     if (!theater.isCreditCardDuplicate(creditCardNumber)) {
-
                         return creditCardNumber;
                     }
                     else{
