@@ -30,8 +30,12 @@ public class ClientsList implements Serializable {
 	}
 	
 	public boolean remove(String id){
+		
+		
+		
 		for(int i = 0; i < clients.size(); i++){
-			if(clients.get(i).getID().equals(id)){
+			String idToCheck = clients.get(i).getID();
+			if(idToCheck.equals(id)){
 				clients.remove(i);
 				return true;
 			}				
