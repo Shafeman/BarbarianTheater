@@ -1,3 +1,12 @@
+/**
+ * Barbarians: Douglas Brian Shaffer, Nathan Kangas, Johnathan Franco
+ * This class represents a Credit Card object. It holds the
+ * credit card number as a string and a Calendar expiration date.
+ * It has getters, a setter for the expiration date (the number should
+ * not be changed after creation), and a method for validating the number
+ * is in a correct credit card format. The toString() returns the number
+ * and expiration date.
+ */
 package theater;
 
 import java.io.Serializable;
@@ -5,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
+@SuppressWarnings("serial")
 public class CreditCard implements Serializable {
 	private String creditCardNumber;
 	private Calendar expirationDate;
