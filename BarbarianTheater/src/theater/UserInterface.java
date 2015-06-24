@@ -380,8 +380,7 @@ public class UserInterface {
         String name = getToken("Enter client name");
         String address = getToken("Enter client address");
         String phoneNumber = getToken("Enter client phone number");
-        String creditCardNumber = getCreditCardNumber("Enter credit card number with dashes\n" +
-                "Example 1111-2222-3333-4444"); 
+        String creditCardNumber = getCreditCardNumber("Enter a valid credit card numbery"); 
         Calendar date = getCreditCardExpirationDate("Enter credit card expiration date in this format mm/yy");        
         Member member = theater.addMember(name, address, phoneNumber, creditCardNumber, date);
 
