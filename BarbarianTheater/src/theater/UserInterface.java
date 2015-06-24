@@ -10,7 +10,7 @@
  *   - the use is for academic purpose only
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *   - Neither the name of Brahma Dathan or Sarnath Ramnath
+ *   - Neither the name of Brahma Dathan or Sarnath Ramnathn
  *     may be used to endorse or promote products derived
  *     from this software without specific prior written permission.
  *
@@ -84,7 +84,7 @@ public class UserInterface {
 
             } while (!isDataRelatedCommand);
 
-         
+            commandValue = getCommand();
             
 //            theater = Theater.instance();
 //            theater.setName("Guthrie");
@@ -521,7 +521,7 @@ public class UserInterface {
      */
     private void retrieve() {
     	
-    	if(theater != null){
+    	if(theater != null && (!theater.listMembers().isEmpty() || !theater.listClients().isEmpty())){
     		System.out.println("The theater is already loaded.");
     	} else { 
 
