@@ -306,6 +306,7 @@ public class Theater implements Serializable {
 			FileOutputStream file = new FileOutputStream("TheaterData");
 			ObjectOutputStream output = new ObjectOutputStream(file);
 			output.writeObject(singletonTheater);
+			output.close();
 			return true;
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -335,6 +336,7 @@ public class Theater implements Serializable {
 			FileInputStream file = new FileInputStream("TheaterData");
 			ObjectInputStream input = new ObjectInputStream(file);
 			input.readObject();
+			input.close();
 			return singletonTheater;
 		} catch (IOException ioe) {
 			return null;

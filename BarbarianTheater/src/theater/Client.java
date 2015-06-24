@@ -92,9 +92,9 @@ public class Client extends TheaterPatron implements Serializable {
 	public boolean hasShow() {
 		boolean hasShows = false;
 		
-		if(shows != null)
+		if(!shows.isEmpty()){
 			hasShows = true;
-		
+		}
 		return hasShows;
 	}
 
