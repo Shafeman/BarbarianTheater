@@ -68,7 +68,6 @@ public class UserInterface {
         	 //If starting a new Theater, ask for name and capacity
             name = getToken("What will be the name of your theater?");
             capacity = getNumber("What is the MAX capacity of your theater?");
-//        	theater = Theater.instance(name,capacity);
 
             boolean isDataRelatedCommand;
             int commandValue;
@@ -93,10 +92,6 @@ public class UserInterface {
             } while (!isDataRelatedCommand);
 
             theater = Theater.instance(name, capacity);
-            
-//            theater = Theater.instance();
-//            theater.setName("Guthrie");
-//            theater.setSeatCapacity(1441);
 
             switch (commandValue) {
                 case ADD_CLIENT:
@@ -202,7 +197,6 @@ public class UserInterface {
      * 
      */
     public void help() {
-        //System.out.println("\n" + theater.toString() + "\n");
         System.out.println("Enter a number between 0 and 12 as explained below:");
         System.out.println(EXIT + " to Exit\n");
         System.out.println(ADD_CLIENT + " to add a client");
@@ -389,10 +383,11 @@ public class UserInterface {
      *  
      */
     private void addMemeber() {
-        String name = getToken("Enter client name");
-        String address = getToken("Enter client address");
-        String phoneNumber = getToken("Enter client phone number");
-        String creditCardNumber = getCreditCardNumber("Enter a valid credit card numbery"); 
+        String name = getToken("Enter member's name");
+        String address = getToken("Enter  member's address");
+        String phoneNumber = getToken("Enter  member's phone number");
+        String creditCardNumber = getCreditCardNumber("Enter a valid credit card number\n" +
+        		"This must follow the correct number format of a real credit card company"); 
         Calendar date = getCreditCardExpirationDate("Enter credit card expiration date in this format mm/yy");        
         Member member = theater.addMember(name, address, phoneNumber, creditCardNumber, date);
 
