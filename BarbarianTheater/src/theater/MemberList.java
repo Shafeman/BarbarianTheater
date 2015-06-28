@@ -8,22 +8,16 @@ package theater;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @SuppressWarnings("serial")
-public class MemberList implements Serializable {
+public class MemberList extends TheaterPatronList<Member, String>implements Serializable {
 	private static MemberList singletonMemberList;
-	//private static MemberList singletonMemberList = MemberList.memberListInstance();
-	private List<Member> members;
 
    /**
 	 * memberList Constructor, creates a singleton list as an ArrayList.
 	 */
 	private MemberList() {
-
-		members = new ArrayList<Member>();
 	}
 
 	/**
@@ -44,7 +38,7 @@ public class MemberList implements Serializable {
 	 * @return
 	 */
 	public boolean add(Member member){
-		return members.add(member);
+		return super.add(member);
 	}
 	
 	/**
@@ -56,37 +50,11 @@ public class MemberList implements Serializable {
 	 * @return
 	 */
 	public boolean remove(String id){
-		for(int i = 0; i < members.size(); i++){
-			if(members.get(i).getID().equals(id)){
-				members.remove(i);
-				return true;
-			}				
+		Member member = search(id);
+		if (member == null){
+			return false;
 		}
-		return false;
-	}
-
-	/**
-	 * getList provides a List of members.
-	 * @return
-	 */
-	public List<Member> getList() {
-		return members;
-	}
-	
-	/**
-	 * search takes a member ID as a string and returns that Member
-	 * if found in the list. search returns null if the member isn't
-	 * found in the list.
-	 * @param id
-	 * @return
-	 */
-	public Member search(String id){
-		for(int i = 0; i < members.size(); i++){
-			if(members.get(i).getID().equals(id)){
-				return members.get(i);
-			}				
-		}
-		return null;
+		return super.remove(id);
 	}
 
 	/**

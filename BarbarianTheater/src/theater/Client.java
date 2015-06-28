@@ -15,7 +15,7 @@ import java.util.*;
 
 
 @SuppressWarnings("serial")
-public class Client extends TheaterPatron implements Serializable {
+public class Client extends TheaterPatron implements Matchable<String>, Serializable {
 	private double balance;
 	private List<Show> shows;
 
@@ -104,5 +104,15 @@ public class Client extends TheaterPatron implements Serializable {
 	@Override
 	public String toString() {
 		return super.toString() + "\nBalance: " + balance;
+	}
+
+	/**
+	 * Checks whether an item's key matches the given key. 
+	 * @param key - the key value
+	 * @return true iff the item's key matches the given key
+	 */
+	@Override
+	public boolean matches(String key) {
+		return this.getID().equals(key);
 	}
 }

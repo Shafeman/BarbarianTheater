@@ -8,22 +8,17 @@ package theater;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @SuppressWarnings("serial")
-public class ClientsList implements Serializable {
+public class ClientsList extends TheaterPatronList<Client, String> implements Serializable {
 
 	private static ClientsList singletonClientList;
-    private List<Client> clients;
 
     /**
 	 * ClientsList Constructor, creates a singleton list as an ArrayList.
 	 */
 	private ClientsList() {
-
-		clients = new ArrayList<Client>();
 	}
 
 	/**
@@ -44,7 +39,7 @@ public class ClientsList implements Serializable {
 	 * @return
 	 */
 	public boolean add(Client client) {
-		return clients.add(client);
+		return super.add(client);
 	}
 	
 	/**
@@ -56,38 +51,11 @@ public class ClientsList implements Serializable {
 	 * @return
 	 */
 	public boolean remove(String id){		
-		for(int i = 0; i < clients.size(); i++){
-			String idToCheck = clients.get(i).getID();
-			if(idToCheck.equals(id)){
-				clients.remove(i);
-				return true;
-			}				
+		Client client = search(id);
+		if (client ==  null){
+			return false;
 		}
-		return false;
-	}
-
-	/**
-	 * getList provides a List of clients.
-	 * @return
-	 */
-	public List<Client> getList() {
-		return clients;
-	}
-	
-	/**
-	 * search takes a Client ID as a string and returns that Client
-	 * if found in the list. search returns null if the client isn't
-	 * found in the list.
-	 * @param id
-	 * @return
-	 */	
-	public Client search(String id){
-		for(int i = 0; i < clients.size(); i++){
-			if(clients.get(i).getID().equals(id)){
-				return clients.get(i);
-			}				
-		}
-		return null;
+		return super.remove(id);
 	}
 
 	/**

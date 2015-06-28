@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @SuppressWarnings("serial")
-public class Member extends TheaterPatron implements Serializable {
+public class Member extends TheaterPatron implements Matchable<String>, Serializable {
 
 	private static int CC_NOT_HERE = 0;
 	private static int TOO_FEW_CARDS = 1;
@@ -100,5 +100,15 @@ public class Member extends TheaterPatron implements Serializable {
 	@Override
 	public String toString() {
 		return super.toString() + "\n" + printCreditCardList();
+	}
+	
+	/**
+	 * Checks whether an item's key matches the given key. 
+	 * @param key - the key value
+	 * @return true iff the item's key matches the given key
+	 */
+	@Override
+	public boolean matches(String key) {
+		return this.getID().equals(key);
 	}
 }
