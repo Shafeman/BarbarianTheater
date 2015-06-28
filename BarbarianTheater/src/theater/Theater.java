@@ -282,7 +282,7 @@ public class Theater implements Serializable {
 	 * @param endDate
 	 * @return Show object: if the dates are not valid the Show object will be null
 	 */
-	public Show addShow(String clientID, String name, Calendar startDate, Calendar endDate){		
+	public Show addShow(String clientID, String name, Calendar startDate, Calendar endDate, double price){		
 		Show show = null;				
 		Client client = searchClient(clientID);
 		
@@ -291,7 +291,7 @@ public class Theater implements Serializable {
 				return show;
 			}else{
 				
-				show = new Show(name, startDate, endDate);
+				show = new Show(name, startDate, endDate, price);
 				client.addShow(show);
 			}
 		return show;

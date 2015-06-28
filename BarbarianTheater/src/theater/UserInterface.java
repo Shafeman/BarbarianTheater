@@ -178,6 +178,22 @@ public class UserInterface {
     }
     
     /**
+     * Converts the string to a double
+     * @param prompt the string for prompting
+     * @return the double corresponding to the string
+     */
+    public double getPrice(String prompt) {
+    	do {
+    		try {
+    			String item = getToken(prompt);
+    			Double price = Double.valueOf(item);
+    			return price.doubleValue();
+    		} catch (NumberFormatException nfe) {
+    			System.out.println("Please input a price: (0.00) ");
+    		}    		
+    	}while (true);
+    }
+    /**
      * Queries for a yes or no and returns true for yes and false for no
      * 
      * @param prompt The string to be prepended to the yes/no prompt
@@ -464,10 +480,12 @@ public class UserInterface {
     	String id = getToken("Please enter a client ID");
     	Client client = theater.searchClient(id);
     	
+    	
     	if(client != null) {
     		String showTitle = getToken("What is the title of the show?");
     		Calendar startDate = getDate("Enter a start date: mm/dd/yy");
     		Calendar endDate = getDate("Enter a end date: mm/dd/yy");
+    		double price = getPrice("Please enter the cost of a ticket");
     		
     		while(startDate.after(endDate)){
     			System.out.println("Please enter a start date that is before the end date");
@@ -476,7 +494,7 @@ public class UserInterface {
     		}
     		
     		//Show will return null if date are used 
-    		show = theater.addShow(id, showTitle, startDate, endDate);    		
+    		show = theater.addShow(id, showTitle, startDate, endDate, price);    		
     		if(show != null){
     	    		System.out.println(show);
     		}else{

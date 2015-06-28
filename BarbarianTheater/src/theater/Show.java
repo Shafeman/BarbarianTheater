@@ -15,6 +15,7 @@ public class Show implements Serializable {
 	private String name;
 	private Calendar startDate;
 	private Calendar endDate;
+	private Double price;
 	
 	/**
 	 * Show Constructor. Creates a Show.
@@ -22,10 +23,11 @@ public class Show implements Serializable {
 	 * @param startDate
 	 * @param endDate
 	 */
-	public Show(String name, Calendar startDate, Calendar endDate){
+	public Show(String name, Calendar startDate, Calendar endDate, double price){
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.price = price;
 	}
 	
 	/**
@@ -79,6 +81,7 @@ public class Show implements Serializable {
 		str += name;
 		str += ":  " + startMonth + "/" + startDay + "/" + startYear + " -";
 		str += " " + endMonth + "/" + endDay + "/" + endYear;
+		str += " Price: $" + price;
 				
 		
 		return str;
