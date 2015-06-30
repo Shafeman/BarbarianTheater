@@ -1,7 +1,7 @@
 /**
  * Barbarians: Douglas Brian Shaffer, Nathan Kangas, Johnathan Franco
  * The Show class represents a show that is being put on by a client.
- * Each show has a name, start date and end date. Once a name is set,
+ * Each show has a name, start date, end date, price, and soldTickets. Once a name is set,
  * it cannot be changed, but dates can be changed through setters. 
  */
 package theater;
@@ -15,7 +15,8 @@ public class Show implements Serializable {
 	private String name;
 	private Calendar startDate;
 	private Calendar endDate;
-	private Double price;
+	private double price;
+	private int soldTickets;
 	
 	/**
 	 * Show Constructor. Creates a Show.
@@ -28,6 +29,7 @@ public class Show implements Serializable {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.price = price;
+		this.soldTickets = 0;
 	}
 	
 	/**
@@ -62,6 +64,17 @@ public class Show implements Serializable {
 		return endDate;
 	}
 	
+	/**
+	 * @return the soldTickets
+	 */
+	public int getSoldTickets() {
+		return soldTickets;
+	}
+
+	public void indicateSell(){
+		this.soldTickets++;
+	}
+
 	/**
 	 * toString returns the Show name, start date, and end date as a String.
 	 * @return

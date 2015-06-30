@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 
 @SuppressWarnings("serial")
-public class MemberList extends TheaterPatronList<Member, String>implements Serializable {
+public class MemberList extends TheaterPatronList<Member, String> implements Serializable {
 	private static MemberList singletonMemberList;
 
    /**
