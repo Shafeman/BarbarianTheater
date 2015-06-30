@@ -53,6 +53,28 @@ public abstract class Ticket implements Serializable{
 	}
 	
 	/**
+	 * Generate a unique serial number for a Ticket.
+	 * @return
+	 */
+	public String generateSerialNumber() {
+		String serialNumber = "";
+		
+		if((this.dateOfShow.get(Calendar.MONTH) < 10) && (this.dateOfShow.get(Calendar.DAY_OF_MONTH) < 10)) {		
+			serialNumber += "0" + this.dateOfShow.get(Calendar.MONTH);
+			serialNumber += "0" + this.dateOfShow.get(Calendar.DAY_OF_MONTH);
+			serialNumber += (this.dateOfShow.get(Calendar.YEAR)) % 100;
+			serialNumber += "0";
+		}else	{		
+			serialNumber += this.dateOfShow.get(Calendar.MONTH);
+			serialNumber += this.dateOfShow.get(Calendar.DAY_OF_MONTH);
+			serialNumber += (this.dateOfShow.get(Calendar.YEAR)) % 100;
+			serialNumber += "0";
+		}	
+		//Then add the Box office # and the seat #.
+		return serialNumber;
+	}
+	
+	/**
 	 * Returns a description of the ticket
 	 */
 	@Override
