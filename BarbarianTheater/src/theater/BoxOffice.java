@@ -11,11 +11,9 @@ import java.util.List;
 public class BoxOffice {
 
 	private List<Transaction> transactions = new ArrayList<Transaction>();
-	private int counter;
 	private static BoxOffice singletonBoxOffice;
 	
 	private BoxOffice(){
-		counter = 0;
 	}
 	
 	public static BoxOffice instance(){
@@ -29,10 +27,7 @@ public class BoxOffice {
 		//
 		return 0.00;
 	}
-	
-	public boolean checkSeats(Show show){
-		return true;
-	}
+
 	
 	public Ticket createTicket(Show show, int ticketType){
 		return null;

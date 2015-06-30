@@ -3,17 +3,18 @@ package theater;
 import java.io.Serializable;
 import java.util.Calendar;
 
+@SuppressWarnings("serial")
 public abstract class Ticket implements Serializable{
 	
 	private String serialNumber;
-	private Member ticketHolder;
+	//private Member ticketHolder;
 	private Calendar dateOfShow;
 	private double ticketPrice;
 	protected static double advanceDiscount = .70;
 	protected static double studentDiscount = .50;
 	
-	public Ticket(Member member, Calendar date, double price) {
-		this.ticketHolder = member;
+	public Ticket(/*Member member,*/ Calendar date, double price) {
+		//this.ticketHolder = member;
 		this.dateOfShow = date;
 		this.ticketPrice = price;
 		//Could use the same technique as TheaterPatron to generate an ID for a Ticket
@@ -32,9 +33,9 @@ public abstract class Ticket implements Serializable{
 	 * Returns the Member object who purchased the ticket.
 	 * @return
 	 */
-	public Member getTicketHolder() {
+	/*public Member getTicketHolder() {
 		return ticketHolder;
-	}
+	}*/
 
 	/**
 	 * Returns the date a show the ticket is for.

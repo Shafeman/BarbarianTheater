@@ -13,7 +13,6 @@ import java.io.Serializable;
 public abstract class TheaterPatron implements Serializable {
 
 	private TheaterPatronIdServer singletonTheaterPatronIdServer;
-	//private static int counter = 0; //statics testing
 	private String id;
 	private String name;
 	private String address;
@@ -31,7 +30,6 @@ public abstract class TheaterPatron implements Serializable {
 		this.phoneNumber = phoneNumber;
 		singletonTheaterPatronIdServer = TheaterPatronIdServer.theaterPatronIdServerInstance();
 		this.id = generateID();
-		//counter++;
 	}
 
 	/**
@@ -114,6 +112,4 @@ public abstract class TheaterPatron implements Serializable {
 		return ("ID: " + id + "\nName: " + name + "\nAddress: " + address + "\nPhone number: " +
 				phoneNumber);
 	}
-	
-	//add equals method that lets us call objects instead of ids?
 }
