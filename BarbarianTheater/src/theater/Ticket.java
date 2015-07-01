@@ -1,7 +1,9 @@
 package theater;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Calendar;
+import java.math.MathContext;
 
 @SuppressWarnings("serial")
 public abstract class Ticket implements Serializable{
@@ -10,6 +12,7 @@ public abstract class Ticket implements Serializable{
 	//private Member ticketHolder;
 	private Calendar dateOfShow;
 	private double ticketPrice;
+	private MathContext theRounding = new MathContext(3);
 	protected static double advanceDiscount = .70;
 	protected static double studentDiscount = .50;
 	
@@ -73,6 +76,28 @@ public abstract class Ticket implements Serializable{
 		}	
 		//Then add the Box office # and the seat #.
 		return serialNumber;
+	}
+	
+	/**
+	 * This will discount the tickets price for advance tickets.
+	 * Which cost 70% of a Regular ticket
+	 * @return double that is rounded. (0.00)
+	 */
+	public double advanceDiscount() {	
+		BigDecimal discountedPrice = new BigDecimal((ticketPrice * advanceDiscount),theRounding);
+		
+		return discountedPrice.doubleValue();
+	}
+	
+	/**
+	 * This will discount the ticket price for student advance tickets.
+	 * Which cost 50% of an advanced ticket.
+	 * @return double that is rounded. (0.00)
+	 */
+	public double studentAdvanceDiscount() {		
+		BigDecimal discountedPrice = new BigDecimal((advanceDiscount() * studentDiscount), theRounding);
+		
+		return discountedPrice.doubleValue();
 	}
 	
 	/**

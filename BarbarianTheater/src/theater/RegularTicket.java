@@ -2,6 +2,7 @@ package theater;
 
 import java.util.Calendar;
 
+@SuppressWarnings("serial")
 public class RegularTicket extends Ticket {
 	
 
