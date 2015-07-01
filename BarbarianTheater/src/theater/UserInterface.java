@@ -49,7 +49,12 @@ public class UserInterface {
     private static final int LIST_SHOWS = 10;
     private static final int SAVE_DATA = 11;
     private static final int RETRIEVE_DATA = 12;
-    private static final int HELP = 13;
+    private static final int SELL_REGULAR_TICKET = 13;
+    private static final int SELL_ADVANCE_TICKET = 14;
+    private static final int SELL_STUDENT_ADVANCE_TICKET = 15;
+    private static final int PAY_CLIENT = 16;
+    private static final int PRINT_ALL_TICKETS = 17;
+    private static final int HELP = 18;
     private static UserInterface userInterface;
     private static Theater theater;
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -130,6 +135,21 @@ public class UserInterface {
                 case RETRIEVE_DATA:
                     retrieve();
                     break;
+                case SELL_REGULAR_TICKET:
+                	sellRegularTicket();
+                	break;
+                case SELL_ADVANCE_TICKET:
+                	sellAdvanceTicket();
+                	break;
+                case SELL_STUDENT_ADVANCE_TICKET:
+                	sellStudentAdvanceTicket();
+                	break;
+                case PAY_CLIENT:
+                	payClient();
+                	break;
+                case PRINT_ALL_TICKETS:
+                	printAllTickets();
+                	break;
                 case HELP:
                     help();
                     break;
@@ -227,6 +247,9 @@ public class UserInterface {
         System.out.println(LIST_SHOWS + " to list all shows");
         System.out.println(SAVE_DATA + " to save data");
         System.out.println(RETRIEVE_DATA + " to retrieve");
+        System.out.println(SELL_REGULAR_TICKET + " to sell a regular ticket");
+        System.out.println(SELL_ADVANCE_TICKET + " to sell a advance ticket");
+        System.out.println(SELL_STUDENT_ADVANCE_TICKET + " to sell a student advance ticket");
         System.out.println(HELP + " for help");
     }
 
@@ -260,9 +283,18 @@ public class UserInterface {
                     break;
                 case SAVE_DATA: saveData();
                     break;
-                case RETRIEVE_DATA:
-                    retrieve();
-                    break;
+                case RETRIEVE_DATA: retrieve();
+                	break;
+                case SELL_REGULAR_TICKET: sellRegularTicket();
+                	break;
+                case SELL_ADVANCE_TICKET: sellAdvanceTicket();
+                	break;
+                case SELL_STUDENT_ADVANCE_TICKET: sellStudentAdvanceTicket();
+                	break;
+                case PAY_CLIENT: payClient();
+                	break;
+                case PRINT_ALL_TICKETS: printAllTickets();
+                	break;
                 case HELP: help();
                     break;
             }
@@ -565,6 +597,26 @@ public class UserInterface {
     			cnfe.printStackTrace();
     		}
     	}
+    }
+    
+    private void sellRegularTicket() {
+    	
+    }
+    
+    private void sellAdvanceTicket() {
+    	
+    }
+    
+    private void sellStudentAdvanceTicket()	{
+    	
+    }
+    
+    private void payClient() {
+    	
+    }
+    
+    private void printAllTickets() {
+    	
     }
 
     /**
