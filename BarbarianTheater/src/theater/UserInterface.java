@@ -250,6 +250,8 @@ public class UserInterface {
         System.out.println(SELL_REGULAR_TICKET + " to sell a regular ticket");
         System.out.println(SELL_ADVANCE_TICKET + " to sell a advance ticket");
         System.out.println(SELL_STUDENT_ADVANCE_TICKET + " to sell a student advance ticket");
+        System.out.println(PAY_CLIENT + " to pay a client");
+        System.out.println(PRINT_ALL_TICKETS + " to list all tickets for a certian date");
         System.out.println(HELP + " for help");
     }
 
