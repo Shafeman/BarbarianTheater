@@ -10,5 +10,17 @@ public class StudentAdvanceTicket extends Ticket {
 		super(/*member,*/ date, (price * advanceDiscount) * studentDiscount );
 		
 	}
+	
+	/**
+	 * Generate a unique serial number for a Student advanced ticket
+	 * Appends and "S" at the end of the SN to notify this.
+	 */
+	public String generateSerialNumber() {
+		String serialNumber = super.generateSerialNumber();		
+		
+		serialNumber += "S";		
+		
+		return serialNumber;
+	}
 
 }
