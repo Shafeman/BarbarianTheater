@@ -8,20 +8,16 @@ import java.math.MathContext;
 @SuppressWarnings("serial")
 public abstract class Ticket implements Serializable{
 	
-	private String serialNumber;
-	//private Member ticketHolder;
+	private String serialNumber;	
 	private Calendar dateOfShow;
-	private double ticketPrice;
-	private MathContext theRounding = new MathContext(3);
+	protected double ticketPrice;
+	protected static MathContext theRounding = new MathContext(3);
 	protected static double advanceDiscount = .70;
 	protected static double studentDiscount = .50;
 	
-	public Ticket(/*Member member,*/ Calendar date, double price) {
-		//this.ticketHolder = member;
+	public Ticket(Calendar date, double price) {
 		this.dateOfShow = date;
-		this.ticketPrice = price;
-		//Could use the same technique as TheaterPatron to generate an ID for a Ticket
-		//Use the show title and the idServer
+		this.ticketPrice = price;		
 	}
 
 	/**
@@ -30,15 +26,7 @@ public abstract class Ticket implements Serializable{
 	 */
 	public String getSerialNumber() {
 		return serialNumber;
-	}
-
-	/**
-	 * Returns the Member object who purchased the ticket.
-	 * @return
-	 */
-	/*public Member getTicketHolder() {
-		return ticketHolder;
-	}*/
+	}	
 
 	/**
 	 * Returns the date a show the ticket is for.
@@ -73,32 +61,9 @@ public abstract class Ticket implements Serializable{
 			serialNumber += this.dateOfShow.get(Calendar.DAY_OF_MONTH);
 			serialNumber += (this.dateOfShow.get(Calendar.YEAR)) % 100;
 			serialNumber += "0";
-		}	
-		//Then add the Box office # and the seat #.
+		}		
 		return serialNumber;
-	}
-	
-	/**
-	 * This will discount the tickets price for advance tickets.
-	 * Which cost 70% of a Regular ticket
-	 * @return double that is rounded. (0.00)
-	 */
-	public double advanceDiscount() {	
-		BigDecimal discountedPrice = new BigDecimal((ticketPrice * advanceDiscount),theRounding);
-		
-		return discountedPrice.doubleValue();
-	}
-	
-	/**
-	 * This will discount the ticket price for student advance tickets.
-	 * Which cost 50% of an advanced ticket.
-	 * @return double that is rounded. (0.00)
-	 */
-	public double studentAdvanceDiscount() {		
-		BigDecimal discountedPrice = new BigDecimal((advanceDiscount() * studentDiscount), theRounding);
-		
-		return discountedPrice.doubleValue();
-	}
+	}	
 	
 	/**
 	 * Returns a description of the ticket
