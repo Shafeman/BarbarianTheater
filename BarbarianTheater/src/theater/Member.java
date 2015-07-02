@@ -20,6 +20,7 @@ public class Member extends TheaterPatron implements Matchable<String>, Serializ
 	private static int TOO_FEW_CARDS = 1;
 	private static int SUCCESS = 2;
 	private List<CreditCard> creditCards;
+	private List<Ticket> ticketsBought;
 	
 	/**
 	 * Member constructor
@@ -33,6 +34,14 @@ public class Member extends TheaterPatron implements Matchable<String>, Serializ
 		super(name, address, phoneNumber);
 		creditCards = new ArrayList<CreditCard>();
 		creditCards.add(new CreditCard(creditCardNumber, expiration));
+	}
+	
+	/**
+	 * The tickets bought by a member are stored here
+	 * @param ticket
+	 */
+	public void addTicket(Ticket ticket) {
+		ticketsBought.add(ticket);
 	}
 	
 	/**

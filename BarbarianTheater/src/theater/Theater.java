@@ -23,7 +23,10 @@ public class Theater implements Serializable {
 	public static final int NOT_FOUND = 0;
 	public static final int TOO_FEW_CARDS = 1;
 	public static final int SUCCESS = 2;
-	public static final int HAS_SHOWS = 3;	
+	public static final int HAS_SHOWS = 3;
+	public static final int REGULAR_TICKET = 4;
+	public static final int ADVANCE_TICKET = 5;
+	public static final int STUDENT_ADVANCE_TICKET = 6;
 	 
 	private ClientsList clientList;
 	private MemberList memberList;

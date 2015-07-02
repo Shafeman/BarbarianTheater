@@ -16,6 +16,8 @@ public class Show implements Serializable {
 	private Calendar startDate;
 	private Calendar endDate;
 	private double price;
+	
+
 	private int soldTickets;
 	
 	/**
@@ -73,6 +75,10 @@ public class Show implements Serializable {
 
 	public void indicateSell(){
 		this.soldTickets++;
+	}
+	
+	public double getPrice() {
+		return price;
 	}
 
 	/**

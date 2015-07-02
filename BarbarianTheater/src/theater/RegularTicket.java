@@ -6,7 +6,7 @@ import java.util.Calendar;
 public class RegularTicket extends Ticket {
 	
 
-	public RegularTicket(Member member, Calendar date, double price) {
+	public RegularTicket(Calendar date, double price) {
 		super(date, price);
 		this.generateSerialNumber();
 		

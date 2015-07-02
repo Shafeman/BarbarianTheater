@@ -7,7 +7,7 @@ import java.util.Calendar;
 public class AdvanceTicket extends Ticket{
 	
 	
-	public AdvanceTicket(Member member, Calendar date, double price) {
+	public AdvanceTicket(Calendar date, double price) {
 		super(date, price);
 		this.generateSerialNumber();
 		this.advanceDiscount();
