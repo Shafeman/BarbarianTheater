@@ -77,6 +77,8 @@ public abstract class Ticket implements Serializable{
 	public String toString() {
 		String str = "";
 		
+		str += serialNumber + " " + dateOfShow + " ";
+		
 		return str;
 	}
 	

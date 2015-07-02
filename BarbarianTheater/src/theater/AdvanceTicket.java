@@ -37,5 +37,19 @@ public class AdvanceTicket extends Ticket{
 		
 		return serialNumber;
 	}
+	
+	/**
+	 * Returns a description of the ticket
+	 */
+	@Override
+	public String toString() {
+		String str = "";
+		
+		str += super.toString();
+		str += "$" + this.ticketPrice + " ";
+		str += "Advance";
+		
+		return str;
+	}
 
 }
