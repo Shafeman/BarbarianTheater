@@ -9,7 +9,8 @@ public class AdvanceTicket extends Ticket{
 	
 	public AdvanceTicket(Member member, Calendar date, double price) {
 		super(date, price);
-		advanceDiscount();
+		this.generateSerialNumber();
+		this.advanceDiscount();
 		
 	}
 	

@@ -8,6 +8,7 @@ public class RegularTicket extends Ticket {
 
 	public RegularTicket(Member member, Calendar date, double price) {
 		super(date, price);
+		this.generateSerialNumber();
 		
 	}
 	

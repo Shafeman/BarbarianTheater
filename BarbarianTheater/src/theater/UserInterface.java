@@ -527,7 +527,7 @@ public class UserInterface {
         		endDate = getDate("Enter a end date: mm/dd/yy");
     		}
     		
-    		//Show will return null if date are used 
+    		//Show will return null if dates are used 
     		show = theater.addShow(id, showTitle, startDate, endDate, price);    		
     		if(show != null){
     	    		System.out.println(show);

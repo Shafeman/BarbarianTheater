@@ -1,13 +1,13 @@
 package theater;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.math.MathContext;
 
 @SuppressWarnings("serial")
 public abstract class Ticket implements Serializable{
 	
+	private TheaterPatronIdServer singletonTheaterPatronIdServer;
 	private String serialNumber;	
 	private Calendar dateOfShow;
 	protected double ticketPrice;
@@ -51,7 +51,8 @@ public abstract class Ticket implements Serializable{
 	public String generateSerialNumber() {
 		String serialNumber = "";
 		
-		if((this.dateOfShow.get(Calendar.MONTH) < 10) && (this.dateOfShow.get(Calendar.DAY_OF_MONTH) < 10)) {		
+		if((this.dateOfShow.get(Calendar.MONTH) < 10) 
+				&& (this.dateOfShow.get(Calendar.DAY_OF_MONTH) < 10)) {		
 			serialNumber += "0" + this.dateOfShow.get(Calendar.MONTH);
 			serialNumber += "0" + this.dateOfShow.get(Calendar.DAY_OF_MONTH);
 			serialNumber += (this.dateOfShow.get(Calendar.YEAR)) % 100;
@@ -61,7 +62,11 @@ public abstract class Ticket implements Serializable{
 			serialNumber += this.dateOfShow.get(Calendar.DAY_OF_MONTH);
 			serialNumber += (this.dateOfShow.get(Calendar.YEAR)) % 100;
 			serialNumber += "0";
-		}		
+		}
+		
+		//unique number to the system
+		serialNumber += singletonTheaterPatronIdServer.getNewIdCounter();
+		
 		return serialNumber;
 	}	
 	
