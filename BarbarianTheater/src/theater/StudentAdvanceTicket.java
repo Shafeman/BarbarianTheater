@@ -9,8 +9,8 @@ public class StudentAdvanceTicket extends Ticket {
 	
 	public StudentAdvanceTicket(Calendar date, double price) {
 		super(date, price);
-		this.generateSerialNumber();
-		this.studentAdvanceDiscount();
+		serialNumber = this.generateSerialNumber();
+		ticketPrice = this.studentAdvanceDiscount();
 		
 	}
 	

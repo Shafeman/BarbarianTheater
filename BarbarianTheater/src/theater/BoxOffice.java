@@ -4,11 +4,12 @@
  */
 package theater;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class BoxOffice {
+public class BoxOffice implements Serializable{
 
 	private List<Transaction> transactions = new ArrayList<Transaction>();
 	private static BoxOffice singletonBoxOffice;

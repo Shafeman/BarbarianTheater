@@ -8,7 +8,7 @@ import java.math.MathContext;
 public abstract class Ticket implements Serializable{
 	
 	private TheaterPatronIdServer singletonTheaterPatronIdServer;
-	private String serialNumber;	
+	protected String serialNumber;	
 	private Calendar dateOfShow;
 	protected double ticketPrice;
 	protected static MathContext theRounding = new MathContext(3);
@@ -17,7 +17,8 @@ public abstract class Ticket implements Serializable{
 	
 	public Ticket(Calendar date, double price) {
 		this.dateOfShow = date;
-		this.ticketPrice = price;		
+		this.ticketPrice = price;
+		singletonTheaterPatronIdServer = TheaterPatronIdServer.theaterPatronIdServerInstance();
 	}
 
 	/**
@@ -53,12 +54,12 @@ public abstract class Ticket implements Serializable{
 		
 		if((this.dateOfShow.get(Calendar.MONTH) < 10) 
 				&& (this.dateOfShow.get(Calendar.DAY_OF_MONTH) < 10)) {		
-			serialNumber += "0" + this.dateOfShow.get(Calendar.MONTH);
+			serialNumber += "0" + (this.dateOfShow.get(Calendar.MONTH) + 1);
 			serialNumber += "0" + this.dateOfShow.get(Calendar.DAY_OF_MONTH);
 			serialNumber += (this.dateOfShow.get(Calendar.YEAR)) % 100;
 			serialNumber += "0";
 		}else	{		
-			serialNumber += this.dateOfShow.get(Calendar.MONTH);
+			serialNumber += (this.dateOfShow.get(Calendar.MONTH) + 1);
 			serialNumber += this.dateOfShow.get(Calendar.DAY_OF_MONTH);
 			serialNumber += (this.dateOfShow.get(Calendar.YEAR)) % 100;
 			serialNumber += "0";

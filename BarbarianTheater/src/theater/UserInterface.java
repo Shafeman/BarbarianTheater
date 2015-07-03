@@ -32,6 +32,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class UserInterface {
@@ -601,16 +602,53 @@ public class UserInterface {
     	}
     }
     
+    /**
+     * sell a regular ticket by calling sellAnyTicket with the proper value
+     */
     private void sellRegularTicket() {
-    	
+    	sellAnyTicket(Theater.REGULAR_TICKET);  	
     }
     
+    /**
+     * sell an advanced ticket by calling sellAnyTicket with the proper value
+     */
     private void sellAdvanceTicket() {
-    	
+    	sellAnyTicket(Theater.ADVANCE_TICKET);
     }
     
+    /**
+     * sell an advanced student ticket by calling sellAnyTicket with the proper value
+     */
     private void sellStudentAdvanceTicket()	{
+    	sellAnyTicket(Theater.STUDENT_ADVANCE_TICKET);
+    }
+    
+    /**
+     * takes a ticket type and processes a ticket sell.
+     * @param ticketType
+     */
+    private void sellAnyTicket(int ticketType){
+    	Calendar showDate = getDate("Enter a show date: mm/dd/yy");
+    	Show show = theater.getShow(showDate);
+    	String creditCardNumber;
     	
+    	if (show != null){
+    		String memberID = getToken("Enter member ID");
+    		Member member = theater.searchMember(memberID);
+    		if (member != null) {
+    			do{
+    				creditCardNumber = getToken("Enter a valid credit card number");
+    			} while(!theater.checkCreditCardInCorrectFormat(creditCardNumber));
+    			CreditCard creditCard = theater.getCreditCard(member, creditCardNumber);
+    			if(creditCard != null){
+    				theater.sellTicket(show, member, creditCard, Theater.REGULAR_TICKET, showDate);
+    			}
+    		} else {
+    			System.out.println("Member " + memberID + " isn't in the system");
+    		}
+    	} else {
+    		System.out.println("There is no show scheduled for " + showDate.toString());
+    	}
     }
     
     private void payClient() {
@@ -618,9 +656,9 @@ public class UserInterface {
     }
     
     private void printAllTickets() {    	
-    	
-    	
+        	
     }
+    
 
     /**
      * Prompts the user for a correctly formatted credit card
