@@ -72,7 +72,20 @@ public class BoxOffice implements Serializable{
 		return ticket;
 	}
 	
+	/**
+	 * Traverses through the list of transactions to find
+	 * tickets with a certain date.
+	 * @param date to look for
+	 * @return List of tickets for a certain date
+	 */
 	public List<Ticket> getTickets(Calendar date){
-		return null;
+		
+		List<Ticket> ticketList = new ArrayList<Ticket>();
+		
+		for(Transaction ticket: transactions )
+			if(ticket.getTicket().getDateOfShow().equals(date))
+				ticketList.add(ticket.getTicket());
+		
+		return ticketList;
 	}
 }

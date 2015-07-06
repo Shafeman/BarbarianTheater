@@ -342,6 +342,10 @@ public class Theater implements Serializable {
 		return true;
 		
 	}
+	
+	public List<Ticket> listTickets(Calendar date) {
+		return boxOffice.getTickets(date);
+	}
 
 	/**
 	 * save is used to save the system to a file

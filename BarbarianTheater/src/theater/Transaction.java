@@ -2,7 +2,7 @@ package theater;
 
 import java.io.Serializable;
 
-
+@SuppressWarnings("serial")
 public class Transaction implements Serializable {
 	
 	private Show show;

@@ -46,7 +46,7 @@ public class AdvanceTicket extends Ticket{
 		
 		str += super.toString();
 		str += " " + serialNumber + " ";
-		str += "$" + this.ticketPrice + " ";
+		str += "$" + UserInterface.displayPrice(this.ticketPrice) + " ";
 		str += "Advance";
 		
 		return str;

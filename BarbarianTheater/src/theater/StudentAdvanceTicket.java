@@ -46,7 +46,7 @@ public class StudentAdvanceTicket extends Ticket {
 		
 		str += super.toString();
 		str += " " + serialNumber + " ";
-		str += "$" + this.ticketPrice + " ";
+		str += "$" + UserInterface.displayPrice(this.ticketPrice) + " ";
 		str += "Student Advance";
 		str += " *Must show valid student id*";
 		

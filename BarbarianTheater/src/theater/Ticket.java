@@ -1,8 +1,8 @@
 package theater;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.math.MathContext;
 
 @SuppressWarnings("serial")
 public abstract class Ticket implements Serializable{
@@ -10,10 +10,10 @@ public abstract class Ticket implements Serializable{
 	private TheaterPatronIdServer singletonTheaterPatronIdServer;
 	protected String serialNumber;	
 	private Calendar dateOfShow;
-	protected Integer ticketPrice;
-	protected static MathContext theRounding = new MathContext(3);
+	protected Integer ticketPrice;	
 	protected static double advanceDiscount = .70;
 	protected static double studentDiscount = .50;
+	SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	public Ticket(Calendar date, Integer price) {
 		this.dateOfShow = date;
@@ -76,9 +76,9 @@ public abstract class Ticket implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		String str = "";
+		String str = "";		
 		
-		str += dateOfShow + " ";
+		str += dateFormat.format(dateOfShow.getTime()) + " ";
 		
 		return str;
 	}

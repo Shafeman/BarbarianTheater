@@ -33,7 +33,7 @@ public class RegularTicket extends Ticket {
 		
 		str += super.toString();
 		str += " " + serialNumber + " ";
-		str += "$" + this.ticketPrice + " ";
+		str += "$" + UserInterface.displayPrice(this.ticketPrice) + " ";
 		str += "Regular";
 		
 		return str;

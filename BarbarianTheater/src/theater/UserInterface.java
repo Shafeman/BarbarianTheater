@@ -32,7 +32,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class UserInterface {
@@ -474,7 +473,7 @@ public class UserInterface {
     }
 
     /**
-     * Propmts user for a member id and
+     * Prompts user for a member id and
      * Calls appropriate method in Theater to remove a member
      */
     private void removeMember() {
@@ -666,7 +665,15 @@ public class UserInterface {
     			} while(!theater.checkCreditCardInCorrectFormat(creditCardNumber));
     			CreditCard creditCard = theater.getCreditCard(member, creditCardNumber);
     			if(creditCard != null){
-    				theater.sellTicket(show, member, creditCard, Theater.REGULAR_TICKET, showDate);
+    				if(ticketType == Theater.REGULAR_TICKET) {
+    					theater.sellTicket(show, member, creditCard, Theater.REGULAR_TICKET, showDate);
+    				} 
+    				if(ticketType == Theater.ADVANCE_TICKET) {
+    					theater.sellTicket(show, member, creditCard, Theater.ADVANCE_TICKET, showDate);
+    				}
+    				if(ticketType == Theater.STUDENT_ADVANCE_TICKET) {
+    					theater.sellTicket(show, member, creditCard, Theater.STUDENT_ADVANCE_TICKET, showDate);
+    				}
     			}
     		} else {
     			System.out.println("Member " + memberID + " isn't in the system");
@@ -680,8 +687,16 @@ public class UserInterface {
     	
     }
     
-    private void printAllTickets() {    	
-        	
+    private void printAllTickets() {     	
+    	
+    	Calendar date = getDate("To view tickets for a certain date,\n"
+    			+ "Enter a date: mm/dd/yy");
+    	
+    	for(Ticket ticket: theater.listTickets(date)) {
+    		System.out.println(ticket.toString());
+    	}
+    	
+       	
     }
     
 
