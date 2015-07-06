@@ -115,4 +115,8 @@ public class Client extends TheaterPatron implements Matchable<String>, Serializ
 	public boolean matches(String key) {
 		return this.getID().equals(key);
 	}
+
+	public void getPaid(Integer amount) {
+		this.balance = this.balance - amount;		
+	}
 }

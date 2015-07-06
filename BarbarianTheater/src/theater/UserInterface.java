@@ -686,6 +686,22 @@ public class UserInterface {
     
     private void payClient() {
 
+  	      String clientId = getToken("Enter client's id to be removed");
+  	      Client client = theater.getClient(clientId);
+  	      if (client != null){
+  	    	  int balance = client.getBalance();
+  	    	  System.out.println(clientId + "'s balance is " + balance);
+  	    	  Integer payment = (Integer) getPrice("How much would you like to pay?");
+  	    	  if (payment <= balance){
+  	    		  theater.payClient(client, payment);
+  	    		  System.out.println(clientId + "'s new balance is " + client.getBalance());
+  	    	  } else {
+  	    		  System.out.println("Payment entered is greater than client's balance!");
+  	    	  }
+  	      } else {
+  	    	  System.out.println(clientId + " is not found in the system.");
+  	      }
+
     }
     
     private void printAllTickets() {     	
