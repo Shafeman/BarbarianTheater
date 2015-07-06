@@ -337,7 +337,7 @@ public class Theater implements Serializable {
 	}
 //========================================================================================================	
 	public boolean sellTicket(Show show, Member member, CreditCard creditCard,	int ticketType, Calendar showDate) {
-		Integer price = (int) boxOffice.sellTicket(member, show, creditCard, ticketType, showDate);
+		Integer price = boxOffice.sellTicket(member, show, creditCard, ticketType, showDate);
 		return true;
 		
 	}

@@ -1,7 +1,9 @@
 package theater;
 
+import java.io.Serializable;
 
-public class Transaction {
+
+public class Transaction implements Serializable {
 	
 	private Show show;
 	private Member member;

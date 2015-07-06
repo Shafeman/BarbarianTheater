@@ -19,8 +19,8 @@ public class Member extends TheaterPatron implements Matchable<String>, Serializ
 	private static int CC_NOT_HERE = 0;
 	private static int TOO_FEW_CARDS = 1;
 	private static int SUCCESS = 2;
-	private List<CreditCard> creditCards;
-	private List<Ticket> ticketsBought;
+	private List<CreditCard> creditCards = new ArrayList<CreditCard>();
+	private List<Ticket> ticketsBought = new ArrayList<Ticket>();
 	
 	/**
 	 * Member constructor

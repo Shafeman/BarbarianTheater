@@ -34,7 +34,7 @@ public class BoxOffice implements Serializable{
 	 * @param showDate : date the ticket is good for
 	 * @return price : of the ticket after any discounts
 	 */
-	public double sellTicket(Member member, Show show, CreditCard card, int ticketType, Calendar showDate){
+	public Integer sellTicket(Member member, Show show, CreditCard card, int ticketType, Calendar showDate){
 		
 		Ticket ticket = createTicket(showDate, show, ticketType);
 		Transaction transaction = new Transaction(show, member, ticket, card);
