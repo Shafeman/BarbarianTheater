@@ -203,17 +203,41 @@ public class UserInterface {
      * @param prompt the string for prompting
      * @return the double corresponding to the string
      */
-    public double getPrice(String prompt) {
+    public Integer getPrice(String prompt) {
     	do {
     		try {
     			String item = getToken(prompt);
-    			Double price = Double.valueOf(item);
-    			return price.doubleValue();
+    			item = item.replaceAll("[.]","");    			
+    			Integer price = Integer.valueOf(item);
+    			return price;
     		} catch (NumberFormatException nfe) {
     			System.out.println("Please input a price: (0.00) ");
     		}    		
     	}while (true);
     }
+    
+    /**
+     * Price is in "cents", this method converts price into 
+     * a 0.00 format.
+     * @param price
+     * @return String representation of Cents into dollars and cents
+     */
+    public static String displayPrice(Integer price) {
+    	String str = "";
+    	
+    	str += price / 100;
+		str += "."; 
+		if(price % 100 == 0) {
+			str += "00";
+		}
+		else {
+			str += price % 100;
+		}	
+		
+		return str;   	
+    	
+    }
+    
     /**
      * Queries for a yes or no and returns true for yes and false for no
      * 
@@ -520,7 +544,7 @@ public class UserInterface {
     		String showTitle = getToken("What is the title of the show?");
     		Calendar startDate = getDate("Enter a start date: mm/dd/yy");
     		Calendar endDate = getDate("Enter a end date: mm/dd/yy");
-    		double price = getPrice("Please enter the cost of a ticket");
+    		Integer price = (Integer) getPrice("Please enter the cost of a ticket");
     		
     		while(startDate.after(endDate)){
     			System.out.println("Please enter a start date that is before the end date");

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class BoxOffice implements Serializable{
 
 	private List<Transaction> transactions = new ArrayList<Transaction>();

@@ -1,13 +1,12 @@
 package theater;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
 
 @SuppressWarnings("serial")
 public class StudentAdvanceTicket extends Ticket {	
 	
 	
-	public StudentAdvanceTicket(Calendar date, double price) {
+	public StudentAdvanceTicket(Calendar date, Integer price) {
 		super(date, price);
 		serialNumber = this.generateSerialNumber();
 		ticketPrice = this.studentAdvanceDiscount();
@@ -17,15 +16,13 @@ public class StudentAdvanceTicket extends Ticket {
 	/**
 	 * This will discount the ticket price for student advance tickets.
 	 * Which cost 50% of an advanced ticket.
-	 * @return double that is rounded. (0.00)
+	 * @return Integer that is in "Cents"
 	 */
-	public double studentAdvanceDiscount() {		
-		BigDecimal discountedPrice1 = new BigDecimal(
-				(ticketPrice * advanceDiscount),theRounding);
-		BigDecimal discountedPrice = new BigDecimal(
-			(discountedPrice1.doubleValue() * studentDiscount), theRounding);
+	public Integer studentAdvanceDiscount() {		
+		Integer firstDiscount = (int) (ticketPrice * advanceDiscount);
+		Integer secondDiscount = (int) (firstDiscount * studentDiscount);
 		
-		return discountedPrice.doubleValue();
+		return secondDiscount;
 	}
 	
 	/**
@@ -48,12 +45,11 @@ public class StudentAdvanceTicket extends Ticket {
 		String str = "";
 		
 		str += super.toString();
+		str += " " + serialNumber + " ";
 		str += "$" + this.ticketPrice + " ";
 		str += "Student Advance";
 		str += " *Must show valid student id*";
 		
 		return str;
 	}
-
-
 }

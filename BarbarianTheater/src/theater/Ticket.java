@@ -10,12 +10,12 @@ public abstract class Ticket implements Serializable{
 	private TheaterPatronIdServer singletonTheaterPatronIdServer;
 	protected String serialNumber;	
 	private Calendar dateOfShow;
-	protected double ticketPrice;
+	protected Integer ticketPrice;
 	protected static MathContext theRounding = new MathContext(3);
 	protected static double advanceDiscount = .70;
 	protected static double studentDiscount = .50;
 	
-	public Ticket(Calendar date, double price) {
+	public Ticket(Calendar date, Integer price) {
 		this.dateOfShow = date;
 		this.ticketPrice = price;
 		singletonTheaterPatronIdServer = TheaterPatronIdServer.theaterPatronIdServerInstance();
@@ -41,7 +41,7 @@ public abstract class Ticket implements Serializable{
 	 * Returns the price of the ticket
 	 * @return
 	 */
-	public double getTicketPrice() {
+	public Integer getTicketPrice() {
 		return ticketPrice;
 	}
 	
@@ -78,7 +78,7 @@ public abstract class Ticket implements Serializable{
 	public String toString() {
 		String str = "";
 		
-		str += serialNumber + " " + dateOfShow + " ";
+		str += dateOfShow + " ";
 		
 		return str;
 	}

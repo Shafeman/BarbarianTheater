@@ -15,7 +15,7 @@ public class Show implements Serializable {
 	private String name;
 	private Calendar startDate;
 	private Calendar endDate;
-	private double price;
+	private Integer price;
 	
 
 	private int soldTickets;
@@ -26,7 +26,7 @@ public class Show implements Serializable {
 	 * @param startDate
 	 * @param endDate
 	 */
-	public Show(String name, Calendar startDate, Calendar endDate, double price){
+	public Show(String name, Calendar startDate, Calendar endDate, Integer price){
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -77,7 +77,7 @@ public class Show implements Serializable {
 		this.soldTickets++;
 	}
 	
-	public double getPrice() {
+	public Integer getPrice() {
 		return price;
 	}
 
@@ -100,7 +100,7 @@ public class Show implements Serializable {
 		str += name;
 		str += ":  " + startMonth + "/" + startDay + "/" + startYear + " -";
 		str += " " + endMonth + "/" + endDay + "/" + endYear;
-		str += " Price: $" + price;
+		str += " Price: $" + UserInterface.displayPrice(price);
 				
 		
 		return str;

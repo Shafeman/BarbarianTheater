@@ -16,7 +16,7 @@ import java.util.*;
 
 @SuppressWarnings("serial")
 public class Client extends TheaterPatron implements Matchable<String>, Serializable {
-	private double balance;
+	private Integer balance;
 	private List<Show> shows;
 
 /**
@@ -27,7 +27,7 @@ public class Client extends TheaterPatron implements Matchable<String>, Serializ
  */
 	public Client(String name, String address, String phoneNumber) {
 		super(name, address, phoneNumber);
-		this.balance = 0.00;
+		this.balance = 0;
 		shows = new ArrayList<Show>();
 	}
 
@@ -43,7 +43,7 @@ public class Client extends TheaterPatron implements Matchable<String>, Serializ
 	 * setBalance takes a double and assigns it to this Client's balance
 	 * @param balance
 	 */
-	public void setBalance(double balance) {
+	public void setBalance(Integer balance) {
 		this.balance = balance;
 	}
 
