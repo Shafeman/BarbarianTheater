@@ -103,7 +103,7 @@ public class Client extends TheaterPatron implements Matchable<String>, Serializ
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "\nBalance: " + balance;
+		return super.toString() + "\nBalance: $" + UserInterface.displayPrice(balance);
 	}
 
 	/**
