@@ -336,9 +336,14 @@ public class Theater implements Serializable {
 		return null;
 	}
 
+	
+	//Maybe this can return an Integer "price" that is added to a clients balance
 	//========================================================================================================	
 	public boolean sellTicket(Show show, Member member, CreditCard creditCard,	int ticketType, Calendar showDate) {
 		Integer price = boxOffice.sellTicket(member, show, creditCard, ticketType, showDate);
+		
+		
+		
 		return true;
 		
 	}

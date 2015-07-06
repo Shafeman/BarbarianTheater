@@ -662,6 +662,7 @@ public class UserInterface {
     	if (show != null){
     		String memberID = getToken("Enter member ID");
     		Member member = theater.searchMember(memberID);
+    		//search for a client, client = theater.getClient(show)
     		if (member != null) {
     			do{
     				creditCardNumber = getToken("Enter a valid credit card number");
@@ -669,12 +670,15 @@ public class UserInterface {
     			CreditCard creditCard = theater.getCreditCard(member, creditCardNumber);
     			if(creditCard != null){
     				if(ticketType == Theater.REGULAR_TICKET) {
+    					//client.addToBalance(theater.sellTicket(show, member, creditCard, Theater.REGULAR_TICKET, showDate);
     					theater.sellTicket(show, member, creditCard, Theater.REGULAR_TICKET, showDate);
     				} 
     				if(ticketType == Theater.ADVANCE_TICKET) {
+    					//ect
     					theater.sellTicket(show, member, creditCard, Theater.ADVANCE_TICKET, showDate);
     				}
     				if(ticketType == Theater.STUDENT_ADVANCE_TICKET) {
+    					//ect
     					theater.sellTicket(show, member, creditCard, Theater.STUDENT_ADVANCE_TICKET, showDate);
     				}
     			}
