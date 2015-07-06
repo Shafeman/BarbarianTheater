@@ -230,6 +230,9 @@ public class UserInterface {
 		if(price % 100 == 0) {
 			str += "00";
 		}
+		else if(price % 100 < 10) {
+			str += "0" + price % 100;
+		}			
 		else {
 			str += price % 100;
 		}	
