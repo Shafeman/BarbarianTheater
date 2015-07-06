@@ -59,6 +59,7 @@ public class UserInterface {
     private static UserInterface userInterface;
     private static Theater theater;
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
     /**
      * Constructor. Prompts user if they want to load a file or creates a new theater
@@ -671,7 +672,7 @@ public class UserInterface {
     			System.out.println("Member " + memberID + " isn't in the system");
     		}
     	} else {
-    		System.out.println("There is no show scheduled for " + showDate.toString());
+    		System.out.println("There is no show scheduled for " + dateFormat.format(showDate.getTime()));
     	}
     }
     

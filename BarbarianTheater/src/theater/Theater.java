@@ -312,7 +312,8 @@ public class Theater implements Serializable {
 			for(Show show: client.getShows()){
 				Calendar testStartDate = show.getStartDate();
 				Calendar testEndDate = show.getEndDate();
-				if((date.after(testStartDate) && date.before(testEndDate))){
+				if((date.equals(testStartDate) || date.equals(testEndDate) || 
+						(date.after(testStartDate) && date.before(testEndDate)))){
 					return show;
 				}
 			}
