@@ -279,7 +279,7 @@ public class UserInterface {
         System.out.println(SELL_ADVANCE_TICKET + " to sell a advance ticket");
         System.out.println(SELL_STUDENT_ADVANCE_TICKET + " to sell a student advance ticket");
         System.out.println(PAY_CLIENT + " to pay a client");
-        System.out.println(PRINT_ALL_TICKETS + " to list all tickets for a certian date");
+        System.out.println(PRINT_ALL_TICKETS + " to list all tickets for a certain date");
         System.out.println(HELP + " for help");
     }
 
@@ -669,17 +669,11 @@ public class UserInterface {
     			} while(!theater.checkCreditCardInCorrectFormat(creditCardNumber));
     			CreditCard creditCard = theater.getCreditCard(member, creditCardNumber);
     			if(creditCard != null){
-    				if(ticketType == Theater.REGULAR_TICKET) {
-    					//client.addToBalance(theater.sellTicket(show, member, creditCard, Theater.REGULAR_TICKET, showDate);
-    					theater.sellTicket(show, member, creditCard, Theater.REGULAR_TICKET, showDate);
-    				} 
-    				if(ticketType == Theater.ADVANCE_TICKET) {
-    					//ect
-    					theater.sellTicket(show, member, creditCard, Theater.ADVANCE_TICKET, showDate);
-    				}
-    				if(ticketType == Theater.STUDENT_ADVANCE_TICKET) {
-    					//ect
-    					theater.sellTicket(show, member, creditCard, Theater.STUDENT_ADVANCE_TICKET, showDate);
+    				Ticket ticket = theater.sellTicket(show, member, creditCard, ticketType, showDate);
+    				if (ticket != null){
+    					System.out.println(ticket);
+    				} else { 
+    					System.out.println("Ticket was not created.");
     				}
     			}
     		} else {
@@ -691,7 +685,7 @@ public class UserInterface {
     }
     
     private void payClient() {
-    	
+
     }
     
     private void printAllTickets() {     	

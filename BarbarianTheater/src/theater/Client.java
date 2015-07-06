@@ -35,7 +35,7 @@ public class Client extends TheaterPatron implements Matchable<String>, Serializ
 	 * getBalance returns the Client's balance
 	 * @return
 	 */
-	public double getBalance() {
+	public int getBalance() {
 		return balance;
 	}
 
@@ -43,8 +43,8 @@ public class Client extends TheaterPatron implements Matchable<String>, Serializ
 	 * setBalance takes a double and assigns it to this Client's balance
 	 * @param balance
 	 */
-	public void setBalance(Integer balance) {
-		this.balance = balance;
+	public void addPrice(Integer price) {
+		this.balance = this.balance + price;
 	}
 
 	/**

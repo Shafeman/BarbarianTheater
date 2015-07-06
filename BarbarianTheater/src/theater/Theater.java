@@ -339,13 +339,23 @@ public class Theater implements Serializable {
 	
 	//Maybe this can return an Integer "price" that is added to a clients balance
 	//========================================================================================================	
-	public boolean sellTicket(Show show, Member member, CreditCard creditCard,	int ticketType, Calendar showDate) {
-		Integer price = boxOffice.sellTicket(member, show, creditCard, ticketType, showDate);
+	public Ticket sellTicket(Show show, Member member, CreditCard creditCard,	int ticketType, Calendar showDate) {
+		Client clientToBill = getClientByShow(show);
+		Ticket ticket = boxOffice.sellTicket(member, show, creditCard, ticketType, showDate);
+		clientToBill.addPrice((ticket.getTicketPrice() / 2));		
+		return ticket;
 		
-		
-		
-		return true;
-		
+	}
+	
+	public Client getClientByShow(Show show){
+		for(Client client: clientList.getList()){
+			for(Show clientShow: client.getShows()){
+				if (clientShow.matches(show)){
+					return client;
+				}
+			}
+		}
+		return null;
 	}
 	
 	public List<Ticket> listTickets(Calendar date) {
@@ -440,6 +450,11 @@ public class Theater implements Serializable {
 		str += "Theater Name:" + name + "\nSeating Capacity:" + seatCapacity;
 		
 		return str;
+	}
+
+	public int getClientBalance(String clientId) {
+		Client clientToPay = clientList.search(clientId);
+		return clientToPay.getBalance();
 	}
 
 

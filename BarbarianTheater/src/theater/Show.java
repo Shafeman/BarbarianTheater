@@ -11,7 +11,7 @@ import java.util.Calendar;
 
 
 @SuppressWarnings("serial")
-public class Show implements Serializable {
+public class Show implements Matchable<Show>, Serializable {
 	private String name;
 	private Calendar startDate;
 	private Calendar endDate;
@@ -80,6 +80,7 @@ public class Show implements Serializable {
 	public Integer getPrice() {
 		return price;
 	}
+	
 
 	/**
 	 * toString returns the Show name, start date, and end date as a String.
@@ -88,23 +89,36 @@ public class Show implements Serializable {
 	@Override
 	public String toString() {
 		
-		int startDay = startDate.get(Calendar.DAY_OF_MONTH);
-		int startMonth = startDate.get(Calendar.MONTH) + 1;
-		int startYear = startDate.get(Calendar.YEAR);
-		int endDay = endDate.get(Calendar.DAY_OF_MONTH);
-		int endMonth = endDate.get(Calendar.MONTH) + 1;
-		int endYear = endDate.get(Calendar.YEAR);
-		
+		String firstDate = this.dateToString(startDate);
+		String lastDate = this.dateToString(endDate);
 		String str = "";
 		
 		str += name;
-		str += ":  " + startMonth + "/" + startDay + "/" + startYear + " -";
-		str += " " + endMonth + "/" + endDay + "/" + endYear;
-		str += " Price: $" + UserInterface.displayPrice(price);
-				
+		str += ":  " + firstDate + " - " + lastDate;
+		str += " Price: $" + UserInterface.displayPrice(price);			
 		
 		return str;
 		
+	}
+
+	@Override
+	public boolean matches(Show key) {
+		if (this.getName().equals(key.getName())){
+			if (this.dateToString(startDate).equals(key.dateToString(key.getStartDate()))){
+				if (this.dateToString(endDate).equals(key.dateToString(key.getEndDate()))){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private String dateToString(Calendar date){
+		int day = date.get(Calendar.DAY_OF_MONTH);
+		int month = date.get(Calendar.MONTH) + 1;
+		int year = date.get(Calendar.YEAR);
+		
+		return month + "/" + day + "/" + year;
 	}
 
 }
