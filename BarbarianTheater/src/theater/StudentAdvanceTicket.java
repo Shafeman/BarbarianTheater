@@ -1,12 +1,14 @@
 package theater;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Calendar;
 
 @SuppressWarnings("serial")
 public class StudentAdvanceTicket extends Ticket {	
 	
 	
-	public StudentAdvanceTicket(Calendar date, Integer price) {
+	public StudentAdvanceTicket(Calendar date, BigDecimal price) {
 		super(date, price);
 		serialNumber = this.generateSerialNumber();
 		ticketPrice = this.studentAdvanceDiscount();
@@ -18,11 +20,11 @@ public class StudentAdvanceTicket extends Ticket {
 	 * Which cost 50% of an advanced ticket.
 	 * @return Integer that is in "Cents"
 	 */
-	public Integer studentAdvanceDiscount() {		
-		Integer firstDiscount = (int) (ticketPrice * advanceDiscount);
-		Integer secondDiscount = (int) (firstDiscount * studentDiscount);
+	public BigDecimal studentAdvanceDiscount() {		
+		BigDecimal discountedPrice = ticketPrice.multiply(advanceDiscount);
+		discountedPrice = discountedPrice.multiply(studentDiscount);
 		
-		return secondDiscount;
+		return discountedPrice.round(new MathContext(3));
 	}
 	
 	/**
@@ -46,7 +48,7 @@ public class StudentAdvanceTicket extends Ticket {
 		
 		str += super.toString();
 		str += " " + serialNumber + " ";
-		str += "$" + UserInterface.displayPrice(this.ticketPrice) + " ";
+		str += "$" + ticketPrice.round(new MathContext(3)) + " ";
 		str += "Student Advance";
 		str += " *Must show valid student id*";
 		

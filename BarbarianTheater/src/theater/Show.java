@@ -7,6 +7,7 @@
 package theater;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Calendar;
 
 
@@ -15,7 +16,7 @@ public class Show implements Matchable<Show>, Serializable {
 	private String name;
 	private Calendar startDate;
 	private Calendar endDate;
-	private Integer price;
+	private BigDecimal price;
 	
 
 	private int soldTickets;
@@ -26,7 +27,7 @@ public class Show implements Matchable<Show>, Serializable {
 	 * @param startDate
 	 * @param endDate
 	 */
-	public Show(String name, Calendar startDate, Calendar endDate, Integer price){
+	public Show(String name, Calendar startDate, Calendar endDate, BigDecimal price){
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -77,7 +78,7 @@ public class Show implements Matchable<Show>, Serializable {
 		this.soldTickets++;
 	}
 	
-	public Integer getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 	
@@ -95,7 +96,7 @@ public class Show implements Matchable<Show>, Serializable {
 		
 		str += name;
 		str += ":  " + firstDate + " - " + lastDate;
-		str += " Price: $" + UserInterface.displayPrice(price);			
+		str += " Price: $" + price;			
 		
 		return str;
 		
