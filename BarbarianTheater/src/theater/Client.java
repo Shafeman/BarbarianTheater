@@ -111,7 +111,8 @@ public class Client extends TheaterPatron implements Matchable<String>, Serializ
 	}
 
 	public void getPaid(BigDecimal amount) {
-		this.balance.subtract(amount);		
+		//this.balance.subtract(amount);
+		balance = balance.add(amount);
 	}
 
 	/**
@@ -119,7 +120,7 @@ public class Client extends TheaterPatron implements Matchable<String>, Serializ
 	 * @param balance
 	 */
 	public void addPrice(BigDecimal amount) {
-		this.balance.add(amount);
-		
+		//this.balance.add(amount); //TODO this is where the add is failing
+		balance = balance.add(amount);
 	}
 }
