@@ -227,10 +227,7 @@ public class UserInterface {
      */
     private boolean yesOrNo(String prompt) {
         String more = getToken(prompt + " (Y|y)[es] or anything else for no");
-        if (more.charAt(0) != 'y' && more.charAt(0) != 'Y') {
-            return false;
-        }
-        return true;
+        return !(more.charAt(0) != 'y' && more.charAt(0) != 'Y');
     }
 
     /**
@@ -644,15 +641,23 @@ public class UserInterface {
     			do{
     				creditCardNumber = getToken("Enter a valid credit card number");
     			} while(!theater.checkCreditCardInCorrectFormat(creditCardNumber));
-    			CreditCard creditCard = theater.getCreditCard(member, creditCardNumber);
-    			if(creditCard != null){
-    				Ticket ticket = theater.sellTicket(show, member, creditCard, ticketType, showDate);
-    				if (ticket != null){
-    					System.out.println(ticket);
-    				} else { 
-    					System.out.println("Ticket was not created.");
-    				}
-    			}
+                CreditCard creditCard = theater.getCreditCard(member, creditCardNumber);
+
+                int tickAmountToBuy = getValidTicketAmount();
+
+                for (int i = 0; i < tickAmountToBuy; i++) {
+
+                    if (creditCard != null) {
+                        Ticket ticket = theater.sellTicket(show, member, creditCard, ticketType, showDate);
+                        if (ticket != null) {
+                            System.out.println(ticket);
+                        } else {
+                            System.out.println("Ticket was not created.");
+                        }
+                    }
+                }
+
+
     		} else {
     			System.out.println("Member " + memberID + " isn't in the system");
     		}
@@ -660,7 +665,21 @@ public class UserInterface {
     		System.out.println("There is no show scheduled for " + dateFormat.format(showDate.getTime()));
     	}
     }
-    
+
+    private int getValidTicketAmount() {
+
+        do {
+            try {
+                int value = Integer.parseInt(getToken("Please enter a positive amount of tickets you wish to buy"));
+                if (value > 0) {
+                    return value;
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Enter a positive number");
+            }
+        } while (true);
+    }
+
     private void payClient() {
 
   	      String clientId = getToken("Enter client's id to pay");
