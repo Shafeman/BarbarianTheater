@@ -1,6 +1,7 @@
 package theater;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -10,12 +11,12 @@ public abstract class Ticket implements Serializable{
 	private TheaterPatronIdServer singletonTheaterPatronIdServer;
 	protected String serialNumber;	
 	private Calendar dateOfShow;
-	protected Integer ticketPrice;	
-	protected static double advanceDiscount = .70;
-	protected static double studentDiscount = .50;
+	protected BigDecimal ticketPrice;	
+	protected static BigDecimal advanceDiscount = new BigDecimal(0.70);
+	protected static BigDecimal studentDiscount = new BigDecimal(0.50);
 	SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
-	public Ticket(Calendar date, Integer price) {
+	public Ticket(Calendar date, BigDecimal price) {
 		this.dateOfShow = date;
 		this.ticketPrice = price;
 		singletonTheaterPatronIdServer = TheaterPatronIdServer.theaterPatronIdServerInstance();
@@ -41,7 +42,7 @@ public abstract class Ticket implements Serializable{
 	 * Returns the price of the ticket
 	 * @return
 	 */
-	public Integer getTicketPrice() {
+	public BigDecimal getTicketPrice() {
 		return ticketPrice;
 	}
 	

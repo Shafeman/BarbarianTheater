@@ -11,12 +11,13 @@
 package theater;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.*;
 
 
 @SuppressWarnings("serial")
 public class Client extends TheaterPatron implements Matchable<String>, Serializable {
-	private Integer balance;
+	private BigDecimal balance;
 	private List<Show> shows;
 
 /**
@@ -27,7 +28,7 @@ public class Client extends TheaterPatron implements Matchable<String>, Serializ
  */
 	public Client(String name, String address, String phoneNumber) {
 		super(name, address, phoneNumber);
-		this.balance = 0;
+		this.balance = new BigDecimal(0.00);
 		shows = new ArrayList<Show>();
 	}
 
@@ -35,17 +36,10 @@ public class Client extends TheaterPatron implements Matchable<String>, Serializ
 	 * getBalance returns the Client's balance
 	 * @return
 	 */
-	public double getBalance() {
+	public BigDecimal getBalance() {
 		return balance;
 	}
 
-	/**
-	 * setBalance takes a double and assigns it to this Client's balance
-	 * @param balance
-	 */
-	public void setBalance(Integer balance) {
-		this.balance = balance;
-	}
 
 	/**
 	 * getShows returns a List of shows
@@ -103,7 +97,7 @@ public class Client extends TheaterPatron implements Matchable<String>, Serializ
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "\nBalance: $" + UserInterface.displayPrice(balance);
+		return super.toString() + "\nBalance: $" + balance;
 	}
 
 	/**
@@ -114,5 +108,18 @@ public class Client extends TheaterPatron implements Matchable<String>, Serializ
 	@Override
 	public boolean matches(String key) {
 		return this.getID().equals(key);
+	}
+
+	public void getPaid(BigDecimal amount) {
+		this.balance.subtract(amount);		
+	}
+
+	/**
+	 * Adds amount to clients balance
+	 * @param balance
+	 */
+	public void addPrice(BigDecimal amount) {
+		this.balance.add(amount);
+		
 	}
 }

@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
@@ -287,7 +288,7 @@ public class Theater implements Serializable {
 	 * @param endDate
 	 * @return Show object: if the dates are not valid the Show object will be null
 	 */
-	public Show addShow(String clientID, String name, Calendar startDate, Calendar endDate, Integer price){		
+	public Show addShow(String clientID, String name, Calendar startDate, Calendar endDate, BigDecimal price){		
 		Show show = null;				
 		Client client = searchClient(clientID);
 		
@@ -337,15 +338,25 @@ public class Theater implements Serializable {
 	}
 
 	
-	//Maybe this can return an Integer "price" that is added to a clients balance
+	
 	//========================================================================================================	
-	public boolean sellTicket(Show show, Member member, CreditCard creditCard,	int ticketType, Calendar showDate) {
-		Integer price = boxOffice.sellTicket(member, show, creditCard, ticketType, showDate);
+	public Ticket sellTicket(Show show, Member member, CreditCard creditCard,	int ticketType, Calendar showDate) {
+		Client clientToBill = getClientByShow(show);
+		Ticket ticket = boxOffice.sellTicket(member, show, creditCard, ticketType, showDate);
+		clientToBill.addPrice((ticket.getTicketPrice().divide(new BigDecimal(2))));		
+		return ticket;
 		
-		
-		
-		return true;
-		
+	}
+	
+	public Client getClientByShow(Show show){
+		for(Client client: clientList.getList()){
+			for(Show clientShow: client.getShows()){
+				if (clientShow.matches(show)){
+					return client;
+				}
+			}
+		}
+		return null;
 	}
 	
 	public List<Ticket> listTickets(Calendar date) {
@@ -440,6 +451,15 @@ public class Theater implements Serializable {
 		str += "Theater Name:" + name + "\nSeating Capacity:" + seatCapacity;
 		
 		return str;
+	}
+
+	public Client getClient(String clientId) {
+		Client clientToPay = clientList.search(clientId);
+		return clientToPay;
+	}
+	
+	public void payClient(Client client, BigDecimal amount){
+		client.getPaid(amount);
 	}
 
 

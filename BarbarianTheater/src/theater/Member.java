@@ -102,13 +102,23 @@ public class Member extends TheaterPatron implements Matchable<String>, Serializ
 
 		return creditCardList;
 	}
+	
+	private String printTickets() {
+		String ticketList = "";
+		for (Ticket ticket : ticketsBought) {
+
+			ticketList += ticket.toString() + "\n";
+		}
+
+		return ticketList;
+	}
 
 	/**
 	 * returns a String of the Member's name, address, phone number and credit cards on file.
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "\n" + printCreditCardList();
+		return super.toString() + "\n" + printCreditCardList() + printTickets();
 	}
 	
 	/**

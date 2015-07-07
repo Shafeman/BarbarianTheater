@@ -1,12 +1,14 @@
 package theater;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Calendar;
 
 @SuppressWarnings("serial")
 public class RegularTicket extends Ticket {
 	
 
-	public RegularTicket(Calendar date, Integer price) {
+	public RegularTicket(Calendar date, BigDecimal price) {
 		super(date, price);
 		serialNumber = this.generateSerialNumber();
 		
@@ -33,7 +35,7 @@ public class RegularTicket extends Ticket {
 		
 		str += super.toString();
 		str += " " + serialNumber + " ";
-		str += "$" + UserInterface.displayPrice(this.ticketPrice) + " ";
+		str += "$" + ticketPrice.round(new MathContext(3)) + " ";
 		str += "Regular";
 		
 		return str;
