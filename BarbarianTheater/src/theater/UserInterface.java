@@ -632,48 +632,62 @@ public class UserInterface {
     	Calendar showDate = getDate("Enter a show date: mm/dd/yy");
     	Show show = theater.getShow(showDate);
     	String creditCardNumber;
+    	int seatsLeft = 0;
     	
     	if (show != null){
-    		String memberID = getToken("Enter member ID");
-    		Member member = theater.searchMember(memberID);
-    		//search for a client, client = theater.getClient(show)
-    		if (member != null) {
-    			do{
-    				creditCardNumber = getToken("Enter a valid credit card number");
-    			} while(!theater.checkCreditCardInCorrectFormat(creditCardNumber));
-                CreditCard creditCard = theater.getCreditCard(member, creditCardNumber);
-
-                int tickAmountToBuy = getValidTicketAmount();
-
-                for (int i = 0; i < tickAmountToBuy; i++) {
-
-                    if (creditCard != null) {
-                        Ticket ticket = theater.sellTicket(show, member, creditCard, ticketType, showDate);
-                        if (ticket != null) {
-                            System.out.println(ticket);
-                        } else {
-                            System.out.println("Ticket was not created.");
-                        }
-                    }
-                }
-
-
+    		seatsLeft = theater.getCapacity() - show.getSoldTickets();
+    		if (seatsLeft != 0){
+    			System.out.println(show.getName() + " has " + seatsLeft + " seats remaining.\n"); 
+    			String memberID = getToken("Enter member ID");
+    			Member member = theater.searchMember(memberID);
+    		
+    			if (member != null) {
+    				do{
+    					creditCardNumber = getToken("Enter a valid credit card number");
+    				} while(!theater.checkCreditCardInCorrectFormat(creditCardNumber));
+    			
+    				CreditCard creditCard = theater.getCreditCard(member, creditCardNumber);
+                
+    				if (creditCard != null) {
+    					int tickAmountToBuy = getValidTicketAmount(seatsLeft);
+                    
+    					for (int i = 0; i < tickAmountToBuy; i++) {   
+    						Ticket ticket = theater.sellTicket(show, member, creditCard, ticketType, showDate);
+    						if (ticket != null) {
+    							System.out.println(ticket);
+    						} else {
+    							System.out.println("Ticket was not created.");
+    						}
+    					}
+    				} else {
+    					System.out.println("That credit card was not found for the user.");
+    				}
+    			} else {
+    				System.out.println("Member " + memberID + " isn't in the system");
+    			}
     		} else {
-    			System.out.println("Member " + memberID + " isn't in the system");
+    			System.out.println("There are no seats remaining for this show.");
     		}
     	} else {
-    		System.out.println("There is no show scheduled for " + dateFormat.format(showDate.getTime()));
+    		System.out.println("There is no show scheduled for " + dateFormat.format(showDate.getTime()));	
     	}
     }
 
-    private int getValidTicketAmount() {
+    private int getValidTicketAmount(int seatsLeft) {
 
         do {
             try {
-                int value = Integer.parseInt(getToken("Please enter a positive amount of tickets you wish to buy"));
+                int value = Integer.parseInt(getToken("Please enter a positive amount of tickets to be sold, "
+                		+ "but less than the " + seatsLeft + " seats remaining."));
                 if (value > 0) {
-                    return value;
-                }
+                	if(value <= seatsLeft){
+                		return value;
+                	} else {
+                    	System.out.println("There are not enough seats left for this request.");
+                	}
+                } else {
+                	System.out.println("Enter a positive number");
+                }                
             } catch (NumberFormatException nfe) {
                 System.out.println("Enter a positive number");
             }

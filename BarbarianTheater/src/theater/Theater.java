@@ -461,5 +461,9 @@ public class Theater implements Serializable {
 		client.getPaid(amount);
 	}
 
+	public int getCapacity() {
+		return this.seatCapacity;
+	}
+
 
 }

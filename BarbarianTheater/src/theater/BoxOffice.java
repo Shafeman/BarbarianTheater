@@ -41,7 +41,7 @@ public class BoxOffice implements Serializable{
 		
 		transactions.add(transaction);
 		member.addTicket(ticket);
-		
+		show.indicateSell();
 		
 		return ticket;
 	}

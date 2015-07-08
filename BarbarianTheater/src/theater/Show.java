@@ -17,8 +17,6 @@ public class Show implements Matchable<Show>, Serializable {
 	private Calendar startDate;
 	private Calendar endDate;
 	private BigDecimal price;
-	
-
 	private int soldTickets;
 	
 	/**
