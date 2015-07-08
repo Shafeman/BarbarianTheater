@@ -54,7 +54,7 @@ public class TheaterPatronList <T extends Matchable<K>, K> implements Serializab
 			return false;
 		}
 		else {
-			return true;
+			return elements.remove(element);
 		}
 	}
 	
