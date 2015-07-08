@@ -607,37 +607,73 @@ public class UserInterface {
      * sell a regular ticket by calling sellAnyTicket with the proper value
      */
     private void sellRegularTicket() {
-    	sellAnyTicket(Theater.REGULAR_TICKET);  	
+    	Calendar today = Calendar.getInstance();
+		String todayDate = (today.get(Calendar.MONTH) + 1) + "/" + today.get(Calendar.DAY_OF_MONTH) +
+				"/" + today.get(Calendar.YEAR);
+		Calendar showDate = getDate("Enter a show date: mm/dd/yy");
+		String testDate = (showDate.get(Calendar.MONTH) + 1) + "/" + showDate.get(Calendar.DAY_OF_MONTH) +
+				"/" + showDate.get(Calendar.YEAR);
+		if (todayDate.equals(testDate)){
+			sellAnyTicket(Theater.REGULAR_TICKET, showDate);
+		} else if (today.after(showDate)){
+			System.out.println("That show date is in the past");
+		} else {
+			System.out.println("Please sell the member an appropriate advanced ticket for a future date.");
+		}
+		
     }
     
     /**
      * sell an advanced ticket by calling sellAnyTicket with the proper value
      */
     private void sellAdvanceTicket() {
-    	sellAnyTicket(Theater.ADVANCE_TICKET);
+    	Calendar today = Calendar.getInstance();
+		String todayDate = (today.get(Calendar.MONTH) + 1) + "/" + today.get(Calendar.DAY_OF_MONTH) +
+				"/" + today.get(Calendar.YEAR);
+		Calendar showDate = getDate("Enter a show date: mm/dd/yy");
+		String testDate = (showDate.get(Calendar.MONTH) + 1) + "/" + showDate.get(Calendar.DAY_OF_MONTH) +
+				"/" + showDate.get(Calendar.YEAR);
+		if (today.before(showDate)){
+			sellAnyTicket(Theater.ADVANCE_TICKET, showDate);
+		} else if (todayDate.equals(testDate)){
+			System.out.println("You cannot sell advanced tickets for today's shows");
+		} else {
+			System.out.println("You cannont sell tickets to shows in the past");
+		}
     }
     
     /**
      * sell an advanced student ticket by calling sellAnyTicket with the proper value
      */
     private void sellStudentAdvanceTicket()	{
-    	sellAnyTicket(Theater.STUDENT_ADVANCE_TICKET);
+    	Calendar today = Calendar.getInstance();
+		String todayDate = (today.get(Calendar.MONTH) + 1) + "/" + today.get(Calendar.DAY_OF_MONTH) +
+				"/" + today.get(Calendar.YEAR);
+		Calendar showDate = getDate("Enter a show date: mm/dd/yy");
+		String testDate = (showDate.get(Calendar.MONTH) + 1) + "/" + showDate.get(Calendar.DAY_OF_MONTH) +
+				"/" + showDate.get(Calendar.YEAR);
+		if (today.before(showDate)){
+			sellAnyTicket(Theater.STUDENT_ADVANCE_TICKET, showDate);
+		} else if (todayDate.equals(testDate)){
+			System.out.println("You cannot sell advanced tickets for today's shows");
+		} else {
+			System.out.println("You cannont sell tickets to shows in the past");
+		}
     }
     
     /**
      * takes a ticket type and processes a ticket sell.
      * @param ticketType
      */
-    private void sellAnyTicket(int ticketType){
-    	Calendar showDate = getDate("Enter a show date: mm/dd/yy");
-    	Show show = theater.getShow(showDate);
+    private void sellAnyTicket(int ticketType, Calendar date){
+    	Show show = theater.getShow(date);
     	String creditCardNumber;
     	int seatsLeft = 0;
     	
     	if (show != null){
-    		seatsLeft = theater.getCapacity() - show.getSoldTickets();
+    		seatsLeft = theater.getCapacity() - theater.getTicketCount(date);
     		if (seatsLeft != 0){
-    			System.out.println(show.getName() + " has " + seatsLeft + " seats remaining.\n"); 
+    			System.out.println(show.getName() + " has " + seatsLeft + " seats remaining."); 
     			String memberID = getToken("Enter member ID");
     			Member member = theater.searchMember(memberID);
     		
@@ -652,7 +688,7 @@ public class UserInterface {
     					int tickAmountToBuy = getValidTicketAmount(seatsLeft);
                     
     					for (int i = 0; i < tickAmountToBuy; i++) {   
-    						Ticket ticket = theater.sellTicket(show, member, creditCard, ticketType, showDate);
+    						Ticket ticket = theater.sellTicket(show, member, creditCard, ticketType, date);
     						if (ticket != null) {
     							System.out.println(ticket);
     						} else {
@@ -669,7 +705,7 @@ public class UserInterface {
     			System.out.println("There are no seats remaining for this show.");
     		}
     	} else {
-    		System.out.println("There is no show scheduled for " + dateFormat.format(showDate.getTime()));	
+    		System.out.println("There is no show scheduled for " + dateFormat.format(date.getTime()));	
     	}
     }
 

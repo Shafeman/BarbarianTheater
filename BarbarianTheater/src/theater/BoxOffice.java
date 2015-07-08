@@ -41,7 +41,6 @@ public class BoxOffice implements Serializable{
 		
 		transactions.add(transaction);
 		member.addTicket(ticket);
-		show.indicateSell();
 		
 		return ticket;
 	}
@@ -87,5 +86,11 @@ public class BoxOffice implements Serializable{
 				ticketList.add(ticket.getTicket());
 		
 		return ticketList;
+	}
+	
+	public int getTicketCountForDate(Calendar date){
+		List<Ticket> tickets = getTickets(date);
+		int ticketCount = tickets.size();
+		return ticketCount;
 	}
 }

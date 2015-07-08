@@ -17,7 +17,6 @@ public class Show implements Matchable<Show>, Serializable {
 	private Calendar startDate;
 	private Calendar endDate;
 	private BigDecimal price;
-	private int soldTickets;
 	
 	/**
 	 * Show Constructor. Creates a Show.
@@ -30,7 +29,6 @@ public class Show implements Matchable<Show>, Serializable {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.price = price;
-		this.soldTickets = 0;
 	}
 	
 	/**
@@ -64,17 +62,7 @@ public class Show implements Matchable<Show>, Serializable {
 	public Calendar getEndDate() {
 		return endDate;
 	}
-	
-	/**
-	 * @return the soldTickets
-	 */
-	public int getSoldTickets() {
-		return soldTickets;
-	}
 
-	public void indicateSell(){
-		this.soldTickets++;
-	}
 	
 	public BigDecimal getPrice() {
 		return price;

@@ -105,7 +105,7 @@ public class Theater implements Serializable {
 	public int removeClient(String id){
 		Client clientToRemove = clientList.search(id);
 		Calendar today = Calendar.getInstance();
-		String todayDate = today.get(Calendar.MONTH) + "/" + today.get(Calendar.DAY_OF_MONTH) +
+		String todayDate = (today.get(Calendar.MONTH) + 1) + "/" + today.get(Calendar.DAY_OF_MONTH) +
 				"/" + today.get(Calendar.YEAR);
 		DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
 		try {
@@ -463,6 +463,10 @@ public class Theater implements Serializable {
 
 	public int getCapacity() {
 		return this.seatCapacity;
+	}
+
+	public int getTicketCount(Calendar date) {
+		return boxOffice.getTicketCountForDate(date);
 	}
 
 
