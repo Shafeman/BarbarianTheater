@@ -530,7 +530,7 @@ public class UserInterface {
     		}
     		
     		//Show will return null if dates are used 
-    		show = theater.addShow(id, showTitle, startDate, endDate, price);    		
+    		show = theater.addShow(client, showTitle, startDate, endDate, price);    		
     		if(show != null){
     	    		System.out.println(show);
     		}else{
