@@ -111,7 +111,7 @@ public class Client extends TheaterPatron implements Matchable<String>, Serializ
 	}
 
 	public void getPaid(BigDecimal amount) {
-		balance = balance.add(amount);
+		balance = balance.subtract(amount);
 	}
 
 	/**

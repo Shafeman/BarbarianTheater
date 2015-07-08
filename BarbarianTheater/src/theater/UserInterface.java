@@ -319,7 +319,7 @@ public class UserInterface {
         do {
             try {
                 int value = Integer.parseInt(getToken("Enter command:" + HELP + " for help"));
-                if (value >= EXIT && value <= HELP) {
+                if (value >= EXIT && value <= PRINT_ALL_TICKETS) {
                     return value;
                 }
             } catch (NumberFormatException nfe) {
