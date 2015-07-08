@@ -40,7 +40,7 @@ public class BoxOffice implements Serializable{
 		Transaction transaction = new Transaction(show, member, ticket, card);
 		
 		transactions.add(transaction);
-		member.addTicket(ticket);
+//		member.addTicket(ticket);
 		
 		return ticket;
 	}

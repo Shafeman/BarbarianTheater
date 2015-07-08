@@ -342,6 +342,9 @@ public class Theater implements Serializable {
 	public Ticket sellTicket(Show show, Member member, CreditCard creditCard,	int ticketType, Calendar showDate) {
 		Client clientToBill = getClientByShow(show);
 		Ticket ticket = boxOffice.sellTicket(member, show, creditCard, ticketType, showDate);
+		////
+		member.addTicket(ticket);
+		////
 		clientToBill.addPrice((ticket.getTicketPrice().divide(new BigDecimal(2))));		
 		return ticket;
 		
