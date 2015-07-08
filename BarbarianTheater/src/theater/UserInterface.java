@@ -49,13 +49,13 @@ public class UserInterface {
     private static final int ADD_SHOW = 9;
     private static final int LIST_SHOWS = 10;
     private static final int SAVE_DATA = 11;
-    private static final int RETRIEVE_DATA = 12;
-    private static final int HELP = 13;
-    private static final int SELL_REGULAR_TICKET = 14;
-    private static final int SELL_ADVANCE_TICKET = 15;
-    private static final int SELL_STUDENT_ADVANCE_TICKET = 16;
-    private static final int PAY_CLIENT = 17;
-    private static final int PRINT_ALL_TICKETS = 18;
+    private static final int RETRIEVE_DATA = 12;    
+    private static final int SELL_REGULAR_TICKET = 13;
+    private static final int SELL_ADVANCE_TICKET = 14;
+    private static final int SELL_STUDENT_ADVANCE_TICKET = 15;
+    private static final int PAY_CLIENT = 16;
+    private static final int PRINT_ALL_TICKETS = 17;
+    private static final int HELP = 18;
     private static UserInterface userInterface;
     private static Theater theater;
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -249,12 +249,12 @@ public class UserInterface {
         System.out.println(LIST_SHOWS + " to list all shows");
         System.out.println(SAVE_DATA + " to save data");
         System.out.println(RETRIEVE_DATA + " to retrieve");
-        System.out.println(HELP + " for help");
         System.out.println(SELL_REGULAR_TICKET + " to sell a regular ticket");
         System.out.println(SELL_ADVANCE_TICKET + " to sell a advance ticket");
         System.out.println(SELL_STUDENT_ADVANCE_TICKET + " to sell a student advance ticket");
         System.out.println(PAY_CLIENT + " to pay a client");
         System.out.println(PRINT_ALL_TICKETS + " to list all tickets for a certain date");
+        System.out.println(HELP + " for help");
     }
 
     /**
@@ -319,7 +319,7 @@ public class UserInterface {
         do {
             try {
                 int value = Integer.parseInt(getToken("Enter command:" + HELP + " for help"));
-                if (value >= EXIT && value <= PRINT_ALL_TICKETS) {
+                if (value >= EXIT && value <= HELP) {
                     return value;
                 }
             } catch (NumberFormatException nfe) {
