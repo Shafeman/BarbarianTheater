@@ -336,20 +336,30 @@ public class Theater implements Serializable {
 		return null;
 	}
 
-	
-	
-	//========================================================================================================	
+	/**
+	 * Takes a Show, Member, CreditCard, Date and ticket type and calls BoxOffice to sell a ticket.
+	 * Updates the client's balance based on the balance of the ticket sold.
+	 * @param show
+	 * @param member
+	 * @param creditCard
+	 * @param ticketType
+	 * @param showDate
+	 * @return
+	 */
 	public Ticket sellTicket(Show show, Member member, CreditCard creditCard,	int ticketType, Calendar showDate) {
 		Client clientToBill = getClientByShow(show);
 		Ticket ticket = boxOffice.sellTicket(member, show, creditCard, ticketType, showDate);
-		////
 		member.addTicket(ticket);
-		////
 		clientToBill.addPrice((ticket.getTicketPrice().divide(new BigDecimal(2))));		
 		return ticket;
 		
 	}
 	
+	/**
+	 * Returns a Client that holds the passed Show.
+	 * @param show
+	 * @return
+	 */
 	public Client getClientByShow(Show show){
 		for(Client client: clientList.getList()){
 			for(Show clientShow: client.getShows()){
@@ -361,6 +371,11 @@ public class Theater implements Serializable {
 		return null;
 	}
 	
+	/**
+	 * Returns a list of tickets for a specific date
+	 * @param date
+	 * @return
+	 */
 	public List<Ticket> listTickets(Calendar date) {
 		return boxOffice.getTickets(date);
 	}
@@ -455,19 +470,38 @@ public class Theater implements Serializable {
 		return str;
 	}
 
+	/**
+	 * Returns a client based on the received client ID
+	 * @param clientId
+	 * @return
+	 */
 	public Client getClient(String clientId) {
 		Client clientToPay = clientList.search(clientId);
 		return clientToPay;
 	}
 	
+	/**
+	 * Updates the client's balance by the amount given.
+	 * @param client
+	 * @param amount
+	 */
 	public void payClient(Client client, BigDecimal amount){
 		client.getPaid(amount);
 	}
 
+	/**
+	 * Returns the seating capacity of the theater
+	 * @return
+	 */
 	public int getCapacity() {
 		return this.seatCapacity;
 	}
 
+	/**
+	 * Returns the number of tickets sold for a show on a given date.
+	 * @param date
+	 * @return
+	 */
 	public int getTicketCount(Calendar date) {
 		return boxOffice.getTicketCountForDate(date);
 	}

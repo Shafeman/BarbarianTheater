@@ -15,9 +15,16 @@ public class BoxOffice implements Serializable{
 	private List<Transaction> transactions = new ArrayList<Transaction>();
 	private static BoxOffice singletonBoxOffice;
 	
+	/**
+	 * constructor
+	 */
 	private BoxOffice(){
 	}
 	
+	/**
+	 * Instance ensures the BoxOffice's singleton property.
+	 * @return
+	 */
 	public static BoxOffice instance(){
 		if (singletonBoxOffice == null){
 			singletonBoxOffice = new BoxOffice();
@@ -38,10 +45,7 @@ public class BoxOffice implements Serializable{
 		
 		Ticket ticket = createTicket(showDate, show, ticketType);
 		Transaction transaction = new Transaction(show, member, ticket, card);
-		
-		transactions.add(transaction);
-//		member.addTicket(ticket);
-		
+		transactions.add(transaction);		
 		return ticket;
 	}
 
@@ -88,6 +92,11 @@ public class BoxOffice implements Serializable{
 		return ticketList;
 	}
 	
+	/**
+	 * Gets the count of tickets sold for a certain date by looking at the Transactions list.
+	 * @param date
+	 * @return
+	 */
 	public int getTicketCountForDate(Calendar date){
 		List<Ticket> tickets = getTickets(date);
 		int ticketCount = tickets.size();

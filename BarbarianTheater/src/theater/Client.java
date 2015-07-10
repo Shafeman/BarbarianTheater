@@ -28,7 +28,7 @@ public class Client extends TheaterPatron implements Matchable<String>, Serializ
  */
 	public Client(String name, String address, String phoneNumber) {
 		super(name, address, phoneNumber);
-		this.balance = new BigDecimal(0.00);
+		this.balance = new BigDecimal(0.00).setScale(2, BigDecimal.ROUND_HALF_UP);
 		shows = new ArrayList<Show>();
 	}
 
@@ -110,6 +110,10 @@ public class Client extends TheaterPatron implements Matchable<String>, Serializ
 		return this.getID().equals(key);
 	}
 
+	/**
+	 * Subtracts the amount from the balance.
+	 * @param amount
+	 */
 	public void getPaid(BigDecimal amount) {
 		balance = balance.subtract(amount);
 	}

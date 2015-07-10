@@ -1,7 +1,11 @@
+/**
+ * Barbarians: Douglas Brian Shaffer, Nathan Kangas, Johnathan Franco
+ * AdvanceTicket extends Ticket and sets the ticket price to 70% of
+ * the regular ticket price.
+ */
 package theater;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.Calendar;
 
 @SuppressWarnings("serial")
@@ -22,9 +26,9 @@ public class AdvanceTicket extends Ticket{
 	 */
 	public BigDecimal advanceDiscount() {	
 		
-		BigDecimal discountedPrice = ticketPrice.multiply(advanceDiscount);			
+		BigDecimal discountedPrice = ticketPrice.multiply(advanceDiscount).setScale(2, BigDecimal.ROUND_HALF_UP);			
 	
-		return discountedPrice.round(new MathContext(3));
+		return discountedPrice;
 	}
 	
 	/**
@@ -48,7 +52,7 @@ public class AdvanceTicket extends Ticket{
 		
 		str += super.toString();
 		str += " " + serialNumber + " ";
-		str += "$" + this.ticketPrice.round(new MathContext(3)) + " ";
+		str += "$" + ticketPrice + " ";
 		str += "Advance";
 		
 		return str;

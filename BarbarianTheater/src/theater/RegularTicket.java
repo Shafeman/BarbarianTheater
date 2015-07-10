@@ -1,7 +1,10 @@
+/**
+ * Barbarians: Douglas Brian Shaffer, Nathan Kangas, Johnathan Franco
+ * RegularTicket extends Ticket and creates a ticket at regular price.
+ */
 package theater;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.Calendar;
 
 @SuppressWarnings("serial")
@@ -35,7 +38,7 @@ public class RegularTicket extends Ticket {
 		
 		str += super.toString();
 		str += " " + serialNumber + " ";
-		str += "$" + ticketPrice.round(new MathContext(3)) + " ";
+		str += "$" + ticketPrice + " ";
 		str += "Regular";
 		
 		return str;

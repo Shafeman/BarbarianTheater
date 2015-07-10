@@ -1,3 +1,8 @@
+/**
+ * Barbarians: Douglas Brian Shaffer, Nathan Kangas, Johnathan Franco
+ * Transaction creates a link between a member, a ticket, and a show, and stores
+ * the credit card used to pay for the ticket.
+ */
 package theater;
 
 import java.io.Serializable;
@@ -15,22 +20,36 @@ public class Transaction implements Serializable {
 		this.member = member;
 		this.ticket = ticket;
 		this.creditCard = creditCard;
-		//Maybe a date of transaction?
 	}
 	
-	
+	/**
+	 * Returns the show
+	 * @return
+	 */
 	public Show getShow() {
 		return show;
 	}
 
+	/**
+	 * Returns the member
+	 * @return
+	 */
 	public Member getMember() {
 		return member;
 	}
 
+	/**
+	 * Returns the ticket
+	 * @return
+	 */
 	public Ticket getTicket() {
 		return ticket;
 	}
 
+	/**
+	 * Returns the credit card
+	 * @return
+	 */
 	public CreditCard getCreditCard() {
 		return creditCard;
 	}

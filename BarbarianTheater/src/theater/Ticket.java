@@ -1,3 +1,9 @@
+/**
+ * Barbarians: Douglas Brian Shaffer, Nathan Kangas, Johnathan Franco
+ * Ticket is the abstract class that the specific ticket types in the theater
+ * extend. It has a unique serial number, date of the show, price, and values
+ * for calculating ticket prices.
+ */
 package theater;
 
 import java.io.Serializable;
@@ -18,7 +24,7 @@ public abstract class Ticket implements Serializable{
 	
 	public Ticket(Calendar date, BigDecimal price) {
 		this.dateOfShow = date;
-		this.ticketPrice = price;
+		this.ticketPrice = price.setScale(2, BigDecimal.ROUND_HALF_UP);
 		singletonTheaterPatronIdServer = TheaterPatronIdServer.theaterPatronIdServerInstance();
 	}
 

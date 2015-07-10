@@ -709,6 +709,12 @@ public class UserInterface {
     	}
     }
 
+    /**
+     * Gets a number of tickets to sell from the user and ensures that amount is
+     * less than the number of seats left for the show.
+     * @param seatsLeft
+     * @return
+     */
     private int getValidTicketAmount(int seatsLeft) {
 
         do {
@@ -730,6 +736,10 @@ public class UserInterface {
         } while (true);
     }
 
+    /**
+     * Gets a client ID from the user, finds that client, and queries the user for the amount
+     * to pay the client. Does not allow a payment higher than the client's balance.y
+     */
     private void payClient() {
 
   	      String clientId = getToken("Enter client's id to pay");
@@ -750,6 +760,9 @@ public class UserInterface {
 
     }
     
+    /**
+     * Prints all tickets for a given date.
+     */
     private void printAllTickets() {     	
     	
     	Calendar date = getDate("To view tickets for a certain date,\n"

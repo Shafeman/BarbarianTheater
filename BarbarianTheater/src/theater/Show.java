@@ -28,7 +28,7 @@ public class Show implements Matchable<Show>, Serializable {
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.price = price;
+		this.price = price.setScale(2, BigDecimal.ROUND_HALF_UP);
 	}
 	
 	/**
@@ -88,6 +88,11 @@ public class Show implements Matchable<Show>, Serializable {
 		
 	}
 
+	/**
+	 * Overrides matches. Checks that the passed show has the same name,
+	 * start date and end date.
+	 * @param Show
+	 */
 	@Override
 	public boolean matches(Show key) {
 		if (this.getName().equals(key.getName())){
@@ -100,6 +105,11 @@ public class Show implements Matchable<Show>, Serializable {
 		return false;
 	}
 	
+	/**
+	 * Converts a passed date into a string for various searches.
+	 * @param date
+	 * @return
+	 */
 	private String dateToString(Calendar date){
 		int day = date.get(Calendar.DAY_OF_MONTH);
 		int month = date.get(Calendar.MONTH) + 1;
